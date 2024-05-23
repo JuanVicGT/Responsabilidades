@@ -17,14 +17,24 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased">
+<body class="min-h-screen font-sans antialiased bg-base-200/50 dark:bg-base-200">
 
-    {{-- The navbar with `sticky` and `full-width` --}}
-    <x-layouts.navbar />
+    {{-- NAVBAR mobile only --}}
+    <x-mary-nav sticky class="lg:hidden">
+        <x-slot:brand>
+            <div class="ml-5 pt-5">App</div>
+        </x-slot:brand>
+        <x-slot:actions>
+            <label for="main-drawer" class="lg:hidden mr-3">
+                <x-mary-icon name="o-bars-3" class="cursor-pointer" />
+            </label>
+        </x-slot:actions>
+    </x-mary-nav>
 
-    {{-- The main content with `full-width` --}}
-    <x-mary-main with-nav full-width>
+    {{-- MAIN --}}
+    <x-mary-main full-width>
 
+        {{-- SIDEBAR --}}
         <x-layouts.sidebar />
 
         {{-- The `$slot` goes here --}}
@@ -33,7 +43,7 @@
         </x-slot:content>
     </x-mary-main>
 
-    {{--  TOAST area --}}
+    {{-- Toast --}}
     <x-mary-toast />
 
     {{-- Scripts area --}}

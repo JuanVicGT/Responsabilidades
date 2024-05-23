@@ -1,0 +1,35 @@
+@startuml "DC 01 - Funcionamiento de permisos"
+
+/' === Clases === '/
+class users as "Usuario" {
+    id : Integer
+
+    address : string
+    admin : boolean
+    birthdate : date
+    city : string
+    code : string
+    created_at : timestamp
+    dependence : string
+    email : string
+    lastname : string
+    name : string
+    phone : string
+    position : string
+    password : string
+    photo : string
+    row : string
+    state : string
+    status : boolean
+    theme : string
+    updated_at : timestamp
+    username : String
+}
+
+class dependence as "Dependencia" {
+    
+}
+
+/' === Relaciones === '/
+
+@enduml

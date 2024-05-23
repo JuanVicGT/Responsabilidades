@@ -1,0 +1,52 @@
+@startuml "DC 01 - Funcionamiento de permisos"
+
+/' === Clases === '/
+class users as "Usuario" {
+    id : Integer
+    ip : String
+    name : String
+    email : String
+    username : String
+    password : String
+}
+
+class permissions as "Permiso" {
+    id : Integer
+    name : String
+    guard_name : String
+}
+
+class model_has_permissions as "Modelo_tiene_permiso"{
+    permission_id : Integer
+    model_type : String
+    model_id : Integer
+}
+
+class roles as "Rol" {
+    id : Integer
+    name : String
+    guard_name : String
+}
+
+class roles_has_permissions as "Rol_tiene_permiso" {
+    permission_id : Integer
+    role_id : Integer
+}
+
+class model_has_roles as "modelo_tiene_rol" {
+    role_id : Integer
+    model_type : String
+    model_id : Integer
+}
+
+/' === Relaciones === '/
+roles --{ roles_has_permissions
+roles --{ model_has_roles
+
+permissions --{ roles_has_permissions
+permissions --{ model_has_permissions
+
+roles --{ permissions
+users }--{ roles
+
+@enduml

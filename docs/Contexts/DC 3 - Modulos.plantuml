@@ -31,15 +31,18 @@ mindmapDiagram {
 +++ Permisos de edición, consulta y creación
 
 ++ RRHH <<orange>>
-+++ Usuarios/Colaboradores
++++ Dependencias <<blue>>
+++++ Creación de dependencia
++++ Usuarios/Colaboradores <<blue>>
 ++++ Creación de Usuarios
 ++++ Asignación de rol
+++++ Asignación de dependencia
 ++++ Gestión de horarios de entrada y salida
-+++ Eventos
++++ Eventos <<blue>>
 ++++ Ingresar evento
 ++++ Cancelar evento
 ++++ Reagendar evento
-+++ Tareas
++++ Tareas <<blue>>
 ++++ Ingresar tarea
 ++++ Editar tarea
 
