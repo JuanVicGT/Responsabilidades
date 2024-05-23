@@ -1,0 +1,71 @@
+@startmindmap "Diagrama de contexto 2 - Planteamiento general"
+
+<style>
+mindmapDiagram {
+    .green {
+        BackgroundColor lightgreen
+    }
+    .rose {
+        BackgroundColor #FFBBCC
+    }
+    .blue {
+        BackgroundColor lightblue
+    }
+    .yellow {
+        BackgroundColor lightyellow
+    }
+    .orange {
+        BackgroundColor #FECF79
+    }
+    .white {
+        BackgroundColor white
+    }
+}
+</style>
+
+* Sistema de Responsabilidades \ny cuestiones básicas de RRHH <<green>>
+
+++ Empleado <<blue>>
++++ Horario <<orange>>
+++++ Ingreso de entrada
+++++ Ingreso de salida
++++ Tareas <<orange>>
+++++ Ingresar tareas
+++++ Actualizar tareas
+++++ Consultar tareas propias
++++ Eventos <<orange>>
+++++ Consultar eventos
+++++ Imprimir calendarización
++++ Hojas de responsabilidades <<orange>>
+++++ Consultar hoja de responsabilidades
+++++ Imprimir hoja de responsabilidades
+
+++ Invitado <<blue>>
++++ Consultar QR de hojas de responsabilidades
+
+left side
+
+-- Administrador <<blue>>
+--- Acceso completo <<yellow>>
+
+-- Encargado <<blue>>
+--- Tareas <<orange>>
+---- Ingresar tareas propias
+---- Editar tareas propias
+---- Consultar tareas de los empleados
+--- Eventos <<orange>>
+---- Calendarizar eventos
+---- Consultar calendarización
+---- Editar evento calendarizado
+---- Imprimir calendarización
+--- Items <<orange>>
+---- Ingresar items
+---- Editar items
+---- Consultar items
+--- Hojas de responsabilidades <<orange>>
+---- Generar hoja de responsabilidades
+---- Asignar items
+---- Generar QR
+---- Consultar hojas de responsabilidades
+---- Imprimir hoja de responsabilidades
+@endmindmap

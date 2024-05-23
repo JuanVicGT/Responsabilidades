@@ -1,0 +1,94 @@
+@startgantt "May - 2024"
+
+project starts the 2024/05/01
+
+<style>
+ganttDiagram {
+    task {
+        BackGroundColor GreenYellow
+        LineColor Green
+        unstarted {
+            BackGroundColor Fuchsia
+            LineColor FireBrick
+        }
+    }
+}
+</style>
+
+-- Roles --
+[Tabla de roles] as [table_role] requires 3 days
+[Sección de roles] as [role] requires 4 days
+
+[role] starts at [table_role]'s end
+
+[Lista de roles] as [list_role] requires 3 days
+[Creación de roles] as [create_role] requires 5 days
+[Vista de roles] as [view_role] requires 3 days
+[Edición de roles] as [edit_role] requires 5 days
+[Eliminación de roles] as [delete_role] requires 3 days
+
+[list_role] starts at [role]'s end
+[create_role] starts at [role]'s end
+[view_role] starts at [create_role]'s end
+[edit_role] starts at [create_role]'s end
+[delete_role] starts at [edit_role]'s end
+
+[role] is 100% complete
+[table_role] is 100% complete
+[list_role] is 100% complete
+[create_role] is 75% complete
+[view_role] is 50% complete
+[edit_role] is 50% complete
+[delete_role] is 80% complete
+
+-- Permisos --
+[Tabla de permisos] as [table_permission] requires 3 days
+[Sección de permisos] as [permission] requires 4 days
+
+[permission] starts at [table_permission]'s end
+
+[Lista de permisos] as [list_permission] requires 3 days
+[Creación de permisos] as [create_permission] requires 5 days
+[Vista de permisos] as [view_permission] requires 3 days
+[Edición de permisos] as [edit_permission] requires 5 days
+[Eliminación de permisos] as [delete_permission] requires 5 days
+
+[list_permission] starts at [permission]'s end
+[create_permission] starts at [permission]'s end
+[view_permission] starts at [create_permission]'s end
+[edit_permission] starts at [create_permission]'s end
+[delete_permission] starts at [edit_permission]'s end
+
+[permission] is 100% complete
+[table_permission] is 100% complete
+[list_permission] is 100% complete
+[create_permission] is 0% complete
+[view_permission] is 0% complete
+[edit_permission] is 0% complete
+[delete_permission] is 0% complete
+
+-- Asigación de permisos a roles --
+[Mostrar permisos en roles] as [show_permission_role] requires 10 days
+[Asignar permisos] as [assign_permission_role] requires 8 days
+[Re asignar permisos] as [re_assign_permission_role] requires 2 days
+
+[assign_permission_role] starts at [show_permission_role]'s end
+[re_assign_permission_role] starts at [assign_permission_role]'s end
+
+[show_permission_role] is 100% complete
+[assign_permission_role] is 100% complete
+[re_assign_permission_role] is 100% complete
+
+-- Asigación de roles a usuarios --
+[Mostrar roles en usuarios] as [show_role_user] requires 10 days
+[Asignar roles] as [assign_role_user] requires 8 days
+[Re asignar roles] as [re_assign_role_user] requires 2 days
+
+[assign_role_user] starts at [show_role_user]'s end
+[re_assign_role_user] starts at [assign_role_user]'s end
+
+[show_role_user] is 0% complete
+[assign_role_user] is 0% complete
+[re_assign_role_user] is 0% complete
+
+@endgantt
