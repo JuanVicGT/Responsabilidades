@@ -1,0 +1,145 @@
+@startuml "DC 01 - Identificación de entidades"
+
+/' === Fuertes === '/
+entity users as "Usuarios" {
+    id : Integer
+
+    birthdate : date
+    code : string
+    avatar : string
+    name : string
+    last_name : string
+    admin : boolean
+    status : boolean
+    email : string
+    phone : string
+    address : string
+    password : string
+    username : string
+    work_position : string
+    work_row : string
+    dependence : string
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity events as "Eventos" {
+    id : Integer
+    id_responsible : Integer <<foreign>>
+
+    name : string
+    status : string
+    start_date : date
+    end_date : date
+    description : string
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity dependences as "Dependencias" {
+    id : Integer
+
+    name : string
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity items as "Elementos" {
+    id : Integer
+
+    code : string
+    name : string
+    quantity : integer
+    description : text
+    series : string
+    sicoin_gl : string
+    observations : text
+    unit_value : float
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+/' === Debiles === '/
+entity todos as "Tareas" {
+    id : Integer
+    id_user : Integer <<foreign>>
+
+    name : string
+    status : string
+    start_date : date
+    end_date : date
+    description : string
+    year : date
+    month : date
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity attendances as "Asistencias" {
+    id : Integer
+    id_user : Integer <<foreign>>
+
+    name : string
+    date : date
+    start_hour : number
+    end_hour : number
+    extra_hours : number
+    description : string
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity responsability_sheets as "Hojas de responsabilidad" {
+    id : Integer
+    created_by : Integer <<foreign>>
+    id_responsible : Integer <<foreign>>
+
+    series : string
+    total : float
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity detail_responsibility_sheets as "Detalles de hoja de responsabilidad" {
+    id : Integer
+    added_by : Integer <<foreign>>
+    id_item : Integer <<foreign>>
+    id_responsability_sheet : Integer <<foreign>>
+
+    quantity : float
+    subtotal : float
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity observation_responsibility_sheets as "Observaciones de hoja de responsabilidad" {
+    id : Integer
+    added_by : Integer <<foreign>>
+    id_responsability_sheet : Integer <<foreign>>
+
+    description : string
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+/' === Relaciones === '/
+users "  0..*  " }o--|{ "  1..*  " dependences
+users "  1..*  " ||--o| "  0..1  " events
+users "  1..*  " ||--o| "  0..1  " todos
+users "  1..*  " ||--o| "  0..1  " attendances
+users "  1..*  " ||--o| "  0..1  " responsability_sheets
+
+responsability_sheets "  1..*  " ||--o{ "  0..*  " detail_responsibility_sheets
+responsability_sheets "  1..*  " ||--o{ "  0..*  " observation_responsibility_sheets
+items "  1..*  " ||--o{ "  0..*  " detail_responsibility_sheets
+
+@enduml

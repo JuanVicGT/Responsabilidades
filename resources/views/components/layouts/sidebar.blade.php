@@ -12,7 +12,8 @@
             <x-mary-menu-separator />
 
             {{-- All slots --}}
-            <x-mary-list-item :item="$user" value="name" sub-value="cargo" no-separator no-hover class="-mx-2 !-my-2 rounded">
+            <x-mary-list-item :item="$user" value="name" sub-value="work_position" no-separator no-hover
+                class="-mx-2 !-my-2 rounded" link="{{ route('profile.edit') }}">
                 <x-slot:avatar>
                     <x-mary-avatar image="{{ $user->avatar ?? asset('assets/images/no_image.jpg') }}" class="!w-10" />
                 </x-slot:avatar>
@@ -22,15 +23,19 @@
                             <x-mary-button icon="o-cog-6-tooth" class="btn-circle" />
                         </x-slot:trigger>
 
-                        {{-- Or `wire:click.stop`  --}}
+                        <x-mary-menu-item title="{{ __('Profile') }}" icon="o-user"
+                            link="{{ route('profile.edit') }}" />
+                        <x-mary-menu-item title="{{ __('Change Theme') }}" icon="o-swatch" @click.stop=""
+                            @click="$dispatch('mary-toggle-theme')" />
+
+                        <x-mary-menu-separator />
+
                         <form method="POST" action="{{ route('logout') }}" class="flex">
                             @csrf
-                            <button type="submit">
+                            <button type="submit" class="w-full">
                                 <x-mary-menu-item title="{{ __('Logout') }}" icon="o-power" />
                             </button>
                         </form>
-                        <x-mary-menu-item title="{{ __('Change Theme') }}" icon="o-swatch" @click.stop=""
-                            @click="$dispatch('mary-toggle-theme')" />
                     </x-mary-dropdown>
                 </x-slot:actions>
             </x-mary-list-item>

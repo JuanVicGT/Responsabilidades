@@ -1,0 +1,42 @@
+@startchen "ER 01 - Entidad Relación general dek sitema"
+
+entity "Usuario" as user {
+    id : Integer <<key>>
+    "Fecha de nacimiento" as birthdate : Date
+    "Código" as code : String
+    "Foto" as avatar : String
+    "Nombre" as Name {
+        "Nombre" as name : String
+        "Apellido" as last_name : String
+    }
+    "Condiciones" as conditions {
+        "Es administrador" as admin : Boolean
+        "Activo" as status : Boolean
+    }
+    "Creación" as create {
+        "Fecha de creación" as created_at : TimeStamp
+        "Fecha de actualización" as updated_at : TimeStamp
+    }
+    "Contacto" as contact {
+        "Correo" as email : String
+        "Teléfono" as phone : String
+        "Dirección" as address : String
+    }
+    "Acceso" as access {
+        "Contraseña" as password : String
+        "Nombre de usuario" as username : String
+    }
+    "Labor" as work {
+        "Cargo" as work_position : String
+        "Reglón" as work_row : String
+        "Dependencia" as dependence : String
+    }
+}
+
+entity MOVIE {
+    Title
+    Released
+    Code
+}
+
+@endchen
