@@ -32,6 +32,8 @@ entity events as "Eventos" {
     status : string
     start_date : date
     end_date : date
+    start_hour : time
+    end_hour : time
     description : string
 
     created_at : timestamp
@@ -41,6 +43,7 @@ entity events as "Eventos" {
 entity dependences as "Dependencias" {
     id : Integer
 
+    code : string
     name : string
 
     created_at : timestamp

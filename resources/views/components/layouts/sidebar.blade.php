@@ -1,23 +1,33 @@
 <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-200">
 
     {{-- BRAND --}}
-    <div class="ml-5 pt-5">App</div>
+    <div class="mary-hideable">
+        <div class="pt-5 grid place-items-center w-full">
+            <a href="{{ route('dashboard') }}">
+                <x-application-logo class="w-24 h-24 text-gray-500" />
+            </a>
+            <span class="text-center mt-2">{{ __('Work Rights') }}</span>
+        </div>
+    </div>
 
     {{-- MENU --}}
-    <x-mary-menu activate-by-route active-bg-color="bg-sky-500/20">
+    <x-mary-menu activate-by-route active-bg-color="bg-sky-500/20" class="-mt-3">
         <x-mary-theme-toggle class="hidden" />
 
         {{-- User --}}
         @if ($user = auth()->user())
             <x-mary-menu-separator />
 
-            {{-- All slots --}}
+            {{-- Avatar, Name and Work_position --}}
             <x-mary-list-item :item="$user" value="name" sub-value="work_position" no-separator no-hover
                 class="-mx-2 !-my-2 rounded" link="{{ route('profile.edit') }}">
                 <x-slot:avatar>
-                    <x-mary-avatar image="{{ asset('storage/' . $user->avatar) ?? asset('assets/images/no_image.jpg') }}"
+                    <x-mary-avatar
+                        image="{{ asset('storage/' . $user->avatar) ?? asset('assets/images/no_image.jpg') }}"
                         class="!w-10" />
                 </x-slot:avatar>
+
+                {{-- Actions --}}
                 <x-slot:actions>
                     <x-mary-dropdown>
                         <x-slot:trigger no-separator no-hover class="!-my-2 rounded">
@@ -31,6 +41,7 @@
 
                         <x-mary-menu-separator />
 
+                        {{-- Logout --}}
                         <form method="POST" action="{{ route('logout') }}" class="flex">
                             @csrf
                             <button type="submit" class="w-full">
@@ -44,14 +55,34 @@
             <x-mary-menu-separator />
         @endif
 
-        {{-- Activates the menu item when a route matches the `link` property --}}
-        <x-mary-menu-item title="{{ __('home') }}" icon="o-home" link="{{ route('dashboard') }}" />
+        {{-- Sección General --}}
+        <x-mary-menu-item title="{{ __('Home') }}" icon="o-home" link="{{ route('dashboard') }}" />
+        <x-mary-menu-item title="{{ __('Events') }}" icon="o-calendar-days" link="###" />
+        <x-mary-menu-item title="{{ __('Todos') }}" icon="o-clipboard-document-check" link="###" />
+        <x-mary-menu-item title="{{ __('Attendances') }}" icon="o-clock" link="###" />
 
         {{-- Sección de RH --}}
+        <span class="text-lg font-bold flex items-center">
+            <hr class="w-full mx-4">
+            <p class="mary-hideable mr-2">{{ __('HR') }}</p>
+        </span>
+        <x-mary-menu-item title="{{ __('Dependencies') }}" icon="o-building-office-2" link="###" />
         <x-mary-menu-item title="{{ __('Collaborators') }}" icon="o-user-group" link="###" />
 
         {{-- Sección de responsabilidades --}}
-        <x-mary-menu-item title="{{ __('list-docs') }}" icon="c-clipboard-document-check" link="###" />
-        <x-mary-menu-item title="{{ __('settings') }}" icon="o-cog-6-tooth" link="###" />
+        <span class="text-lg font-bold flex items-center">
+            <hr class="w-full mx-4">
+            <p class="mary-hideable mr-2">{{ __('Responsibilities') }}</p>
+        </span>
+        <x-mary-menu-item title="{{ __('Items') }}" icon="o-rectangle-group" link="###" />
+        <x-mary-menu-item title="{{ __('Responsibility Sheets') }}" icon="c-clipboard-document-check" link="###" />
+
+        {{-- Sección de configuración --}}
+        <span class="text-lg font-bold flex items-center">
+            <hr class="w-full mx-4">
+            <p class="mary-hideable mr-2">{{ __('Others') }}</p>
+        </span>
+
+        <x-mary-menu-item title="{{ __('Settings') }}" icon="o-cog-6-tooth" link="###" />
     </x-mary-menu>
 </x-slot:sidebar>
