@@ -39,6 +39,13 @@
 
         {{-- The `$slot` goes here --}}
         <x-slot:content>
+            @if (session('alerts'))
+                @foreach (session('alerts') as $alert)
+                    <x-mary-alert title="{{ $alert->message }}" icon="{{ $alert->icon }}"
+                        class="mb-4 {{ $alert->type }}" shadow dismissible />
+                @endforeach
+            @endif
+
             {{ $slot }}
         </x-slot:content>
     </x-mary-main>

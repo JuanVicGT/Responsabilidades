@@ -39,5 +39,22 @@
     "Collaborators": "Colaboradores",
     "Welcome": "Bienvenido",
     "Work Rights": "Municipalidad de Santa María Chiquimula",
-    "Profile": "Perfil"
+    "Profile": "Perfil",
+    "Edit Profile": "Editar Perfil",
+    "Update your basic profile information.": "Actualiza los datos básicos de tu perfil.",
+    "Profile Information": "Información de Perfil",
+    "Last Name": "Apellido",
+    "Birthdate": "Fecha de Nacimiento",
+    "Phone": "Telefono",
+    "Save": "Guardar",
+    "Delete": "Eliminar",
+    "Delete Account": "Eliminar Cuenta",
+    "Address": "Dirección",
+    "Your profile has been updated!": "Tu perfil ha sido actualizado!",
+    "Your password has been updated!": "Tu contraseña ha sido actualizada!",
+    "Update Password": "Actualizar contraseña",
+    "Ensure your account is using a long, random password to stay secure.": "Asegúrate de que tu cuenta este usando una contraseña más larga, aleatoria para mantener la seguridad.",
+    "Current Password": "Contraseña Actual",
+    "New Password": "Nueva contraseña",
+    "New Password Confirmation": "Confirmación de Nueva contraseña"
 }

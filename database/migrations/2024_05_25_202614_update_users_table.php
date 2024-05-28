@@ -12,22 +12,26 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // Update columns
+            // === Update columns ===
             $table->string('email')->nullable()->change();
 
-            // Add new columns
-            $table->string('username', 30)->unique(); // required - login
-            $table->string('code', 30)->nullable();
+            // === Add new columns ===
+
+            // User can edit (extras: name, email and password)
+            $table->date('birthdate')->nullable();
             $table->string('phone', 20)->nullable();
             $table->string('last_name')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('address')->nullable();
+
+            // Only admin can edit
+            $table->string('code', 30)->nullable();
+            $table->string('username', 30)->unique(); // required - login
+            $table->string('work_row')->nullable();
             $table->string('work_position')->nullable();
             $table->string('dependence')->nullable();
-            $table->string('work_row')->nullable();
-            $table->date('birthdate')->nullable();
-            $table->string('avatar')->nullable();
             $table->boolean('admin')->nullable();
             $table->boolean('status')->nullable();
-            $table->string('address')->nullable();
         });
     }
 

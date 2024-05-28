@@ -15,7 +15,8 @@
             <x-mary-list-item :item="$user" value="name" sub-value="work_position" no-separator no-hover
                 class="-mx-2 !-my-2 rounded" link="{{ route('profile.edit') }}">
                 <x-slot:avatar>
-                    <x-mary-avatar image="{{ $user->avatar ?? asset('assets/images/no_image.jpg') }}" class="!w-10" />
+                    <x-mary-avatar image="{{ asset('storage/' . $user->avatar) ?? asset('assets/images/no_image.jpg') }}"
+                        class="!w-10" />
                 </x-slot:avatar>
                 <x-slot:actions>
                     <x-mary-dropdown>
