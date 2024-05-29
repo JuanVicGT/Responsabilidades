@@ -14,6 +14,7 @@ class TodoController extends Controller
     public function index()
     {
         //
+        return view('backend.todo.index');
     }
 
     /**
@@ -22,6 +23,7 @@ class TodoController extends Controller
     public function create()
     {
         //
+        return view('backend.todo.Create');
     }
 
     /**
@@ -38,6 +40,7 @@ class TodoController extends Controller
     public function show(Todo $todo)
     {
         //
+        return view('backend.todo.show', compact('todo'));
     }
 
     /**
@@ -46,6 +49,7 @@ class TodoController extends Controller
     public function edit(Todo $todo)
     {
         //
+        return view('backend.todo.Edit', compact('todo'));
     }
 
     /**

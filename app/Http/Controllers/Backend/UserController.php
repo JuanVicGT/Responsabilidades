@@ -14,6 +14,7 @@ class UserController extends Controller
     public function index()
     {
         //
+        return view('backend.user.Index');
     }
 
     /**
@@ -22,6 +23,7 @@ class UserController extends Controller
     public function create()
     {
         //
+        return view('backend.user.Create');
     }
 
     /**
@@ -38,6 +40,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         //
+        return view('backend.user.Show', compact('user'));
     }
 
     /**
@@ -46,6 +49,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         //
+        return view('backend.user.Edit', compact('user'));
     }
 
     /**

@@ -78,5 +78,13 @@
     "Currency": "Moneda",
     "Countries": "Paises",
     "Settings": "Configuraciones",
-    "Others": "Varios"
+    "Others": "Varios",
+    "Add New": "Nuevo",
+    "Add New Collaborator": "Nuevo Colaborador",
+    "Add New Dependency": "Nueva Dependencia",
+    "Return": "Regresar",
+    "Created successfully": "Registro creado correctamente",
+    "Updated successfully": "Registro actualizado correctamente",
+    "Deleted successfully": "Registro eliminado correctamente",
+    "Could not be created": "No se ha podido crear el registro"
 }

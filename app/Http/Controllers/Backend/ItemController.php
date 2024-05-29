@@ -14,6 +14,7 @@ class ItemController extends Controller
     public function index()
     {
         //
+        return view('backend.item.Index');
     }
 
     /**
@@ -22,6 +23,7 @@ class ItemController extends Controller
     public function create()
     {
         //
+        return view('backend.item.Create');
     }
 
     /**
@@ -38,6 +40,7 @@ class ItemController extends Controller
     public function show(Item $item)
     {
         //
+        return view('backend.item.Show', compact('item'));
     }
 
     /**
@@ -46,6 +49,7 @@ class ItemController extends Controller
     public function edit(Item $item)
     {
         //
+        return view('backend.item.Edit', compact('item'));
     }
 
     /**

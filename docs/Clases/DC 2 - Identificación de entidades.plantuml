@@ -29,9 +29,9 @@ entity events as "Eventos" {
     id_responsible : Integer <<foreign>>
 
     name : string
-    status : string
     start_date : date
     end_date : date
+    status : string
     start_hour : time
     end_hour : time
     description : string
@@ -58,7 +58,6 @@ entity items as "Elementos" {
     quantity : integer
     description : text
     series : string
-    sicoin_gl : string
     observations : text
     unit_value : float
 
@@ -110,9 +109,8 @@ entity responsability_sheets as "Hojas de responsabilidad" {
     updated_at : timestamp
 }
 
-entity detail_responsibility_sheets as "Detalles de hoja de responsabilidad" {
+entity line_responsibility_sheets as "Detalles de hoja de responsabilidad" {
     id : Integer
-    added_by : Integer <<foreign>>
     id_item : Integer <<foreign>>
     id_responsability_sheet : Integer <<foreign>>
 
@@ -128,6 +126,7 @@ entity observation_responsibility_sheets as "Observaciones de hoja de responsabi
     added_by : Integer <<foreign>>
     id_responsability_sheet : Integer <<foreign>>
 
+    name : string
     description : string
 
     created_at : timestamp

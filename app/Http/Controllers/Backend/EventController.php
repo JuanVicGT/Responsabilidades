@@ -14,6 +14,7 @@ class EventController extends Controller
     public function index()
     {
         //
+        return view('backend.event.Index');
     }
 
     /**
@@ -22,6 +23,7 @@ class EventController extends Controller
     public function create()
     {
         //
+        return view('backend.event.Create');
     }
 
     /**
@@ -38,6 +40,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         //
+        return view('backend.event.Show', compact('event'));
     }
 
     /**
@@ -46,6 +49,7 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         //
+        return view('backend.event.Edit', compact('event'));
     }
 
     /**

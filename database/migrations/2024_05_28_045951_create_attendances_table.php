@@ -14,6 +14,15 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+
+            $table->string('name')->nullable();
+            $table->date('date')->nullable();
+            $table->time('start_hour')->nullable();
+            $table->time('end_hour')->nullable();
+            $table->float('extra_hours')->nullable();
+            $table->string('description')->nullable();
+
+            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
         });
     }
 

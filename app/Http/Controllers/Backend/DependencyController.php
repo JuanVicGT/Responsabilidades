@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dependency;
+use App\Utils\Enums\AlertType;
 use Illuminate\Http\Request;
 
 class DependencyController extends Controller
@@ -14,6 +15,7 @@ class DependencyController extends Controller
     public function index()
     {
         //
+        return view('backend.dependency.Index');
     }
 
     /**
@@ -22,6 +24,7 @@ class DependencyController extends Controller
     public function create()
     {
         //
+        return view('backend.dependency.Create');
     }
 
     /**
@@ -30,6 +33,23 @@ class DependencyController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'code' => ['required', 'string', 'max:30'],
+            'name' => ['required', 'string', 'max:150'],
+        ]);
+
+        $dependency = new Dependency();
+        $dependency->code = $request->code;
+        $dependency->name = $request->name;
+        $save = $dependency->save();
+
+        if (!$save)
+            $this->addAlert(AlertType::ERROR, __('Could not be created'));
+
+        if ($save)
+            $this->addAlert(AlertType::SUCCESS, __('Created successfully'));
+
+        return redirect()->route('dependency.create')->with('alerts', $this->getAlerts());
     }
 
     /**
@@ -38,6 +58,7 @@ class DependencyController extends Controller
     public function show(Dependency $dependency)
     {
         //
+        return view('backend.dependency.Show', compact('dependency'));
     }
 
     /**
@@ -46,6 +67,7 @@ class DependencyController extends Controller
     public function edit(Dependency $dependency)
     {
         //
+        return view('backend.dependency.Edit', compact('dependency'));
     }
 
     /**

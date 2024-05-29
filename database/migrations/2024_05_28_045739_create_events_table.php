@@ -15,16 +15,15 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->string('name');
+            $table->string('name', 150);
             $table->date('start_date');
-            $table->string('status')->nullable();
             $table->date('end_date')->nullable();
+            $table->string('status', 20)->nullable();
             $table->date('start_hour')->nullable();
             $table->date('end_hour')->nullable();
             $table->string('description')->nullable();
-            
-            $table->int('id_responsible')->nullable();
-            $table->foreignId('id_responsible')->nullable()->constrained('responsible')->onDelete('cascade');
+
+            $table->foreignId('id_responsible')->nullable()->constrained('users')->onDelete('cascade');
         });
     }
 

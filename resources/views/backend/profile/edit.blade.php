@@ -1,5 +1,11 @@
 <x-layouts.app>
-    <x-mary-header title="{{ $user->name }}" subtitle="{{ __('Edit Profile') }}" />
+    @section('tab-title')
+        {{ __('Edit Profile') }}
+    @endsection
+
+    @section('content-header')
+        <x-mary-header title="{{ $user->name }}" subtitle="{{ __('Edit Profile') }}" class="mb-4"/>
+    @endsection
 
     <!-- MARY UI BASIC INFORMATION FORM -->
     <livewire:profile.update-profile-information-form :user="$user" />
@@ -11,6 +17,6 @@
         </h2>
     </x-slot>
 
-    @include('profile.partials.update-password-form')
+    @include('backend.profile.partials.update-password-form')
 
 </x-layouts.app>

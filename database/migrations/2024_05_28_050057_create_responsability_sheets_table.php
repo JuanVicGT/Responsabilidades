@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('responsability_sheets', function (Blueprint $table) {
             $table->id();
+
+            $table->string('series')->nullable();
+            $table->float('total')->nullable();
+
+            $table->foreignId('id_responsible')->constrained('users')->onDelete('cascade');
+            $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

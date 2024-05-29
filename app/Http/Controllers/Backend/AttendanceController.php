@@ -14,6 +14,7 @@ class AttendanceController extends Controller
     public function index()
     {
         //
+        return view('backend.attendance.Index');
     }
 
     /**
@@ -22,6 +23,7 @@ class AttendanceController extends Controller
     public function create()
     {
         //
+        return view('backend.attendance.Create');
     }
 
     /**
@@ -38,6 +40,7 @@ class AttendanceController extends Controller
     public function show(Attendance $attendance)
     {
         //
+        return view('backend.attendance.Show', compact('attendance'));
     }
 
     /**
@@ -46,6 +49,7 @@ class AttendanceController extends Controller
     public function edit(Attendance $attendance)
     {
         //
+        return view('backend.attendance.Edit', compact('attendance'));
     }
 
     /**

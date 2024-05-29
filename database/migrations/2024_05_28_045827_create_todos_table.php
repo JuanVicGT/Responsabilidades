@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
+
+            $table->string('name', 150)->nullable();
+            $table->string('status', 20)->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->string('description')->nullable();
+            $table->date('year')->nullable();
+            $table->date('month')->nullable();
+
+            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

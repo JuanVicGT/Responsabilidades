@@ -7,7 +7,7 @@
         <div class="max-w-md w-full mx-auto">
             <div class="flex justify-center pb-4">
                 <a href="/">
-                    <x-application-logo class="w-32 h-32 text-gray-500" />
+                    <x-application-logo class="w-32 h-32 text-gray-500 object-contain" />
                 </a>
             </div>
 
