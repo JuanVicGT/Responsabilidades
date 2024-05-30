@@ -86,5 +86,12 @@
     "Created successfully": "Registro creado correctamente",
     "Updated successfully": "Registro actualizado correctamente",
     "Deleted successfully": "Registro eliminado correctamente",
-    "Could not be created": "No se ha podido crear el registro"
+    "Could not be created": "No se ha podido crear el registro",
+    "Are you sure?": "¿Está seguro?",
+    "Press confirm button to delete": "Pulsa el botón de confirmación para eliminar",
+    "Confirm": "Confirmar",
+    "Cancel": "Cancelar",
+    "Deleted Successfully": "Eliminado correctamente",
+    "Could not be deleted": "No se ha podido eliminar el registro",
+    "Showing :from - :to of :total results": "Mostrando :from-:to de :total registros"
 }

@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend;
 
 Route::get('/', function () {
-    redirect('/dashboard');
-});
+    return redirect('/dashboard');
+})->middleware(['auth', 'verified']);
 
 Route::get('/dashboard', function () {
     return view('backend.dashboard');
