@@ -12,4 +12,8 @@
         </x-mary-header>
     @endsection
 
+    <div>
+        <livewire:backend.dependency.dependency-table />
+    </div>
+
 </x-layouts.app>
