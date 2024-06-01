@@ -93,5 +93,8 @@
     "Cancel": "Cancelar",
     "Deleted Successfully": "Eliminado correctamente",
     "Could not be deleted": "No se ha podido eliminar el registro",
-    "Showing :from - :to of :total results": "Mostrando :from-:to de :total registros"
+    "search": "Buscar",
+    "Showing :init to :end of :count results": "Mostrando :init a :end de :count resultados",
+    "name": "Nombre",
+    "Edit Dependency": "Editar Dependencia"
 }

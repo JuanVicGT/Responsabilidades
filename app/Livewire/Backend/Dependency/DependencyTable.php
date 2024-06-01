@@ -40,8 +40,8 @@ class DependencyTable extends Component
             $this->search,
 
             fn ($query) =>
-            $query->where('nombre', 'like', "%{$this->search}%")
-                ->orWhere('dpi', 'like', "%{$this->search}%")
+            $query->where('code', 'like', "%{$this->search}%")
+                ->orWhere('name', 'like', "%{$this->search}%")
         )
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->pagination);

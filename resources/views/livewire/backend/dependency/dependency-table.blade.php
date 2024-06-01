@@ -7,7 +7,9 @@
     </div>
 
     {{-- You can use any `$wire.METHOD` on `@row-click` --}}
-    <x-mary-table :headers="$headers" :rows="$rows" with-pagination :sort-by="$sortBy" class="pb-4">
+    <x-mary-table :headers="$headers" :rows="$rows" with-pagination :sort-by="$sortBy" class="pb-4" striped
+        link="Dependency/Edit/{id}">
+
         {{-- Overrides headers --}}
         @scope('header_id', $header)
             <h2 class="text-xl font-bold inline">

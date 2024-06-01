@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Dependency;
 use App\Utils\Enums\AlertType;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class DependencyController extends Controller
 {
@@ -15,7 +16,7 @@ class DependencyController extends Controller
     public function index()
     {
         //
-        return view('backend.dependency.Index');
+        return view('backend.dependency.IndexDependency');
     }
 
     /**
@@ -24,7 +25,7 @@ class DependencyController extends Controller
     public function create()
     {
         //
-        return view('backend.dependency.Create');
+        return view('backend.dependency.CreateDependency');
     }
 
     /**
@@ -34,7 +35,7 @@ class DependencyController extends Controller
     {
         //
         $request->validate([
-            'code' => ['required', 'string', 'max:30'],
+            'code' => ['required', 'string', 'max:30', Rule::unique(Dependency::class)],
             'name' => ['required', 'string', 'max:150'],
         ]);
 
@@ -58,24 +59,43 @@ class DependencyController extends Controller
     public function show(Dependency $dependency)
     {
         //
-        return view('backend.dependency.Show', compact('dependency'));
+        return view('backend.dependency.ShowDependency', compact('dependency'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Dependency $dependency)
+    public function edit(int $id)
     {
         //
-        return view('backend.dependency.Edit', compact('dependency'));
+        $dependency = Dependency::find($id);
+        return view('backend.dependency.EditDependency', compact('dependency'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Dependency $dependency)
+    public function update(Request $request)
     {
         //
+        $request->validate([
+            'id' => ['required'],
+            'code' => ['required', 'string', 'max:30'],
+            'name' => ['required', 'string', 'max:150'],
+        ]);
+
+        $dependency = Dependency::find($request->id);
+        $dependency->code = $request->code;
+        $dependency->name = $request->name;
+        $save = $dependency->save();
+
+        if (!$save)
+            $this->addAlert(AlertType::ERROR, __('Could not be updated'));
+
+        if ($save)
+            $this->addAlert(AlertType::SUCCESS, __('Updated successfully'));
+
+        return redirect()->route('dependency.edit', $request->id)->with('alerts', $this->getAlerts());
     }
 
     /**
