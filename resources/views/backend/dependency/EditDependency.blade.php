@@ -6,7 +6,7 @@
     @section('content-header')
         <x-mary-header title="{{ __('Edit Dependency') }}" subtitle="{{ $dependency->name }}">
             <x-slot:actions>
-                <x-mary-button label="{{ __('Return') }}" icon="o-arrow-uturn-left" class="btn-info"
+                <x-mary-button label="{{ __('Return') }}" icon="o-arrow-uturn-left" class="btn-accent dark:btn-info"
                     link="{{ route('dependency.index') }}" />
                 <x-mary-button label="{{ __('Add New') }}" icon="o-plus" class="btn-success"
                     link="{{ route('dependency.create') }}" />

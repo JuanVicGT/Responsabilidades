@@ -7,16 +7,11 @@
     </div>
 
     {{-- You can use any `$wire.METHOD` on `@row-click` --}}
-    <x-mary-table :headers="$headers" :rows="$rows" with-pagination :sort-by="$sortBy" class="pb-4" striped
-        link="Dependency/Edit/{id}">
+    <x-mary-table :headers="$headers" :rows="$permissions" with-pagination :sort-by="$sortBy" class="pb-4" striped
+        link="Role/Edit/{id}">
 
         {{-- Overrides headers --}}
         @scope('header_id', $header)
-            <h2 class="text-xl font-bold inline">
-                {{ $header['label'] }}
-            </h2>
-        @endscope
-        @scope('header_code', $header)
             <h2 class="text-xl font-bold inline">
                 {{ $header['label'] }}
             </h2>
@@ -26,10 +21,16 @@
                 {{ $header['label'] }}
             </h2>
         @endscope
+        
+        @scope('cell_name', $header)
+            <h2 class="text-xl font-bold inline">
+                {{ $header['label'] }}
+            </h2>
+        @endscope
 
-        @scope('actions', $row)
+        @scope('actions', $permission)
             <x-mary-button icon="o-trash" spinner class="btn-sm btn-error"
-                wire:click="showDeleteModal({{ $row->id }})" />
+                wire:click="showDeleteModal({{ $permission->id }})" />
         @endscope
 
     </x-mary-table>

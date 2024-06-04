@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Livewire\Backend\Dependency;
+namespace App\Livewire\Backend\User;
 
-use App\Models\Dependency;
+use App\Models\User;
 use Livewire\Component;
-use Mary\Traits\Toast;
 use Livewire\WithPagination;
 use App\Utils\Alerts;
+use Mary\Traits\Toast;
 use Illuminate\Support\Facades\Gate;
 
-class DependencyTable extends Component
+class UserTable extends Component
 {
     use Toast;
     use Alerts;
@@ -24,7 +24,7 @@ class DependencyTable extends Component
     // Filters
     public int $pagination = 10;
     public string $search = '';
-    public array $sortBy = ['column' => 'code', 'direction' => 'desc'];
+    public array $sortBy = ['column' => 'name', 'direction' => 'desc'];
 
     protected function getTableHeaders(): array
     {
@@ -32,18 +32,20 @@ class DependencyTable extends Component
             ['key' => 'id', 'label' => '#', 'class' => 'bg-red-500/20 w-1'],
             ['key' => 'code', 'label' => __('Code')],
             ['key' => 'name', 'label' => __('Name')],
+            ['key' => 'is_active', 'label' => __('Is Active')],
         ];
     }
 
     protected function getTableRows()
     {
-        return Dependency::when(
-            $this->search,
+        return User::whereNull('is_admin')
+            ->when(
+                $this->search,
 
-            fn ($query) =>
-            $query->where('code', 'like', "%{$this->search}%")
-                ->orWhere('name', 'like', "%{$this->search}%")
-        )
+                fn ($query) =>
+                $query->where('code', 'like', "%{$this->search}%")
+                    ->orWhere('name', 'like', "%{$this->search}%")
+            )
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->pagination);
     }
@@ -51,7 +53,7 @@ class DependencyTable extends Component
     public function render()
     {
         return view(
-            'livewire.backend.dependency.dependency-table',
+            'livewire.backend.user.user-table',
             [
                 'rows' => $this->getTableRows(),
                 'headers' => $this->getTableHeaders(),
@@ -67,9 +69,9 @@ class DependencyTable extends Component
 
     public function delete()
     {
-        $dependency = Dependency::find($this->deleteId);
-        Gate::authorize('delete', $dependency);
-        $hasDeleted = $dependency->delete();
+        $collaborater = User::find($this->deleteId);
+        Gate::authorize('delete', $collaborater);
+        $hasDeleted = $collaborater->delete();
 
         $this->deleteId = null;
         $this->deleteModal = false;

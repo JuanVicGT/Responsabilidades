@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Livewire\Backend\Dependency;
+namespace App\Livewire\Backend\Permission;
 
-use App\Models\Dependency;
+use App\Models\Permission;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Mary\Traits\Toast;
 use Livewire\WithPagination;
 use App\Utils\Alerts;
-use Illuminate\Support\Facades\Gate;
 
-class DependencyTable extends Component
+class PermissionTable extends Component
 {
     use Toast;
     use Alerts;
@@ -24,25 +24,23 @@ class DependencyTable extends Component
     // Filters
     public int $pagination = 10;
     public string $search = '';
-    public array $sortBy = ['column' => 'code', 'direction' => 'desc'];
+    public array $sortBy = ['column' => 'name', 'direction' => 'desc'];
 
     protected function getTableHeaders(): array
     {
         return [
             ['key' => 'id', 'label' => '#', 'class' => 'bg-red-500/20 w-1'],
-            ['key' => 'code', 'label' => __('Code')],
             ['key' => 'name', 'label' => __('Name')],
         ];
     }
 
     protected function getTableRows()
     {
-        return Dependency::when(
+        return Permission::when(
             $this->search,
 
             fn ($query) =>
-            $query->where('code', 'like', "%{$this->search}%")
-                ->orWhere('name', 'like', "%{$this->search}%")
+            $query->where('name', 'like', "%{$this->search}%")
         )
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->pagination);
@@ -51,7 +49,7 @@ class DependencyTable extends Component
     public function render()
     {
         return view(
-            'livewire.backend.dependency.dependency-table',
+            'livewire.backend.permission.permission-table',
             [
                 'rows' => $this->getTableRows(),
                 'headers' => $this->getTableHeaders(),
@@ -67,9 +65,9 @@ class DependencyTable extends Component
 
     public function delete()
     {
-        $dependency = Dependency::find($this->deleteId);
-        Gate::authorize('delete', $dependency);
-        $hasDeleted = $dependency->delete();
+        $permission = Permission::find($this->deleteId);
+        Gate::authorize('delete', $permission);
+        $hasDeleted = $permission->delete();
 
         $this->deleteId = null;
         $this->deleteModal = false;

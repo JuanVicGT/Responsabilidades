@@ -28,7 +28,7 @@ class User extends Authenticatable
         'code',
         'work_row',
         'work_position',
-        'dependence',
+        'dependency',
         'admin',
         'status',
         'password',

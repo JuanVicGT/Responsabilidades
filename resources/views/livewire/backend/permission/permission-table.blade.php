@@ -8,15 +8,10 @@
 
     {{-- You can use any `$wire.METHOD` on `@row-click` --}}
     <x-mary-table :headers="$headers" :rows="$rows" with-pagination :sort-by="$sortBy" class="pb-4" striped
-        link="Dependency/Edit/{id}">
+        link="Permission/Edit/{id}">
 
         {{-- Overrides headers --}}
         @scope('header_id', $header)
-            <h2 class="text-xl font-bold inline">
-                {{ $header['label'] }}
-            </h2>
-        @endscope
-        @scope('header_code', $header)
             <h2 class="text-xl font-bold inline">
                 {{ $header['label'] }}
             </h2>

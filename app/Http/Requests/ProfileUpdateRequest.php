@@ -20,6 +20,7 @@ class ProfileUpdateRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'last_name' => ['nullable', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:20'],
+            'birthdate' => ['nullable', 'date'],
             'address' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'image' => ['nullable', File::image()->min('1kb')->max('5mb')->dimensions(Rule::dimensions()->maxWidth(500)->maxHeight(500))],

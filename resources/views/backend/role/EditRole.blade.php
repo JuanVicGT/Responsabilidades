@@ -1,31 +1,32 @@
 <x-layouts.app>
     @section('tab-title')
-        {{ __('Add New') }}
+        {{ __('Edit Role') }}
     @endsection
 
     @section('content-header')
-        <x-mary-header title="{{ __('Add New Dependency') }}">
+        <x-mary-header title="{{ __('Edit Role') }}" subtitle="{{ $role->name }}">
             <x-slot:actions>
                 <x-mary-button label="{{ __('Return') }}" icon="o-arrow-uturn-left" class="btn-accent dark:btn-info"
-                    link="{{ route('dependency.index') }}" />
+                    link="{{ route('role.index') }}" />
+                <x-mary-button label="{{ __('Add New') }}" icon="o-plus" class="btn-success"
+                    link="{{ route('role.create') }}" />
             </x-slot:actions>
         </x-mary-header>
     @endsection
 
-    <x-mary-card shadow>
-        <x-mary-form method="POST" action="{{ route('dependency.store') }}" x-data="{ submitButtonDisabled: false }"
+    <x-mary-card shadow class="!p-0">
+
+        <x-mary-form method="POST" action="{{ route('role.update') }}" x-data="{ submitButtonDisabled: false }"
             x-on:submit="submitButtonDisabled = true">
             @csrf
+            @method('patch')
 
-            <div class="grid sm:grid-cols-2 gap-4">
-                <div>
-                    <x-mary-input label="{{ __('Code') }}" type="text" name='code' required autofocus
-                        value="{{ old('code') }}" />
-                    <x-input-error class="mt-2" :messages="$errors->get('code')" />
-                </div>
+            <input type="hidden" name="id" value="{{ $role->id }}">
+
+            <div class="grid gap-4">
                 <div>
                     <x-mary-input label="{{ __('Name') }}" type="text" name='name'
-                        value="{{ old('name') }}" />
+                        value="{{ old('name', $role->name) }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('name')" />
                 </div>
             </div>

@@ -4,10 +4,10 @@
     @endsection
 
     @section('content-header')
-        <x-mary-header title="{{ __('Add New Dependency') }}">
+        <x-mary-header title="{{ __('Add New Role') }}">
             <x-slot:actions>
                 <x-mary-button label="{{ __('Return') }}" icon="o-arrow-uturn-left" class="btn-accent dark:btn-info"
-                    link="{{ route('dependency.index') }}" />
+                    link="{{ route('role.index') }}" />
             </x-slot:actions>
         </x-mary-header>
     @endsection
@@ -17,7 +17,7 @@
             x-on:submit="submitButtonDisabled = true">
             @csrf
 
-            <div class="grid sm:grid-cols-2 gap-4">
+            <div class="grid md:grid-cols-2 gap-4">
                 <div>
                     <x-mary-input label="{{ __('Code') }}" type="text" name='code' required autofocus
                         value="{{ old('code') }}" />

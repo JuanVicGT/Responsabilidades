@@ -8,7 +8,7 @@
 
     {{-- You can use any `$wire.METHOD` on `@row-click` --}}
     <x-mary-table :headers="$headers" :rows="$rows" with-pagination :sort-by="$sortBy" class="pb-4" striped
-        link="Dependency/Edit/{id}">
+        link="User/Edit/{id}">
 
         {{-- Overrides headers --}}
         @scope('header_id', $header)
@@ -25,6 +25,19 @@
             <h2 class="text-xl font-bold inline">
                 {{ $header['label'] }}
             </h2>
+        @endscope
+        @scope('header_is_active', $header)
+            <h2 class="text-xl font-bold inline">
+                {{ $header['label'] }}
+            </h2>
+        @endscope
+
+        @scope('cell_is_active', $row)
+            @if ($row->is_active)
+                SI
+            @else
+                NO  
+            @endif
         @endscope
 
         @scope('actions', $row)

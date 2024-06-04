@@ -8,20 +8,23 @@ use Illuminate\Auth\Access\Response;
 
 class TodoPolicy
 {
+    /** @var string */
+    private $modelName = 'todo';
+
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function index(User $user): bool
     {
-        //
+        return $user->is_admin || $user->hasPermissionTo('index_' . $this->modelName);
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Todo $todo): bool
+    public function show(User $user, Todo $todo): bool
     {
-        //
+        return $user->is_admin || $user->hasPermissionTo('show_' . $this->modelName);
     }
 
     /**
@@ -29,15 +32,15 @@ class TodoPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->is_admin || $user->hasPermissionTo('create_' . $this->modelName);
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Todo $todo): bool
+    public function edit(User $user, Todo $todo): bool
     {
-        //
+        return $user->is_admin || $user->hasPermissionTo('edit_' . $this->modelName);
     }
 
     /**
@@ -45,22 +48,6 @@ class TodoPolicy
      */
     public function delete(User $user, Todo $todo): bool
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Todo $todo): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Todo $todo): bool
-    {
-        //
+        return $user->is_admin || $user->hasPermissionTo('delete_' . $this->modelName);
     }
 }

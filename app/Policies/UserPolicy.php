@@ -2,14 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\Item;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
-class ItemPolicy
+class UserPolicy
 {
     /** @var string */
-    private $modelName = 'item';
+    private $modelName = 'user';
 
     /**
      * Determine whether the user can view any models.
@@ -22,9 +20,9 @@ class ItemPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function show(User $user, Item $item): bool
+    public function view(User $user, User $model): bool
     {
-        return $user->is_admin || $user->hasPermissionTo('show_' . $this->modelName);
+        return $user->is_admin || $user->hasPermissionTo('view_' . $this->modelName);
     }
 
     /**
@@ -38,7 +36,7 @@ class ItemPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function edit(User $user, Item $item): bool
+    public function edit(User $user, User $model): bool
     {
         return $user->is_admin || $user->hasPermissionTo('edit_' . $this->modelName);
     }
@@ -46,7 +44,7 @@ class ItemPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Item $item): bool
+    public function delete(User $user, User $model): bool
     {
         return $user->is_admin || $user->hasPermissionTo('delete_' . $this->modelName);
     }

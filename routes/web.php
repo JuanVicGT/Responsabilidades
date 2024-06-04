@@ -25,6 +25,34 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('/Delete', 'destroy')->name('destroy');
         });
 
+    Route::controller(Backend\PermissionController::class)->prefix('/Permission')->name('permission.')
+        ->group(function () {
+            // Views
+            Route::get('/', 'index')->name('index');
+            Route::get('/Create', 'create')->name('create');
+            Route::get('/Edit/{id}', 'edit')->name('edit');
+            Route::get('/Show/{id}', 'show')->name('show');
+
+            // Actions
+            Route::post('/Store', 'store')->name('store');
+            Route::patch('/Update', 'update')->name('update');
+            Route::delete('/Delete', 'delete')->name('destroy');
+        });
+
+    Route::controller(Backend\RoleController::class)->prefix('/Role')->name('role.')
+        ->group(function () {
+            // Views
+            Route::get('/', 'index')->name('index');
+            Route::get('/Create', 'create')->name('create');
+            Route::get('/Edit/{id}', 'edit')->name('edit');
+            Route::get('/Show/{id}', 'show')->name('show');
+
+            // Actions
+            Route::post('/Store', 'store')->name('store');
+            Route::patch('/Update', 'update')->name('update');
+            Route::delete('/Delete', 'delete')->name('destroy');
+        });
+
     Route::controller(Backend\UserController::class)->prefix('/User')->name('user.')
         ->group(function () {
             // Views

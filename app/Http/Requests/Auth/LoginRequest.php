@@ -43,7 +43,7 @@ class LoginRequest extends FormRequest
         $this->ensureIsNotRateLimited();
 
         // Verificar si hay algún usuario con status true
-        $userActive = User::where('username', $this->username)->where('status', true)->exists();
+        $userActive = User::where('username', $this->username)->where('is_active', true)->exists();
 
         if (!$userActive || !Auth::attempt($this->only('username', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());

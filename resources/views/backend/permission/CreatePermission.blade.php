@@ -4,25 +4,20 @@
     @endsection
 
     @section('content-header')
-        <x-mary-header title="{{ __('Add New Dependency') }}">
+        <x-mary-header title="{{ __('Add New Permission') }}">
             <x-slot:actions>
                 <x-mary-button label="{{ __('Return') }}" icon="o-arrow-uturn-left" class="btn-accent dark:btn-info"
-                    link="{{ route('dependency.index') }}" />
+                    link="{{ route('permission.index') }}" />
             </x-slot:actions>
         </x-mary-header>
     @endsection
 
     <x-mary-card shadow>
-        <x-mary-form method="POST" action="{{ route('dependency.store') }}" x-data="{ submitButtonDisabled: false }"
+        <x-mary-form method="POST" action="{{ route('permission.store') }}" x-data="{ submitButtonDisabled: false }"
             x-on:submit="submitButtonDisabled = true">
             @csrf
 
-            <div class="grid sm:grid-cols-2 gap-4">
-                <div>
-                    <x-mary-input label="{{ __('Code') }}" type="text" name='code' required autofocus
-                        value="{{ old('code') }}" />
-                    <x-input-error class="mt-2" :messages="$errors->get('code')" />
-                </div>
+            <div class="grid gap-4">
                 <div>
                     <x-mary-input label="{{ __('Name') }}" type="text" name='name'
                         value="{{ old('name') }}" />

@@ -96,5 +96,11 @@
     "search": "Buscar",
     "Showing :init to :end of :count results": "Mostrando :init a :end de :count resultados",
     "name": "Nombre",
-    "Edit Dependency": "Editar Dependencia"
+    "Edit Dependency": "Editar Dependencia",
+    "Dependency": "Dependencia",
+    "Select Dependency": "Seleccione una dependencia",
+    "Work Position": "Cargo",
+    "Work Row": "Reglón",
+    "Is Active": "Se encuentra activo",
+    "Is Admin": "Es administrador"
 }

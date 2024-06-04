@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dependency\StoreDependencyRequest;
+use App\Http\Requests\Dependency\UpdateDependencyRequest;
 use App\Models\Dependency;
 use App\Utils\Enums\AlertType;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Gate;
+
 
 class DependencyController extends Controller
 {
@@ -15,7 +17,8 @@ class DependencyController extends Controller
      */
     public function index()
     {
-        //
+        Gate::authorize('index', Dependency::class);
+
         return view('backend.dependency.IndexDependency');
     }
 
@@ -24,21 +27,16 @@ class DependencyController extends Controller
      */
     public function create()
     {
-        //
+        Gate::authorize('create', Dependency::class);
+
         return view('backend.dependency.CreateDependency');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreDependencyRequest $request)
     {
-        //
-        $request->validate([
-            'code' => ['required', 'string', 'max:30', Rule::unique(Dependency::class)],
-            'name' => ['required', 'string', 'max:150'],
-        ]);
-
         $dependency = new Dependency();
         $dependency->code = $request->code;
         $dependency->name = $request->name;
@@ -58,7 +56,8 @@ class DependencyController extends Controller
      */
     public function show(Dependency $dependency)
     {
-        //
+        Gate::authorize('show', $dependency);
+
         return view('backend.dependency.ShowDependency', compact('dependency'));
     }
 
@@ -67,23 +66,17 @@ class DependencyController extends Controller
      */
     public function edit(int $id)
     {
-        //
         $dependency = Dependency::find($id);
+        Gate::authorize('edit', $dependency);
+
         return view('backend.dependency.EditDependency', compact('dependency'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(UpdateDependencyRequest $request)
     {
-        //
-        $request->validate([
-            'id' => ['required'],
-            'code' => ['required', 'string', 'max:30'],
-            'name' => ['required', 'string', 'max:150'],
-        ]);
-
         $dependency = Dependency::find($request->id);
         $dependency->code = $request->code;
         $dependency->name = $request->name;

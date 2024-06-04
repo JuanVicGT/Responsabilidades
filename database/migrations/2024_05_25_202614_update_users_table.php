@@ -30,9 +30,9 @@ return new class extends Migration
             $table->string('username', 30)->unique(); // required - login
             $table->string('work_row', 30)->nullable();
             $table->string('work_position', 50)->nullable();
-            $table->string('dependence', 50)->nullable();
-            $table->boolean('admin')->nullable();
-            $table->boolean('status')->nullable();
+            $table->string('dependency', 50)->nullable();
+            $table->boolean('is_admin')->nullable();
+            $table->boolean('is_active')->nullable();
         });
     }
 

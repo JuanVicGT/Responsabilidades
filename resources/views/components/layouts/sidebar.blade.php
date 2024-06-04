@@ -69,6 +69,8 @@
             <hr class="w-full mx-4">
             <p class="mary-hideable mr-2">{{ __('HR') }}</p>
         </span>
+        <x-mary-menu-item title="{{ __('Roles') }}" icon="o-user-plus" link="{{ route('role.index') }}" />
+        <x-mary-menu-item title="{{ __('Permissions') }}" icon="o-lock-open" link="{{ route('permission.index') }}" />
         <x-mary-menu-item title="{{ __('Dependencies') }}" icon="o-building-office-2"
             link="{{ route('dependency.index') }}" />
         <x-mary-menu-item title="{{ __('Collaborators') }}" icon="o-user-group" link="{{ route('user.index') }}" />
