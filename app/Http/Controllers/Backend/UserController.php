@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\Dependency;
+use App\Models\Role;
 use App\Models\User;
 use App\Utils\Enums\AlertType;
 use Illuminate\Support\Facades\Gate;
@@ -30,7 +31,8 @@ class UserController extends Controller
     {
         //
         $dependencies = Dependency::all();
-        return view('backend.user.CreateUser', compact('dependencies'));
+        $roles = Role::all();
+        return view('backend.user.CreateUser', compact('dependencies', 'roles'));
     }
 
     /**
@@ -39,7 +41,6 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         //
-
         $user = new User();
         $user->code = $request->code;
         $user->username = $request->username;
@@ -63,8 +64,10 @@ class UserController extends Controller
         if (!$save)
             $this->addAlert(AlertType::ERROR, __('Could not be stored'));
 
-        if ($save)
+        if ($save) {
+            $user->assignRole($request->role);
             $this->addAlert(AlertType::SUCCESS, __('Stored successfully, password: ' . $password));
+        }
 
         return redirect()->route('user.create')->with('alerts', $this->getAlerts());
     }
@@ -85,7 +88,10 @@ class UserController extends Controller
     {
         //
         $user = User::find($id);
-        return view('backend.user.EditUser', compact('user'));
+        $roles = Role::all();
+        $dependencies = Dependency::all();
+        $currentRole = $user->roles()->first();
+        return view('backend.user.EditUser', compact('user', 'roles', 'dependencies', 'currentRole'));
     }
 
     /**
@@ -93,7 +99,35 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request)
     {
-        //
+        $user = User::find($request->id);
+        $user->code = $request->code;
+        $user->username = $request->username;
+        $user->name = $request->name;
+        $user->last_name = $request->last_name;
+        $user->work_position = $request->work_position;
+        $user->work_row = $request->work_row;
+        $user->dependency = $request->dependency;
+        $user->phone = $request->phone;
+        $user->email = $request->email;
+        $user->birthdate = $request->birthdate;
+        $user->address = $request->address;
+        $user->is_admin = $request->is_admin;
+        $user->is_active = $request->is_active;
+
+        $password = Str::random(8);
+        $user->password = Hash::make($password);
+
+        $save = $user->save();
+
+        if (!$save)
+            $this->addAlert(AlertType::ERROR, __('Could not be stored'));
+
+        if ($save) {
+            $user->syncRoles([$request->role]);
+            $this->addAlert(AlertType::SUCCESS, __('Stored successfully, password: ' . $password));
+        }
+
+        return redirect()->route('user.create')->with('alerts', $this->getAlerts());
     }
 
     /**

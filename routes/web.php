@@ -3,10 +3,11 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend;
+use Illuminate\Support\Facades\Redirect;
 
 // Dashboard
 Route::get('/', function () {
-    return view('backend.dashboard');
+    return Redirect::to('/dashboard');
 })->middleware(['auth', 'verified']);
 
 Route::get('/dashboard', function () {

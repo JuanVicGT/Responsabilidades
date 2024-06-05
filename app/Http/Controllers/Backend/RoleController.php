@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Utils\Enums\AlertType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class RoleController extends Controller
 {
@@ -35,11 +36,11 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['name' => ['required', 'string', 'max:255'],]);
+        $request->validate(['name' => ['required', 'string', 'max:255', Rule::unique('roles', 'name')]]);
 
         $role = new Role();
         $role->name = $request->name;
-
+        $role->guard_name = 'web';
         if ($role->save())
             $this->addAlert(AlertType::SUCCESS, __('Created successfully'));
         else

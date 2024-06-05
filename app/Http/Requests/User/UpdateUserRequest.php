@@ -34,6 +34,7 @@ class UpdateUserRequest extends FormRequest
             'work_position' => ['nullable', 'string', 'max:50'],
             'work_row' => ['nullable', 'string', 'max:30'],
             'dependency' => ['nullable', 'string', 'max:30'],
+            'role' => ['nullable', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:100', Rule::unique('users', 'email')->ignore($this->request->get('id'))],
             'birthdate' => ['nullable', 'date'],

@@ -7,8 +7,7 @@
     </div>
 
     {{-- You can use any `$wire.METHOD` on `@row-click` --}}
-    <x-mary-table :headers="$headers" :rows="$permissions" with-pagination :sort-by="$sortBy" class="pb-4" striped
-        link="Role/Edit/{id}">
+    <x-mary-table :headers="$headers" :rows="$permissions" with-pagination :sort-by="$sortBy" class="pb-4" striped>
 
         {{-- Overrides headers --}}
         @scope('header_id', $header)
@@ -21,27 +20,31 @@
                 {{ $header['label'] }}
             </h2>
         @endscope
-        
-        @scope('cell_name', $header)
+        @scope('header_status', $header)
             <h2 class="text-xl font-bold inline">
                 {{ $header['label'] }}
             </h2>
         @endscope
 
+        @scope('cell_status', $permission)
+            @if ($this->role->hasPermissionTo($permission->name))
+                <x-mary-badge value="{{ __('YES') }}" class="badge-success" />
+            @else
+                <x-mary-badge value="{{ __('NO') }}" class="badge-warning" />
+            @endif
+        @endscope
+
         @scope('actions', $permission)
-            <x-mary-button icon="o-trash" spinner class="btn-sm btn-error"
-                wire:click="showDeleteModal({{ $permission->id }})" />
+            @if (auth()->user()->is_admin || auth()->user()->can('edit_role'))
+                @if ($this->role->hasPermissionTo($permission->name))
+                    <x-mary-button icon="o-lock-closed" spinner class="btn-sm btn-error"
+                        wire:click="revokePermission({{ $permission->id }})" />
+                @else
+                    <x-mary-button icon="o-lock-open" spinner class="btn-sm btn-success"
+                        wire:click="givePermission({{ $permission->id }})" />
+                @endif
+            @endif
         @endscope
 
     </x-mary-table>
-
-    <x-mary-modal wire:model="deleteModal" class="backdrop-blur">
-        <x-mary-header title="{{ __('Are you sure?') }}" subtitle="{{ __('Press confirm button to delete') }}" />
-        <x-mary-form wire:submit="delete">
-            <div class="w-full flex justify-end space-x-4">
-                <x-mary-button label="{{ __('Cancel') }}" class="btn-neutral" @click="$wire.deleteModal = false" />
-                <x-mary-button label="{{ __('Confirm') }}" class="btn-error" type="submit" spinner="delete" />
-            </div>
-        </x-mary-form>
-    </x-mary-modal>
 </section>

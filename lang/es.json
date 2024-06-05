@@ -102,5 +102,15 @@
     "Work Position": "Cargo",
     "Work Row": "Reglón",
     "Is Active": "Se encuentra activo",
-    "Is Admin": "Es administrador"
+    "Is Admin": "Es administrador",
+    "Have Permission?": "¿Tiene Permiso?",
+    "Permission Granted": "Permiso otorgado",
+    "Permission Revoked": "Permiso revocado",
+    "Select a Role": "Seleccione un rol",
+    "Add New Role": "Nuevo Rol",
+    "Edit Role": "Editar Rol",
+    "Add New Permission": "Nuevo Permiso",
+    "Edit Permission": "Editar Permiso",
+    "YES": "SI",
+    "NO": "NO"
 }

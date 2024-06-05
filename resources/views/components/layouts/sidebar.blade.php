@@ -59,29 +59,51 @@
 
         {{-- Sección General --}}
         <x-mary-menu-item title="{{ __('Dashboard') }}" icon="o-home" link="{{ route('dashboard') }}" />
-        <x-mary-menu-item title="{{ __('Events') }}" icon="o-calendar-days" link="{{ route('event.index') }}" />
-        <x-mary-menu-item title="{{ __('Todos') }}" icon="o-clipboard-document-check"
-            link="{{ route('todo.index') }}" />
-        <x-mary-menu-item title="{{ __('Attendances') }}" icon="o-clock" link="{{ route('attendance.index') }}" />
+        @if (auth()->user()->is_admin || auth()->user()->can('index_event'))
+            <x-mary-menu-item title="{{ __('Events') }}" icon="o-calendar-days" link="{{ route('event.index') }}" />
+        @endif
+        @if (auth()->user()->is_admin || auth()->user()->can('index_todo'))
+            <x-mary-menu-item title="{{ __('Todos') }}" icon="o-clipboard-document-check"
+                link="{{ route('todo.index') }}" />
+        @endif
+        @if (auth()->user()->is_admin || auth()->user()->can('index_attendance'))
+            <x-mary-menu-item title="{{ __('Attendances') }}" icon="o-clock" link="{{ route('attendance.index') }}" />
+        @endif
 
         {{-- Sección de RH --}}
-        <span class="text-lg font-bold flex items-center">
-            <hr class="w-full mx-4">
-            <p class="mary-hideable mr-2">{{ __('HR') }}</p>
-        </span>
-        <x-mary-menu-item title="{{ __('Roles') }}" icon="o-user-plus" link="{{ route('role.index') }}" />
-        <x-mary-menu-item title="{{ __('Permissions') }}" icon="o-lock-open" link="{{ route('permission.index') }}" />
-        <x-mary-menu-item title="{{ __('Dependencies') }}" icon="o-building-office-2"
-            link="{{ route('dependency.index') }}" />
-        <x-mary-menu-item title="{{ __('Collaborators') }}" icon="o-user-group" link="{{ route('user.index') }}" />
+        @if (auth()->user()->is_admin || auth()->user()->can('index_user'))
+            <span class="text-lg font-bold flex items-center">
+                <hr class="w-full mx-4">
+                <p class="mary-hideable mr-2">{{ __('HR') }}</p>
+            </span>
+        @endif
+        @if (auth()->user()->is_admin || auth()->user()->can('index_role'))
+            <x-mary-menu-item title="{{ __('Roles') }}" icon="o-user-plus" link="{{ route('role.index') }}" />
+        @endif
+        @if (auth()->user()->is_admin || auth()->user()->can('index_permission'))
+            <x-mary-menu-item title="{{ __('Permissions') }}" icon="o-lock-open"
+                link="{{ route('permission.index') }}" />
+        @endif
+        @if (auth()->user()->is_admin || auth()->user()->can('index_dependency'))
+            <x-mary-menu-item title="{{ __('Dependencies') }}" icon="o-building-office-2"
+                link="{{ route('dependency.index') }}" />
+        @endif
+        @if (auth()->user()->is_admin || auth()->user()->can('index_user'))
+            <x-mary-menu-item title="{{ __('Collaborators') }}" icon="o-user-group"
+                link="{{ route('user.index') }}" />
+        @endif
 
         {{-- Sección de responsabilidades --}}
         <span class="text-lg font-bold flex items-center">
             <hr class="w-full mx-4">
             <p class="mary-hideable mr-2">{{ __('Responsibilities') }}</p>
         </span>
-        <x-mary-menu-item title="{{ __('Items') }}" icon="o-rectangle-group" link="{{ route('item.index') }}" />
-        <x-mary-menu-item title="{{ __('Responsibility Sheets') }}" icon="c-clipboard-document-check"
-            link="{{ route('responsibility-sheet.index') }}" />
+        @if (auth()->user()->is_admin || auth()->user()->can('index_item'))
+            <x-mary-menu-item title="{{ __('Items') }}" icon="o-rectangle-group" link="{{ route('item.index') }}" />
+        @endif
+        @if (auth()->user()->is_admin || auth()->user()->can('index_responsibility'))
+            <x-mary-menu-item title="{{ __('Responsibility Sheets') }}" icon="c-clipboard-document-check"
+                link="{{ route('responsibility-sheet.index') }}" />
+        @endif
     </x-mary-menu>
 </x-slot:sidebar>

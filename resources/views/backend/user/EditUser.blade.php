@@ -4,7 +4,7 @@
     @endsection
 
     @section('content-header')
-        <x-mary-header title="{{ __('Edit Collaborator') }}" subtitle="{{ $collaborator->name }}">
+        <x-mary-header title="{{ __('Edit Collaborator') }}" subtitle="{{ $user->name }}">
             <x-slot:actions>
                 <x-mary-button label="{{ __('Return') }}" icon="o-arrow-uturn-left" class="btn-accent dark:btn-info"
                     link="{{ route('user.index') }}" />
@@ -24,68 +24,74 @@
             <div class="grid sm:grid-cols-2 gap-4">
                 <div>
                     <x-mary-input label="{{ __('Code') }}" name="code" required autofocus
-                        value="{{ old('code', $collaborator->code) }}" />
+                        value="{{ old('code', $user->code) }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('code')" />
                 </div>
                 <div>
                     <x-mary-input label="{{ __('Username') }}" name="username" required
-                        value="{{ old('username', $collaborator->username) }}" />
+                        value="{{ old('username', $user->username) }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('username')" />
                 </div>
                 <div>
                     <x-mary-input label="{{ __('Name') }}" type="text" name='name' required
-                        autocomplete="name" value="{{ old('name', $collaborator->name) }}" />
+                        autocomplete="name" value="{{ old('name', $user->name) }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('name')" />
                 </div>
                 <div>
+                    <x-mary-select label="{{ __('Role') }}" icon="o-lock-closed" name="role" :options="$roles"
+                        option-value="name" placeholder="{{ old('role', $currentRole->name) }}"
+                        placeholder-value="{{ old('role', $currentRole->id) }}" required />
+                    <x-input-error class="mt-2" :messages="$errors->get('dependency')" />
+                </div>
+                <div>
                     <x-mary-input label="{{ __('Last Name') }}" type="text" name='last_name'
-                        autocomplete="last_name" value="{{ old('last_name', $collaborator->last_name) }}" />
+                        autocomplete="last_name" value="{{ old('last_name', $user->last_name) }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('last_name')" />
                 </div>
                 <div>
                     <x-mary-input label="{{ __('Work Position') }}" name="work_position"
-                        value="{{ old('work_position', $collaborator->work_position) }}" />
+                        value="{{ old('work_position', $user->work_position) }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('work_position')" />
                 </div>
                 <div>
                     <x-mary-input label="{{ __('Work Row') }}" name="work_row"
-                        value="{{ old('work_row', $collaborator->work_row) }}" />
+                        value="{{ old('work_row', $user->work_row) }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('work_row')" />
                 </div>
                 <div>
                     <x-mary-select label="{{ __('Dependency') }}" icon="o-building-office-2" name="dependency"
-                        :options="$dependencies" option-value="name" placeholder="{{ $collaborator->dependency }}"
-                        placeholder-value="{{ $collaborator->dependency }}" required />
+                        :options="$dependencies" option-value="name" placeholder="{{ $user->dependency }}"
+                        placeholder-value="{{ $user->dependency }}" required />
                     <x-input-error class="mt-2" :messages="$errors->get('dependency')" />
                 </div>
                 <div>
                     <x-mary-input label="{{ __('Phone') }}" type="text" name='phone' autocomplete="phone"
-                        value="{{ old('phone', $collaborator->phone) }}" />
+                        value="{{ old('phone', $user->phone) }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('phone')" />
                 </div>
                 <div>
                     <x-mary-input label="{{ __('Email') }}" type="email" name='email' autocomplete="email"
-                        value="{{ old('email', $collaborator->email) }}" />
+                        value="{{ old('email', $user->email) }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('email')" />
                 </div>
                 <div>
                     <x-mary-datetime label="{{ __('Birthdate') }}" name="birthdate" type="date" required
-                        value="{{ old('birthdate', $collaborator->birthdate) }}" />
+                        value="{{ old('birthdate', $user->birthdate) }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('birthdate')" />
                 </div>
                 <div>
                     <x-mary-input label="{{ __('Address') }}" type="text" name='address' autocomplete="address"
-                        value="{{ old('address', $collaborator->address) }}" />
+                        value="{{ old('address', $user->address) }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('address')" />
                 </div>
                 <div class="flex items-center">
                     <x-mary-checkbox label="{{ __('Is Admin') }}" name="is_admin" tight
-                        x-bind:checked="{{ old('is_admin', $collaborator->is_admin) ? 1 : 0 }}" value="1" />
+                        x-bind:checked="{{ old('is_admin', $user->is_admin) ? 1 : 0 }}" value="1" />
                     <x-input-error class="mt-2" :messages="$errors->get('admin')" />
                 </div>
                 <div class="flex items-center">
                     <x-mary-checkbox label="{{ __('Is Active') }}" name="is_active" tight
-                        x-bind:checked="{{ old('is_active', $collaborator->is_active) ? 1 : 0 }}" value="1" />
+                        x-bind:checked="{{ old('is_active', $user->is_active) ? 1 : 0 }}" value="1" />
                     <x-input-error class="mt-2" :messages="$errors->get('is_active')" />
                 </div>
             </div>

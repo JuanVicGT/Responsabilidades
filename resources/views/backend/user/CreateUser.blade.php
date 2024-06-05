@@ -36,6 +36,12 @@
                     <x-input-error class="mt-2" :messages="$errors->get('name')" />
                 </div>
                 <div>
+                    <x-mary-select label="{{ __('Role') }}" icon="o-lock-closed" name="role" :options="$roles"
+                        option-value="name" placeholder="{{ old('role', __('Select a Role')) }}"
+                        placeholder-value="{{ old('role', null) }}" required />
+                    <x-input-error class="mt-2" :messages="$errors->get('dependency')" />
+                </div>
+                <div>
                     <x-mary-input label="{{ __('Last Name') }}" type="text" name='last_name'
                         autocomplete="last_name" value="{{ old('last_name') }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('last_name')" />

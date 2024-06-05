@@ -14,7 +14,7 @@
         </x-mary-header>
     @endsection
 
-    <x-mary-card shadow class="!p-0">
+    <x-mary-card shadow class="!px-0">
 
         <x-mary-form method="POST" action="{{ route('role.update') }}" x-data="{ submitButtonDisabled: false }"
             x-on:submit="submitButtonDisabled = true">
@@ -47,5 +47,8 @@
 
         </x-mary-form>
     </x-mary-card>
+
+    <x-mary-header title="{{ __('Permissions') }}" class="-mb-2"/>
+    <livewire:backend.role.role-permission-table :role="$role" />
 
 </x-layouts.app>
