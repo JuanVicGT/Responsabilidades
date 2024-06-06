@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserPasswordRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\Dependency;
 use App\Models\Role;
@@ -99,6 +100,23 @@ class UserController extends Controller
         return view('backend.user.EditUser', compact('user', 'roles', 'dependencies', 'currentRole'));
     }
 
+    public function update_password(UpdateUserPasswordRequest $request)
+    {
+        $user = User::find($request->id);
+
+        $password = Str::random(8);
+        $user->password = Hash::make($password);
+        $save = $user->save();
+
+        if (!$save)
+            $this->addAlert(AlertType::ERROR, __('Could not be stored'));
+
+        if ($save)
+            $this->addAlert(AlertType::SUCCESS, __('Updated successfully, password: ' . $password));
+
+        return redirect()->route('user.edit', $user->id)->with('alerts', $this->getAlerts());
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -119,9 +137,6 @@ class UserController extends Controller
         $user->is_admin = $request->is_admin;
         $user->is_active = $request->is_active;
 
-        $password = Str::random(8);
-        $user->password = Hash::make($password);
-
         $save = $user->save();
 
         if (!$save)
@@ -129,10 +144,10 @@ class UserController extends Controller
 
         if ($save) {
             $user->syncRoles([$request->role]);
-            $this->addAlert(AlertType::SUCCESS, __('Stored successfully, password: ' . $password));
+            $this->addAlert(AlertType::SUCCESS, __('Updated successfully'));
         }
 
-        return redirect()->route('user.create')->with('alerts', $this->getAlerts());
+        return redirect()->route('user.edit', $user->id)->with('alerts', $this->getAlerts());
     }
 
     /**

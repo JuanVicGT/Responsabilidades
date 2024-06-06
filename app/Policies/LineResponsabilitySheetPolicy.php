@@ -19,7 +19,7 @@ class LineResponsabilitySheetPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, LineResponsabilitySheet $lineResponsabilitySheet): bool
+    public function show(User $user, LineResponsabilitySheet $lineResponsabilitySheet): bool
     {
         //
     }

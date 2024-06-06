@@ -52,7 +52,7 @@
         </x-mary-form>
     </x-mary-card>
 
-    <x-mary-header title="{{ __('Permissions') }}" class="-mb-2" />
+    <x-mary-header title="{{ __('Permissions') }}" class="-mb-4" />
     <livewire:backend.role.role-permission-table :role="$role" />
 
 </x-layouts.app>

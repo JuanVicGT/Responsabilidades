@@ -112,5 +112,6 @@
     "Add New Permission": "Nuevo Permiso",
     "Edit Permission": "Editar Permiso",
     "YES": "SI",
-    "NO": "NO"
+    "NO": "NO",
+    "Generate Password": "Generar contraseña"
 }

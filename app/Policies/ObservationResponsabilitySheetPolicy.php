@@ -19,7 +19,7 @@ class ObservationResponsabilitySheetPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, ObservationResponsabilitySheet $observationResponsabilitySheet): bool
+    public function show(User $user, ObservationResponsabilitySheet $observationResponsabilitySheet): bool
     {
         //
     }
