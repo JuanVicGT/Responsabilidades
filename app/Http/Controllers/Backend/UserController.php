@@ -30,6 +30,8 @@ class UserController extends Controller
     public function create()
     {
         //
+        Gate::authorize('create', Role::class);
+
         $dependencies = Dependency::all();
         $roles = Role::all();
         return view('backend.user.CreateUser', compact('dependencies', 'roles'));
@@ -78,6 +80,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         //
+        Gate::authorize('show', $user);
         return view('backend.user.Show', compact('user'));
     }
 
@@ -88,6 +91,8 @@ class UserController extends Controller
     {
         //
         $user = User::find($id);
+        Gate::authorize('show', $user);
+
         $roles = Role::all();
         $dependencies = Dependency::all();
         $currentRole = $user->roles()->first();

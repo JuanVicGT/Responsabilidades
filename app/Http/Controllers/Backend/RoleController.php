@@ -65,7 +65,7 @@ class RoleController extends Controller
     public function edit(int $id)
     {
         $role = Role::find($id);
-        Gate::authorize('edit', $role);
+        Gate::authorize('show', $role);
 
         return view('backend.role.EditRole', compact('role'));
     }

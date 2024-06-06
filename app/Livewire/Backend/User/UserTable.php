@@ -6,6 +6,7 @@ use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Utils\Alerts;
+use Illuminate\Support\Facades\Auth;
 use Mary\Traits\Toast;
 use Illuminate\Support\Facades\Gate;
 
@@ -32,13 +33,19 @@ class UserTable extends Component
             ['key' => 'id', 'label' => '#', 'class' => 'bg-red-500/20 w-1'],
             ['key' => 'code', 'label' => __('Code')],
             ['key' => 'name', 'label' => __('Name')],
+            ['key' => 'role', 'label' => __('Role')],
             ['key' => 'is_active', 'label' => __('Is Active')],
         ];
     }
 
     protected function getTableRows()
     {
-        return User::whereNull('is_admin')
+        return User::when(
+            !Auth::user()->is_admin,
+
+            fn ($query) =>
+            $query->whereNull('is_admin')
+        )
             ->when(
                 $this->search,
 

@@ -21,6 +21,11 @@
                 {{ $header['label'] }}
             </h2>
         @endscope
+        @scope('header_role', $header)
+            <h2 class="text-xl font-bold inline">
+                {{ $header['label'] }}
+            </h2>
+        @endscope
         @scope('header_name', $header)
             <h2 class="text-xl font-bold inline">
                 {{ $header['label'] }}
@@ -32,17 +37,23 @@
             </h2>
         @endscope
 
+        @scope('cell_role', $row)
+            <x-mary-badge value="{{ $row->roles()->first()->name ?? '---' }}" class="badge-info" />
+        @endscope
+
         @scope('cell_is_active', $row)
             @if ($row->is_active)
-                SI
+                <x-mary-badge value="{{ __('YES') }}" class="badge-success" />
             @else
-                NO  
+                <x-mary-badge value="{{ __('NO') }}" class="badge-error" />
             @endif
         @endscope
 
         @scope('actions', $row)
-            <x-mary-button icon="o-trash" spinner class="btn-sm btn-error"
-                wire:click="showDeleteModal({{ $row->id }})" />
+            @if (auth()->user()->is_admin || auth()->user()->can('delete_user'))
+                <x-mary-button icon="o-trash" spinner class="btn-sm btn-error"
+                    wire:click="showDeleteModal({{ $row->id }})" />
+            @endif
         @endscope
 
     </x-mary-table>

@@ -67,7 +67,7 @@ class DependencyController extends Controller
     public function edit(int $id)
     {
         $dependency = Dependency::find($id);
-        Gate::authorize('edit', $dependency);
+        Gate::authorize('show', $dependency);
 
         return view('backend.dependency.EditDependency', compact('dependency'));
     }

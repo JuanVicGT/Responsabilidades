@@ -28,8 +28,10 @@
         @endscope
 
         @scope('actions', $row)
-            <x-mary-button icon="o-trash" spinner class="btn-sm btn-error"
-                wire:click="showDeleteModal({{ $row->id }})" />
+            @if (auth()->user()->is_admin || auth()->user()->can('delete_dependency'))
+                <x-mary-button icon="o-trash" spinner class="btn-sm btn-error"
+                    wire:click="showDeleteModal({{ $row->id }})" />
+            @endif
         @endscope
 
     </x-mary-table>

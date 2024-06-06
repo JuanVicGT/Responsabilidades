@@ -66,7 +66,7 @@ class PermissionController extends Controller
     public function edit(int $id)
     {
         $permission = Permission::find($id);
-        Gate::authorize('edit', $permission);
+        Gate::authorize('show', $permission);
 
         return view('backend.permission.EditPermission', compact('permission'));
     }
