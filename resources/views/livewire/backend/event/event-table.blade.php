@@ -38,7 +38,15 @@
         @endscope
 
         @scope('cell_status', $row)
-            <x-mary-badge value="{{ __(ucfirst($row->status)) }}" class="badge-info" />
+            @if ($row->status == 'active')
+                <x-mary-badge value="{{ __(ucfirst($row->status)) }}" class="badge-success" />
+            @endif
+            @if ($row->status == 'cancelled')
+                <x-mary-badge value="{{ __(ucfirst($row->status)) }}" class="badge-error" />
+            @endif
+            @if ($row->status == 'finished')
+                <x-mary-badge value="{{ __(ucfirst($row->status)) }}" class="badge-info" />
+            @endif
         @endscope
 
         @scope('actions', $row)

@@ -9,7 +9,9 @@ use App\Models\Event;
 use App\Models\User;
 use App\Utils\Enums\AlertType;
 use App\Utils\Enums\StatusEvent;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class EventController extends Controller
@@ -26,34 +28,25 @@ class EventController extends Controller
 
         $events = Event::select(
             'name as title',
-            'start_date as start',
-            'end_date as end',
-            'start_hour',
-            'end_hour',
             'description',
-            'status'
+            'status',
+            DB::raw('concat(start_date, "T", start_hour) as start'),
+            DB::raw('concat(end_date, "T", end_hour) as end'),
         )
             ->where('start_date', '>=', $first_date)
             ->where('start_date', '<=', $last_date)
             ->get()
             ->map(function ($event) {
-                // Add the time to the event.
-                if ($event->start_hour && $event->end_hour)
-                    $event->title = $event->title . ' (' . date('H:i', strtotime($event->start_hour)) . '-' . date('H:i', strtotime($event->end_hour)) . ')';
-                else if ($event->start_hour)
-                    $event->title = $event->title . ' (' . date('H:i', strtotime($event->start_hour)) . ')';
-
                 // Set the background color of the event.
                 $event->color = match ($event->status) {
                     StatusEvent::Active->value => '#00A96E',
                     StatusEvent::Cancelled->value => '#FF5861',
-                    StatusEvent::Finished->value => '#00B5FF',
+                    StatusEvent::Finished->value => '#0073A0',
                 };
                 return $event;
             })
             ->toArray();
 
-            
         return view('backend.dashboard', compact('events'));
     }
 
@@ -121,11 +114,7 @@ class EventController extends Controller
         //
         Gate::authorize('edit', new Event());
 
-        $status_options = [
-            ['name' => __('Active'), 'value' => 'active'],
-            ['name' => __('Cancelled'), 'value' => 'cancelled'],
-            ['name' => __('Finished'), 'value' => 'finished']
-        ];
+        $status_options = StatusEvent::array();
         return view('backend.event.EditEvent', compact('status_options', 'id'));
     }
 
