@@ -6,12 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Event\StoreEventRequest;
 use App\Http\Requests\Event\UpdateEventRequest;
 use App\Models\Event;
-use App\Models\User;
 use App\Utils\Enums\AlertType;
 use App\Utils\Enums\StatusEvent;
-use DateTime;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class EventController extends Controller
@@ -30,13 +26,22 @@ class EventController extends Controller
             'name as title',
             'description',
             'status',
-            DB::raw('concat(start_date, "T", start_hour) as start'),
-            DB::raw('concat(end_date, "T", end_hour) as end'),
+            'start_date as start',
+            'end_date as end',
+            'start_hour',
+            'end_hour'
         )
             ->where('start_date', '>=', $first_date)
             ->where('start_date', '<=', $last_date)
             ->get()
             ->map(function ($event) {
+                // Set the start and end time of the event.
+                if ($event->start_hour)
+                    $event->start = $event->start . 'T' . $event->start_hour;
+
+                if ($event->end_hour)
+                    $event->end = $event->end . 'T' . $event->end_hour;
+
                 // Set the background color of the event.
                 $event->color = match ($event->status) {
                     StatusEvent::Active->value => '#00A96E',

@@ -128,5 +128,14 @@
     "Stored successfully. username: :username, password: :password": "Guardado correctamente. Usuario: :username, Contraseña: :password",
     "Could not be stored": "No se ha podido guardar el registro",
     "No results found.": "No se encontraron resultados.",
-    "Edit Event": "Editar Evento"
+    "Edit Event": "Editar Evento",
+    "Code": "Código",
+    "Serial": "Serie",
+    "Quantity": "Cantidad",
+    "Unit Value": "Valor Unitario",
+    "Amount": "Monto",
+    "Observations": "Observaciones",
+    "Add New Item": "Nuevo Artículo",
+    "Edit Item": "Editar Artículo",
+    "Total Amount": "Monto Total"
 }
