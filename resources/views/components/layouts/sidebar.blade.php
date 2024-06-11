@@ -58,7 +58,8 @@
         @endif
 
         {{-- Sección General --}}
-        <x-mary-menu-item title="{{ __('Dashboard') }}" icon="o-home" link="{{ route('dashboard') }}" />
+        <x-mary-menu-item title="{{ __('Dashboard') }}" icon="o-home" link="{{ route('dashboard') }}"
+            no-wire-navigate />
         @if (auth()->user()->is_admin || auth()->user()->can('index_event'))
             <x-mary-menu-item title="{{ __('Events') }}" icon="o-calendar-days" link="{{ route('event.index') }}" />
         @endif

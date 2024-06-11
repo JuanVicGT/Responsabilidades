@@ -43,10 +43,10 @@ class DependencyController extends Controller
         $save = $dependency->save();
 
         if (!$save)
-            $this->addAlert(AlertType::ERROR, __('Could not be created'));
+            $this->addAlert(AlertType::Error, __('Could not be created'));
 
         if ($save)
-            $this->addAlert(AlertType::SUCCESS, __('Created successfully'));
+            $this->addAlert(AlertType::Success, __('Created successfully'));
 
         return redirect()->route('dependency.create')->with('alerts', $this->getAlerts());
     }
@@ -83,10 +83,10 @@ class DependencyController extends Controller
         $save = $dependency->save();
 
         if (!$save)
-            $this->addAlert(AlertType::ERROR, __('Could not be updated'));
+            $this->addAlert(AlertType::Error, __('Could not be updated'));
 
         if ($save)
-            $this->addAlert(AlertType::SUCCESS, __('Updated successfully'));
+            $this->addAlert(AlertType::Success, __('Updated successfully'));
 
         return redirect()->route('dependency.edit', $request->id)->with('alerts', $this->getAlerts());
     }

@@ -42,9 +42,9 @@ class RoleController extends Controller
         $role->name = $request->name;
         $role->guard_name = 'web';
         if ($role->save())
-            $this->addAlert(AlertType::SUCCESS, __('Created successfully'));
+            $this->addAlert(AlertType::Success, __('Created successfully'));
         else
-            $this->addAlert(AlertType::ERROR, __('Could not be created'));
+            $this->addAlert(AlertType::Error, __('Could not be created'));
 
         return redirect()->route('role.create')->with('alerts', $this->getAlerts());
     }
@@ -81,9 +81,9 @@ class RoleController extends Controller
         $role->name = $request->name;
 
         if ($role->save())
-            $this->addAlert(AlertType::SUCCESS, __('Created successfully'));
+            $this->addAlert(AlertType::Success, __('Created successfully'));
         else
-            $this->addAlert(AlertType::ERROR, __('Could not be created'));
+            $this->addAlert(AlertType::Error, __('Could not be created'));
 
         return redirect()->route('role.edit', $request->id)->with('alerts', $this->getAlerts());
     }

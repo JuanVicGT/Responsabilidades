@@ -113,5 +113,20 @@
     "Edit Permission": "Editar Permiso",
     "YES": "SI",
     "NO": "NO",
-    "Generate Password": "Generar contraseña"
+    "Generate Password": "Generar contraseña",
+    "today": "hoy",
+    "Add New Event": "Nuevo Evento",
+    "Status": "Estado",
+    "Start Date": "Fecha de Inicio",
+    "End Date": "Fecha de Finalización",
+    "Start Hour": "Hora de Inicio",
+    "End Hour": "Hora de Finalización",
+    "Description": "Descripción",
+    "Active": "Activo",
+    "Cancelled": "Cancelado",
+    "Finished": "Finalizado",
+    "Stored successfully. username: :username, password: :password": "Guardado correctamente. Usuario: :username, Contraseña: :password",
+    "Could not be stored": "No se ha podido guardar el registro",
+    "No results found.": "No se encontraron resultados.",
+    "Edit Event": "Editar Evento"
 }

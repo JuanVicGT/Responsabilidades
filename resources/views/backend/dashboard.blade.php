@@ -3,6 +3,6 @@
         {{ __('Dashboard') }}
     @endsection
 
-    <x-mary-header title="{{ __('Dashboard') }}" />
+    @include('backend.event.CalendarEvent')
 
 </x-layouts.app>

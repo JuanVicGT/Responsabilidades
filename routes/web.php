@@ -3,19 +3,19 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend;
+use App\Http\Controllers\Backend\EventController;
 use Illuminate\Support\Facades\Redirect;
 
-// Dashboard
+// Dashboard (the dahsboard is in the event controller)
 Route::get('/', function () {
     return Redirect::to('/dashboard');
 })->middleware(['auth', 'verified']);
 
-Route::get('/dashboard', function () {
-    return view('backend.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 // Routes
 Route::middleware(['auth', 'verified'])->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [EventController::class, 'dashboard'])->name('dashboard');
+
     Route::controller(ProfileController::class)->prefix('/Profile')->name('profile.')
         ->group(function () {
             // Views

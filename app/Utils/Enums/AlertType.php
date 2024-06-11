@@ -2,11 +2,15 @@
 
 namespace App\Utils\Enums;
 
+use App\Utils\Traits\EnumToArray;
+
 enum AlertType: string
 {
-    case DEFAULT = '';
-    case ERROR = 'alert-danger';
-    case WARNING = 'alert-warning';
-    case INFO = 'alert-info';
-    case SUCCESS = 'alert-success';
+    use EnumToArray;
+
+    case Default = '';
+    case Error = 'alert-danger';
+    case Warning = 'alert-warning';
+    case Info = 'alert-info';
+    case Success = 'alert-success';
 }

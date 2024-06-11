@@ -65,11 +65,11 @@ class UserController extends Controller
         $save = $user->save();
 
         if (!$save)
-            $this->addAlert(AlertType::ERROR, __('Could not be stored'));
+            $this->addAlert(AlertType::Error, __('Could not be stored'));
 
         if ($save) {
             $user->assignRole($request->role);
-            $this->addAlert(AlertType::SUCCESS, __('Stored successfully, password: ' . $password));
+            $this->addAlert(AlertType::Success, __('Stored successfully. username: :username, password: :password', ['username' => $user->username, 'password' => $password]));
         }
 
         return redirect()->route('user.create')->with('alerts', $this->getAlerts());
@@ -109,10 +109,10 @@ class UserController extends Controller
         $save = $user->save();
 
         if (!$save)
-            $this->addAlert(AlertType::ERROR, __('Could not be stored'));
+            $this->addAlert(AlertType::Error, __('Could not be stored'));
 
         if ($save)
-            $this->addAlert(AlertType::SUCCESS, __('Updated successfully, password: ' . $password));
+            $this->addAlert(AlertType::Success, __('Updated successfully, password: ' . $password));
 
         return redirect()->route('user.edit', $user->id)->with('alerts', $this->getAlerts());
     }
@@ -140,11 +140,11 @@ class UserController extends Controller
         $save = $user->save();
 
         if (!$save)
-            $this->addAlert(AlertType::ERROR, __('Could not be stored'));
+            $this->addAlert(AlertType::Error, __('Could not be stored'));
 
         if ($save) {
             $user->syncRoles([$request->role]);
-            $this->addAlert(AlertType::SUCCESS, __('Updated successfully'));
+            $this->addAlert(AlertType::Success, __('Updated successfully'));
         }
 
         return redirect()->route('user.edit', $user->id)->with('alerts', $this->getAlerts());

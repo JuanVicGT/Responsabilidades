@@ -1,0 +1,7 @@
+.external-choice {
+    display: flex;
+}
+
+.external-choice>input {
+    border: none !important;
+}

@@ -43,9 +43,9 @@ class PermissionController extends Controller
         $permission->guard_name = 'web';
 
         if ($permission->save())
-            $this->addAlert(AlertType::SUCCESS, __('Created successfully'));
+            $this->addAlert(AlertType::Success, __('Created successfully'));
         else
-            $this->addAlert(AlertType::ERROR, __('Could not be created'));
+            $this->addAlert(AlertType::Error, __('Could not be created'));
 
         return redirect()->route('permission.create')->with('alerts', $this->getAlerts());
     }
@@ -84,9 +84,9 @@ class PermissionController extends Controller
         $permission->name = $request->name;
 
         if ($permission->save())
-            $this->addAlert(AlertType::SUCCESS, __('Created successfully'));
+            $this->addAlert(AlertType::Success, __('Created successfully'));
         else
-            $this->addAlert(AlertType::ERROR, __('Could not be created'));
+            $this->addAlert(AlertType::Error, __('Could not be created'));
 
         return redirect()->route('permission.edit', $request->id)->with('alerts', $this->getAlerts());
     }

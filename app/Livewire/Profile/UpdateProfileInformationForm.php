@@ -81,7 +81,7 @@ class UpdateProfileInformationForm extends Component
 
         FileTools::clearTempFiles();
 
-        $this->addAlert(AlertType::SUCCESS, 'Your profile has been updated!');
+        $this->addAlert(AlertType::Success, 'Your profile has been updated!');
 
         return redirect(route('profile.edit'))->with('alerts', $this->getAlerts());
     }

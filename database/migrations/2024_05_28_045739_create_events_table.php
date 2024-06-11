@@ -19,8 +19,8 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->string('status', 20)->nullable();
-            $table->date('start_hour')->nullable();
-            $table->date('end_hour')->nullable();
+            $table->time('start_hour')->nullable();
+            $table->time('end_hour')->nullable();
             $table->string('description')->nullable();
 
             $table->foreignId('id_responsible')->nullable()->constrained('users')->onDelete('cascade');
