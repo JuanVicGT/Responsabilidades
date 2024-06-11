@@ -1,4 +1,11 @@
 <x-layouts.app>
+
+    @section('custom-js')
+        {{--  Currency  --}}
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/robsontenorio/mary@0.44.2/libs/currency/currency.js">
+        </script>
+    @endsection
+
     @section('tab-title')
         {{ __('Add New') }}
     @endsection
@@ -14,7 +21,7 @@
 
     <x-mary-card shadow>
         {{-- Form --}}
-        <x-mary-form method="POST" action="{{ route('dependency.store') }}" x-data="{ submitButtonDisabled: false }"
+        <x-mary-form method="POST" action="{{ route('item.store') }}" x-data="{ submitButtonDisabled: false }"
             x-on:submit="submitButtonDisabled = true">
             @csrf
 
@@ -25,9 +32,39 @@
                     <x-input-error class="mt-2" :messages="$errors->get('code')" />
                 </div>
                 <div>
-                    <x-mary-input label="{{ __('Name') }}" type="text" name='name'
+                    <x-mary-input label="{{ __('Name') }}" type="text" name='name' required
                         value="{{ old('name') }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('name')" />
+                </div>
+                <div>
+                    <x-mary-input label="{{ __('Serial') }}" type="text" name='serial' required
+                        value="{{ old('serial') }}" />
+                    <x-input-error class="mt-2" :messages="$errors->get('serial')" />
+                </div>
+                <div>
+                    <x-mary-input label="{{ __('Unit Value') }}" name='unit_value' required
+                        value="{{ old('unit_value', 0) }}" icon="o-currency-dollar" type="number" step="0.01" />
+                    <x-input-error class="mt-2" :messages="$errors->get('unit_value')" />
+                </div>
+                <div>
+                    <x-mary-input label="{{ __('Quantity') }}" type="number" step="1" name='quantity' required
+                        value="{{ old('quantity', 1) }}" />
+                    <x-input-error class="mt-2" :messages="$errors->get('quantity')" />
+                </div>
+                <div>
+                    <x-mary-input label="{{ __('Total') }}" type="number" step="0.01" name='amount'
+                        value="{{ old('amount', 0) }}" readonly icon="o-currency-dollar" />
+                    <x-input-error class="mt-2" :messages="$errors->get('amount')" />
+                </div>
+                <div>
+                    <x-mary-textarea label="{{ __('Description') }}" type="text" name='description'
+                        value="{{ old('description') }}" rows="5" />
+                    <x-input-error class="mt-2" :messages="$errors->get('description')" />
+                </div>
+                <div>
+                    <x-mary-textarea label="{{ __('Observations') }}" type="text" name='observations'
+                        value="{{ old('observations') }}" rows="5" />
+                    <x-input-error class="mt-2" :messages="$errors->get('observations')" />
                 </div>
             </div>
 

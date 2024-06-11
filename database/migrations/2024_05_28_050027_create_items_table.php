@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('serial', 150)->nullable();
             $table->integer('quantity')->nullable();
             $table->text('description')->nullable();
-            $table->string('series')->nullable();
             $table->text('observations')->nullable();
             $table->float('unit_value')->nullable();
             $table->float('amount')->nullable();
