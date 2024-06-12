@@ -1,9 +1,7 @@
 <x-layouts.app>
 
     @section('custom-js')
-        {{--  Currency  --}}
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/robsontenorio/mary@0.44.2/libs/currency/currency.js">
-        </script>
+        <script src="{{ asset('assets/js/create_item.js') }}"></script>
     @endsection
 
     @section('tab-title')
@@ -42,8 +40,9 @@
                     <x-input-error class="mt-2" :messages="$errors->get('serial')" />
                 </div>
                 <div>
-                    <x-mary-input label="{{ __('Unit Value') }}" name='unit_value' required
-                        value="{{ old('unit_value', 0) }}" icon="o-currency-dollar" type="number" step="0.01" />
+                    <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                    <input label="{{ __('Unit Value') }}" name='unit_value' required value="{{ old('unit_value') }}"
+                        class="input input-primary w-full peer mt-2" x-mask:dynamic="$money($input)" />
                     <x-input-error class="mt-2" :messages="$errors->get('unit_value')" />
                 </div>
                 <div>
@@ -52,8 +51,8 @@
                     <x-input-error class="mt-2" :messages="$errors->get('quantity')" />
                 </div>
                 <div>
-                    <x-mary-input label="{{ __('Total') }}" type="number" step="0.01" name='amount'
-                        value="{{ old('amount', 0) }}" readonly icon="o-currency-dollar" />
+                    <x-mary-input label="{{ __('Total') }}" name='amount' x-mask:dynamic="$money($input)"
+                        value="{{ old('amount') }}" readonly icon="o-currency-dollar" />
                     <x-input-error class="mt-2" :messages="$errors->get('amount')" />
                 </div>
                 <div>
