@@ -7,8 +7,7 @@
     </div>
 
     {{-- You can use any `$wire.METHOD` on `@row-click` --}}
-    <x-mary-table :headers="$headers" :rows="$rows" with-pagination :sort-by="$sortBy" class="pb-4" striped
-        link="Item/Edit/{id}">
+    <x-mary-table :headers="$headers" :rows="$rows" with-pagination :sort-by="$sortBy" class="pb-4" striped>
 
         {{-- Overrides headers --}}
         @scope('header_id', $header)
@@ -47,11 +46,24 @@
             </h2>
         @endscope
 
+        @scope('cell_unit_value', $row)
+            Q {{ number_format($row->unit_value) }}
+        @endscope
+        @scope('cell_amount', $row)
+            Q {{ number_format($row->amount) }}
+        @endscope
+
         @scope('actions', $row)
-            @if (auth()->user()->is_admin || auth()->user()->can('delete_item'))
-                <x-mary-button icon="o-trash" spinner class="btn-sm btn-error"
-                    wire:click="showDeleteModal({{ $row->id }})" />
-            @endif
+            <div class="flex space-x-2">
+                @if (auth()->user()->is_admin || auth()->user()->can('edit_item'))
+                    <x-mary-button icon="o-pencil" spinner class="btn-sm btn-info"
+                        link="{{ route('item.edit', $row->id) }}" no-wire-navigate />
+                @endif
+                @if (auth()->user()->is_admin || auth()->user()->can('delete_item'))
+                    <x-mary-button icon="o-trash" spinner class="btn-sm btn-error"
+                        wire:click="showDeleteModal({{ $row->id }})" />
+                @endif
+            </div>
         @endscope
 
     </x-mary-table>

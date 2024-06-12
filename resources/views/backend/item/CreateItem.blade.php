@@ -1,6 +1,7 @@
 <x-layouts.app>
 
     @section('custom-js')
+        <script src="{{ asset('assets/js/utils.js') }}"></script>
         <script src="{{ asset('assets/js/create_item.js') }}"></script>
     @endsection
 
@@ -40,8 +41,8 @@
                     <x-input-error class="mt-2" :messages="$errors->get('serial')" />
                 </div>
                 <div>
-                    <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-                    <input label="{{ __('Unit Value') }}" name='unit_value' required value="{{ old('unit_value') }}"
+                    <x-input-label for="unit_value" :value="__('Unit Value') . '*'" />
+                    <input name='unit_value' required value="{{ old('unit_value') }}"
                         class="input input-primary w-full peer mt-2" x-mask:dynamic="$money($input)" />
                     <x-input-error class="mt-2" :messages="$errors->get('unit_value')" />
                 </div>

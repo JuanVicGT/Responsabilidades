@@ -30,9 +30,9 @@ class StoreItemRequest extends FormRequest
             'code' => ['required', 'string', 'max:30', Rule::unique(Item::class)],
             'name' => ['required', 'string', 'max:150'],
             'serial' => ['required', 'string', 'max:150'],
-            'quantity' => ['required', 'integer'],
-            'unit_value' => ['required', 'float'],
-            'amount' => ['nullable', 'float'],
+            'quantity' => ['required', 'integer', 'min:1'],
+            'unit_value' => ['required', 'string'],
+            'amount' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
             'observations' => ['nullable', 'string'],
         ];

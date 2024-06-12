@@ -2,12 +2,11 @@ const updateAmount = (quantity, unitValue) => {
     unitValue = unitValue.replace(/,/g, "");
 
     let amountInput = document.getElementsByName('amount')[0];
-    amountInput.value = parseFloat(quantity) * parseFloat(unitValue);
+    let amount = parseFloat(quantity) * parseFloat(unitValue);
+    amountInput.value = numberWithCommas(amount);
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    console.log('DOM loaded');
-
+document.addEventListener('alpine:init', () => {
     let quantityInput = document.getElementsByName('quantity')[0];
     let unitValueInput = document.getElementsByName('unit_value')[0];
 

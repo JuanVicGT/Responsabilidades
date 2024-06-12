@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Item;
 
+use App\Models\Item;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateItemRequest extends FormRequest
 {
@@ -25,7 +27,15 @@ class UpdateItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id' => ['required', 'integer'],
+            'code' => ['required', 'string', 'max:30', Rule::unique(Item::class)->ignore($this->request->get('id'))],
+            'name' => ['required', 'string', 'max:150'],
+            'serial' => ['required', 'string', 'max:150'],
+            'quantity' => ['required', 'integer', 'min:1'],
+            'unit_value' => ['required', 'string'],
+            'amount' => ['nullable', 'string'],
+            'description' => ['nullable', 'string'],
+            'observations' => ['nullable', 'string'],
         ];
     }
 }

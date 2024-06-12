@@ -8,7 +8,7 @@
             @if (auth()->user()->is_admin || auth()->user()->can('create_item'))
                 <x-slot:actions>
                     <x-mary-button label="{{ __('Add New') }}" icon="o-plus" class="btn-success"
-                        link="{{ route('item.create') }}" />
+                        link="{{ route('item.create') }}" no-wire-navigate/>
                 </x-slot:actions>
             @endif
         </x-mary-header>
