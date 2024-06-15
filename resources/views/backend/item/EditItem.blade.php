@@ -65,12 +65,12 @@
                 </div>
                 <div>
                     <x-mary-textarea label="{{ __('Description') }}" type="text" name='description'
-                        value="{{ old('description', $item?->description) }}" rows="5" />
+                        rows="5">{{ old('description', $item?->description) }}</x-mary-textarea>
                     <x-input-error class="mt-2" :messages="$errors->get('description')" />
                 </div>
                 <div>
                     <x-mary-textarea label="{{ __('Observations') }}" type="text" name='observations'
-                        value="{{ old('observations', $item?->observations) }}" rows="5" />
+                        rows="5">{{ old('observations', $item?->observations) }}</x-mary-textarea>
                     <x-input-error class="mt-2" :messages="$errors->get('observations')" />
                 </div>
             </div>

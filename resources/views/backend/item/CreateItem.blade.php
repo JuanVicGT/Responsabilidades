@@ -58,12 +58,12 @@
                 </div>
                 <div>
                     <x-mary-textarea label="{{ __('Description') }}" type="text" name='description'
-                        value="{{ old('description') }}" rows="5" />
+                        rows="5">{{ old('description') }}</x-mary-textarea>
                     <x-input-error class="mt-2" :messages="$errors->get('description')" />
                 </div>
                 <div>
                     <x-mary-textarea label="{{ __('Observations') }}" type="text" name='observations'
-                        value="{{ old('observations') }}" rows="5" />
+                        rows="5">{{ old('observations') }}</x-mary-textarea>
                     <x-input-error class="mt-2" :messages="$errors->get('observations')" />
                 </div>
             </div>
