@@ -13,8 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 
  * @property string name
  * @property string status
- * @property string start_date
- * @property string end_date
+ * @property string date
+ * @property string hour
  * @property string description
  * @property string year
  * @property string month

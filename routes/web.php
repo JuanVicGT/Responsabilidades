@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend;
 use App\Http\Controllers\Backend\EventController;
+use App\Http\Controllers\Backend\TodoController;
 use Illuminate\Support\Facades\Redirect;
 
 // Dashboard (the dahsboard is in the event controller)
@@ -125,6 +126,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('/Delete', 'delete')->name('destroy');
         });
 
+    Route::get('/CalendarTodo', [TodoController::class, 'calendar'])->name('todo.calendar');
     Route::controller(Backend\TodoController::class)->prefix('/Todo')->name('todo.')
         ->group(function () {
             // Views

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TodoController extends Controller
 {
@@ -14,7 +15,18 @@ class TodoController extends Controller
     public function index()
     {
         //
-        return view('backend.todo.index');
+        Gate::authorize('index', Todo::class);
+        return view('backend.todo.IndexTodo');
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function calendar()
+    {
+        //
+        Gate::authorize('index', Todo::class);
+        return view('backend.todo.CalendarTodo');
     }
 
     /**
@@ -23,7 +35,8 @@ class TodoController extends Controller
     public function create()
     {
         //
-        return view('backend.todo.Create');
+        Gate::authorize('create', Todo::class);
+        return view('backend.todo.CreateTodo');
     }
 
     /**
@@ -40,16 +53,19 @@ class TodoController extends Controller
     public function show(Todo $todo)
     {
         //
-        return view('backend.todo.show', compact('todo'));
+        Gate::authorize('show', $todo);
+        return view('backend.todo.ShowTodo', compact('todo'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Todo $todo)
+    public function edit($id)
     {
         //
-        return view('backend.todo.Edit', compact('todo'));
+        $todo = Todo::find($id);
+        Gate::authorize('index', $todo);
+        return view('backend.todo.EditTodo', compact('todo'));
     }
 
     /**

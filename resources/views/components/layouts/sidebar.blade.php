@@ -64,8 +64,12 @@
             <x-mary-menu-item title="{{ __('Events') }}" icon="o-calendar-days" link="{{ route('event.index') }}" />
         @endif
         @if (auth()->user()->is_admin || auth()->user()->can('index_todo'))
-            <x-mary-menu-item title="{{ __('Todos') }}" icon="o-clipboard-document-check"
-                link="{{ route('todo.index') }}" />
+            <x-mary-menu-sub title="{{ __('Todos') }}" icon="o-clipboard-document-check">
+                <x-mary-menu-item title="{{ __('List') }}" icon="o-list-bullet"
+                    link="{{ route('todo.index') }}" />
+                <x-mary-menu-item title="{{ __('Calendar') }}" icon="o-calendar-days"
+                    link="{{ route('todo.calendar') }}" />
+            </x-mary-menu-sub>
         @endif
         @if (auth()->user()->is_admin || auth()->user()->can('index_attendance'))
             <x-mary-menu-item title="{{ __('Attendances') }}" icon="o-clock" link="{{ route('attendance.index') }}" />

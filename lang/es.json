@@ -137,5 +137,9 @@
     "Observations": "Observaciones",
     "Add New Item": "Nuevo Artículo",
     "Edit Item": "Editar Artículo",
-    "Total Amount": "Monto Total"
+    "Total Amount": "Monto Total",
+    "List": "Lista",
+    "Calendar": "Calendario",
+    "Date": "Fecha",
+    "Hour": "Hora"
 }

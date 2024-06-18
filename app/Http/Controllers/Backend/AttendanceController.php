@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class AttendanceController extends Controller
 {
@@ -14,7 +15,8 @@ class AttendanceController extends Controller
     public function index()
     {
         //
-        return view('backend.attendance.Index');
+        Gate::authorize('index', Attendance::class);
+        return view('backend.attendance.IndexAttendance');
     }
 
     /**
@@ -23,7 +25,8 @@ class AttendanceController extends Controller
     public function create()
     {
         //
-        return view('backend.attendance.Create');
+        Gate::authorize('create', Attendance::class);
+        return view('backend.attendance.CreateAttendance');
     }
 
     /**
@@ -40,16 +43,19 @@ class AttendanceController extends Controller
     public function show(Attendance $attendance)
     {
         //
-        return view('backend.attendance.Show', compact('attendance'));
+        Gate::authorize('index', $attendance);
+        return view('backend.attendance.ShowAttendance', compact('attendance'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Attendance $attendance)
+    public function edit($id)
     {
         //
-        return view('backend.attendance.Edit', compact('attendance'));
+        $attendance = Attendance::find($id);
+        Gate::authorize('edit', $attendance);
+        return view('backend.attendance.EditAttendance', compact('attendance'));
     }
 
     /**

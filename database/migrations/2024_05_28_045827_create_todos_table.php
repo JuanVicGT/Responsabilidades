@@ -16,8 +16,8 @@ return new class extends Migration
 
             $table->string('name', 150)->nullable();
             $table->string('status', 20)->nullable();
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
+            $table->date('date')->nullable();
+            $table->time('hour')->nullable();
             $table->string('description')->nullable();
             $table->date('year')->nullable();
             $table->date('month')->nullable();
