@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Todo;
+use App\Utils\Enums\StatusTodo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -36,7 +37,9 @@ class TodoController extends Controller
     {
         //
         Gate::authorize('create', Todo::class);
-        return view('backend.todo.CreateTodo');
+
+        $status_options = StatusTodo::array();
+        return view('backend.todo.CreateTodo', compact('status_options'));
     }
 
     /**

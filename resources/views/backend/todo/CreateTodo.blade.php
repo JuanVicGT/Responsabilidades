@@ -20,45 +20,30 @@
 
             <div class="grid sm:grid-cols-2 gap-4">
                 <div>
-                    <x-mary-input label="{{ __('Code') }}" type="text" name='code' required autofocus
-                        value="{{ old('code') }}" />
-                    <x-input-error class="mt-2" :messages="$errors->get('code')" />
-                </div>
-                <div>
-                    <x-mary-input label="{{ __('Name') }}" type="text" name='name' required
+                    <x-mary-input label="{{ __('Name') }}" type="text" name='name' required autofocus
                         value="{{ old('name') }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('name')" />
                 </div>
                 <div>
-                    <x-mary-input label="{{ __('Serial') }}" type="text" name='serial' required
-                        value="{{ old('serial') }}" />
-                    <x-input-error class="mt-2" :messages="$errors->get('serial')" />
+                    <x-mary-select label="{{ __('Status') }}" name="status" option-value="value" :options="$status_options"
+                        option-label="title" required placeholder="{{ old('status', __('Select a Status')) }}"
+                        placeholder-value="{{ old('status') }}" />
+                    <x-input-error class="mt-2" :messages="$errors->get('status')" />
                 </div>
                 <div>
-                    <x-input-label for="unit_value" :value="__('Unit Value') . '*'" />
-                    <input name='unit_value' required value="{{ old('unit_value') }}"
-                        class="input input-primary w-full peer mt-2" x-mask:dynamic="$money($input)" />
-                    <x-input-error class="mt-2" :messages="$errors->get('unit_value')" />
+                    <x-mary-datetime label="{{ __('Date') }}" name="date" type="date"
+                        value="{{ old('date') }}" />
+                    <x-input-error class="mt-2" :messages="$errors->get('date')" />
                 </div>
                 <div>
-                    <x-mary-input label="{{ __('Quantity') }}" type="number" step="1" name='quantity' required
-                        value="{{ old('quantity', 1) }}" />
-                    <x-input-error class="mt-2" :messages="$errors->get('quantity')" />
+                    <x-mary-datetime label="{{ __('Hour') }}" name="hour" type="time"
+                        value="{{ old('hour') }}" />
+                    <x-input-error class="mt-2" :messages="$errors->get('hour')" />
                 </div>
-                <div>
-                    <x-mary-input label="{{ __('Total') }}" name='amount' x-mask:dynamic="$money($input)"
-                        value="{{ old('amount') }}" readonly icon="o-currency-dollar" />
-                    <x-input-error class="mt-2" :messages="$errors->get('amount')" />
-                </div>
-                <div>
-                    <x-mary-textarea label="{{ __('Description') }}" type="text" name='description'
+                <div class="col-span-2">
+                    <x-mary-textarea label="{{ __('Description') }}" name="description" type="text"
                         rows="5">{{ old('description') }}</x-mary-textarea>
                     <x-input-error class="mt-2" :messages="$errors->get('description')" />
-                </div>
-                <div>
-                    <x-mary-textarea label="{{ __('Observations') }}" type="text" name='observations'
-                        rows="5">{{ old('observations') }}</x-mary-textarea>
-                    <x-input-error class="mt-2" :messages="$errors->get('observations')" />
                 </div>
             </div>
 

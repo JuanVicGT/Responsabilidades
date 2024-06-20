@@ -141,5 +141,8 @@
     "List": "Lista",
     "Calendar": "Calendario",
     "Date": "Fecha",
-    "Hour": "Hora"
+    "Hour": "Hora",
+    "NotStarted": "Sin iniciar",
+    "Started": "En proceso",
+    "Select a Status": "Seleccione un estado"
 }
