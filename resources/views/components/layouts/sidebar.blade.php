@@ -65,10 +65,9 @@
         @endif
         @if (auth()->user()->is_admin || auth()->user()->can('index_todo'))
             <x-mary-menu-sub title="{{ __('Todos') }}" icon="o-clipboard-document-check">
-                <x-mary-menu-item title="{{ __('List') }}" icon="o-list-bullet"
-                    link="{{ route('todo.index') }}" />
+                <x-mary-menu-item title="{{ __('List') }}" icon="o-list-bullet" link="{{ route('todo.index') }}" />
                 <x-mary-menu-item title="{{ __('Calendar') }}" icon="o-calendar-days"
-                    link="{{ route('todo.calendar') }}" />
+                    link="{{ route('todo.calendar') }}" no-wire-navigate />
             </x-mary-menu-sub>
         @endif
         @if (auth()->user()->is_admin || auth()->user()->can('index_attendance'))

@@ -8,13 +8,15 @@
             <x-slot:actions>
                 <x-mary-button label="{{ __('Return') }}" icon="o-arrow-uturn-left" class="btn-accent dark:btn-info"
                     link="{{ route('todo.index') }}" />
+                <x-mary-button label="{{ __('Calendar View') }}" icon="o-calendar-days" class="btn-primary"
+                    link="{{ route('todo.calendar') }}" no-wire-navigate />
             </x-slot:actions>
         </x-mary-header>
     @endsection
 
     <x-mary-card shadow>
         {{-- Form --}}
-        <x-mary-form method="POST" action="{{ route('item.store') }}" x-data="{ submitButtonDisabled: false }"
+        <x-mary-form method="POST" action="{{ route('todo.store') }}" x-data="{ submitButtonDisabled: false }"
             x-on:submit="submitButtonDisabled = true">
             @csrf
 

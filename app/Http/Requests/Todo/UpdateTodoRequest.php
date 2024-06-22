@@ -1,19 +1,22 @@
 <?php
 
-namespace App\Http\Requests\Event;
+namespace App\Http\Requests\Todo;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateEventRequest extends FormRequest
+class UpdateTodoRequest extends FormRequest
 {
     /** @var string */
-    private $modelName = 'event';
+    private $modelName = 'todo';
 
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
+        if ($this->request->get('id_user') !== (string) $this->user()->id)
+            return false;
+
         return $this->user()->is_admin || $this->user()->hasPermissionTo('edit_' . $this->modelName);
     }
 
@@ -25,15 +28,13 @@ class UpdateEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['required', 'integer'],
-            'name' => ['required', 'string', 'max:150'],
-            'start_date' => ['required', 'date'],
-            'end_date' => ['nullable', 'date', 'after:start_date'],
-            'status' => ['required', 'string', 'max:30'],
+            'id'        => ['required', 'integer'],
+            'id_user'   => ['required', 'integer'],
+            'name'      => ['required', 'string', 'max:150'],
+            'status'    => ['required', 'string', 'max:30'],
+            'hour'      => ['nullable', 'date_format:H:i'],
+            'date'      => ['nullable', 'date'],
             'description' => ['nullable', 'string'],
-            'start_hour' => ['nullable', 'date_format:H:i'],
-            'end_hour' => ['nullable', 'date_format:H:i'],
-            'id_responsible' => ['nullable', 'integer'],
         ];
     }
 }

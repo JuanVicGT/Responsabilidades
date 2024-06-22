@@ -1,3 +1,7 @@
+@php
+    use App\Utils\Enums\StatusTodo;
+@endphp
+
 <section>
     <div class="flex py-4">
         <div class="flex justify-end">
@@ -8,7 +12,7 @@
 
     {{-- You can use any `$wire.METHOD` on `@row-click` --}}
     <x-mary-table :headers="$headers" :rows="$rows" with-pagination :sort-by="$sortBy" class="pb-4" striped
-        link="Role/Edit/{id}">
+        link="Todo/Edit/{id}">
 
         {{-- Overrides headers --}}
         @scope('header_id', $header)
@@ -35,6 +39,24 @@
             <h2 class="text-xl font-bold inline">
                 {{ $header['label'] }}
             </h2>
+        @endscope
+
+        @scope('cell_status', $row)
+            @if ($row->status === StatusTodo::NotStarted->value)
+                <x-mary-badge value="{{ __('Not Started') }}" class="badge-warning" />
+            @endif
+
+            @if ($row->status === StatusTodo::Started->value)
+                <x-mary-badge value="{{ __('Started') }}" class="badge-info" />
+            @endif
+
+            @if ($row->status === StatusTodo::Cancelled->value)
+                <x-mary-badge value="{{ __('Cancelled') }}" class="badge-error" />
+            @endif
+
+            @if ($row->status === StatusTodo::Finished->value)
+                <x-mary-badge value="{{ __('Finished') }}" class="badge-success" />
+            @endif
         @endscope
 
         @scope('expansion', $row)

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->time('hour')->nullable();
             $table->string('description')->nullable();
-            $table->date('year')->nullable();
-            $table->date('month')->nullable();
+            $table->string('year', 5)->nullable();
+            $table->string('month', 2)->nullable();
 
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
 

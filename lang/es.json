@@ -144,5 +144,12 @@
     "Hour": "Hora",
     "NotStarted": "Sin iniciar",
     "Started": "En proceso",
-    "Select a Status": "Seleccione un estado"
+    "Select a Status": "Seleccione un estado",
+    "Add New Todo": "Nueva Tarea",
+    "Edit Todo": "Editar Tarea",
+    "Not Started": "Sin Iniciar",
+    "Calendar View": "Calendario",
+    "List View": "Lista",
+    "Todos Calendar": "Calendario de Tareas",
+    "Todos List": "Lista de Tareas"
 }

@@ -4,6 +4,7 @@ namespace App\Livewire\Backend\Todo;
 
 use App\Models\Todo;
 use App\Utils\Alerts;
+use Illuminate\Support\Facades\Auth;
 use Mary\Traits\Toast;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -40,13 +41,14 @@ class TodoTable extends Component
 
     protected function getTableRows()
     {
-        return Todo::when(
-            $this->search,
+        return Todo::where('id_user', Auth::user()->id)
+            ->when(
+                $this->search,
 
-            fn ($query) =>
-            $query->where('name', 'like', "%{$this->search}%")
-                ->orWhere('description', 'like', "%{$this->search}%")
-        )
+                fn ($query) =>
+                $query->where('name', 'like', "%{$this->search}%")
+                    ->orWhere('description', 'like', "%{$this->search}%")
+            )
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->pagination);
     }

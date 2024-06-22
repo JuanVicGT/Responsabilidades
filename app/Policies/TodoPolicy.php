@@ -40,6 +40,9 @@ class TodoPolicy
      */
     public function edit(User $user, Todo $todo): bool
     {
+        if ($todo->user_id !== $user->id)
+            return false;
+
         return $user->is_admin || $user->hasPermissionTo('edit_' . $this->modelName);
     }
 
@@ -48,6 +51,9 @@ class TodoPolicy
      */
     public function delete(User $user, Todo $todo): bool
     {
+        if ($todo->user_id !== $user->id)
+            return false;
+
         return $user->is_admin || $user->hasPermissionTo('delete_' . $this->modelName);
     }
 }
