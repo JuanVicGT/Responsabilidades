@@ -56,11 +56,11 @@
         @scope('actions', $row)
             <div class="flex space-x-2">
                 @if (auth()->user()->is_admin || auth()->user()->can('edit_item'))
-                    <x-mary-button icon="o-pencil" spinner class="btn-sm btn-info"
+                    <x-mary-button icon="o-pencil" spinner class="btn-sm btn-primary text-white"
                         link="{{ route('item.edit', $row->id) }}" no-wire-navigate />
                 @endif
                 @if (auth()->user()->is_admin || auth()->user()->can('delete_item'))
-                    <x-mary-button icon="o-trash" spinner class="btn-sm btn-error"
+                    <x-mary-button icon="o-trash" spinner class="btn-sm btn-error text-white"
                         wire:click="showDeleteModal({{ $row->id }})" />
                 @endif
             </div>

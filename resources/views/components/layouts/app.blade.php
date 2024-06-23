@@ -26,8 +26,8 @@
 
     {{-- NAVBAR mobile only --}}
     <x-mary-nav sticky class="lg:hidden">
+        {{-- Empty Brand because we don't need it (show in the menu) --}}
         <x-slot:brand>
-            <div class="ml-5 pt-5">App</div>
         </x-slot:brand>
         <x-slot:actions>
             <label for="main-drawer" class="lg:hidden mr-3">

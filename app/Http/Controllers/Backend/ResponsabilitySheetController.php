@@ -14,7 +14,7 @@ class ResponsabilitySheetController extends Controller
     public function index()
     {
         //
-        return view('backend.responsability.Index');
+        return view('backend.responsability.IndexResponsability');
     }
 
     /**
@@ -23,7 +23,7 @@ class ResponsabilitySheetController extends Controller
     public function create()
     {
         //
-        return view('backend.responsability.Create');
+        return view('backend.responsability.CreateResponsability');
     }
 
     /**
@@ -40,7 +40,7 @@ class ResponsabilitySheetController extends Controller
     public function show(ResponsabilitySheet $responsabilitySheet)
     {
         //
-        return view('backend.responsability.Show', compact('responsabilitySheet'));
+        return view('backend.responsability.ShowResponsability', compact('responsabilitySheet'));
     }
 
     /**
@@ -49,7 +49,7 @@ class ResponsabilitySheetController extends Controller
     public function edit(ResponsabilitySheet $responsabilitySheet)
     {
         //
-        return view('backend.responsability.Edit', compact('responsabilitySheet'));
+        return view('backend.responsability.EditResponsability', compact('responsabilitySheet'));
     }
 
     /**

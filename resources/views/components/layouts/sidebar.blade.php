@@ -106,8 +106,8 @@
             <x-mary-menu-item title="{{ __('Items') }}" icon="o-rectangle-group" link="{{ route('item.index') }}" />
         @endif
         @if (auth()->user()->is_admin || auth()->user()->can('index_responsibility'))
-            <x-mary-menu-item title="{{ __('Responsibility Sheets') }}" icon="c-clipboard-document-check"
-                link="{{ route('responsibility-sheet.index') }}" />
+            <x-mary-menu-item title="{{ __('Responsability Sheets') }}" icon="c-clipboard-document-check"
+                link="{{ route('responsability-sheet.index') }}" />
         @endif
     </x-mary-menu>
 </x-slot:sidebar>

@@ -38,6 +38,7 @@
     "Collaborators": "Colaboradores",
     "Welcome": "Bienvenido",
     "Work Rights": "Municipalidad de Santa María Chiquimula",
+    "Small Work Rights": "Municipalidad de Santa María Chiquimula",
     "Profile": "Perfil",
     "Edit Profile": "Editar Perfil",
     "Update your basic profile information.": "Actualiza los datos básicos de tu perfil.",
@@ -65,7 +66,7 @@
     "Dependencies": "Dependencias",
     "Items": "Artículos",
     "Responsibilities": "Responsabilidades",
-    "Responsibility Sheets": "Hojas de Responsabilidades",
+    "Responsability Sheets": "Hojas de Responsabilidades",
     "Users": "Usuarios",
     "User": "Usuario",
     "Roles": "Roles",
@@ -151,5 +152,11 @@
     "Calendar View": "Calendario",
     "List View": "Lista",
     "Todos Calendar": "Calendario de Tareas",
-    "Todos List": "Lista de Tareas"
+    "Todos List": "Lista de Tareas",
+    "Add New Responsability Sheet": "Nueva Hoja de Responsabilidades",
+    "General Data": "Datos Generales",
+    "Assign Items": "Asignar Responsabilidades",
+    "Verify Responsibilities": "Verificar",
+    "Previous": "Anterior",
+    "Next": "Siguiente"
 }

@@ -141,7 +141,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('/Delete', 'delete')->name('destroy');
         });
 
-    Route::controller(Backend\ResponsabilitySheetController::class)->prefix('/Responsability')->name('responsibility-sheet.')
+    Route::controller(Backend\ResponsabilitySheetController::class)->prefix('/Responsability')->name('responsability-sheet.')
         ->group(function () {
             // Views
             Route::get('/', 'index')->name('index');
