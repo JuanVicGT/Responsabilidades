@@ -6,8 +6,8 @@
     @section('content-header')
         <x-mary-header title="{{ __('Todos Calendar') }}">
             <x-slot:actions>
-                <x-mary-button label="{{ __('List View') }}" icon="o-clipboard-document-check" class="btn-primary"
-                    link="{{ route('todo.index') }}" no-wire-navigate />
+                <x-mary-button label="{{ __('List View') }}" icon="o-clipboard-document-check"
+                    class="btn-primary text-white dark:text-black" link="{{ route('todo.index') }}" no-wire-navigate />
                 @if (auth()->user()->is_admin || auth()->user()->can('create_todo'))
                     <x-mary-button label="{{ __('Add New') }}" icon="o-plus" class="btn-success"
                         link="{{ route('todo.create') }}" no-wire-navigate />
@@ -36,6 +36,7 @@
         });
     </script>
 
-    <div id="calendar"></div>
-
+    <x-mary-card shadow>
+        <div id="calendar"></div>
+    </x-mary-card>
 </x-layouts.app>

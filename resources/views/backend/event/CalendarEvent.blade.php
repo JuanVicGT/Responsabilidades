@@ -19,6 +19,7 @@
         });
     </script>
 
-    <div id="calendar"></div>
-
+    <x-mary-card shadow>
+        <div id="calendar"></div>
+    </x-mary-card>
 </section>

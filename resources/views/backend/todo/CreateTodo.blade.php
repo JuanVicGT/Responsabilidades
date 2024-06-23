@@ -8,8 +8,8 @@
             <x-slot:actions>
                 <x-mary-button label="{{ __('Return') }}" icon="o-arrow-uturn-left" class="btn-accent dark:btn-info"
                     link="{{ route('todo.index') }}" />
-                <x-mary-button label="{{ __('Calendar View') }}" icon="o-calendar-days" class="btn-primary"
-                    link="{{ route('todo.calendar') }}" no-wire-navigate />
+                <x-mary-button label="{{ __('Calendar View') }}" icon="o-calendar-days"
+                    class="btn-primary text-white dark:text-black" link="{{ route('todo.calendar') }}" no-wire-navigate />
             </x-slot:actions>
         </x-mary-header>
     @endsection

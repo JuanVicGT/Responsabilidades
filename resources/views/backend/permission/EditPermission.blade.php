@@ -16,7 +16,7 @@
         </x-mary-header>
     @endsection
 
-    <x-mary-card shadow class="!p-0">
+    <x-mary-card shadow>
 
         <x-mary-form method="POST" action="{{ route('permission.update') }}" x-data="{ submitButtonDisabled: false }"
             x-on:submit="submitButtonDisabled = true">

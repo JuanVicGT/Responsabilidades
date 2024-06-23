@@ -43,7 +43,7 @@
         <x-layouts.sidebar />
 
         {{-- The `$slot` goes here --}}
-        <x-slot:content>
+        <x-slot:content class="bg-base-200">
             @yield('content-header')
 
             @if (session('alerts'))

@@ -15,7 +15,7 @@
     @endsection
 
     {{-- Form --}}
-    <x-mary-card shadow class="!p-0">
+    <x-mary-card shadow>
         <x-mary-form method="POST" action="{{ route('user.store') }}" x-data="{ submitButtonDisabled: false }"
             x-on:submit="submitButtonDisabled = true">
             @csrf

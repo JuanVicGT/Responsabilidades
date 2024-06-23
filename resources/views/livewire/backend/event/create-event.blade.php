@@ -8,7 +8,7 @@
         @csrf
 
         <div class="grid sm:grid-cols-4 gap-4">
-            <div class="col-span-2">
+            <div class="sm:col-span-2">
                 <x-mary-input label="{{ __('Name') }}" type="text" name='name' wire:model="name" required
                     autofocus />
                 <x-input-error class="mt-2" :messages="$errors->get('name')" />
@@ -39,25 +39,25 @@
                 </x-mary-choices>
                 <x-input-error class="mt-2" :messages="$errors->get('status')" />
             </div>
-            <div class="col-span-2">
+            <div class="sm:col-span-2">
                 <x-mary-datetime label="{{ __('Start Date') }}" name="start_date" wire:model="start_date" type="date"
                     required />
                 <x-input-error class="mt-2" :messages="$errors->get('start_date')" />
             </div>
-            <div class="col-span-2">
+            <div class="sm:col-span-2">
                 <x-mary-datetime label="{{ __('End Date') }}" name="end_date" wire:model="end_date" type="date" />
                 <x-input-error class="mt-2" :messages="$errors->get('end_date')" />
             </div>
-            <div class="col-span-2">
+            <div class="sm:col-span-2">
                 <x-mary-datetime label="{{ __('Start Hour') }}" name="start_hour" wire:model="start_hour"
                     type="time" />
                 <x-input-error class="mt-2" :messages="$errors->get('start_hour')" />
             </div>
-            <div class="col-span-2">
+            <div class="sm:col-span-2">
                 <x-mary-datetime label="{{ __('End Hour') }}" name="end_hour" wire:model="end_hour" type="time" />
                 <x-input-error class="mt-2" :messages="$errors->get('end_hour')" />
             </div>
-            <div class="col-span-4">
+            <div class="sm:col-span-4">
                 <x-mary-textarea label="{{ __('Description') }}" name="description" wire:model="description"
                     type="time" rows="5" inline></x-mary-textarea>
                 <x-input-error class="mt-2" :messages="$errors->get('description')" />

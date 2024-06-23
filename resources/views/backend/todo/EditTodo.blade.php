@@ -8,8 +8,8 @@
             <x-slot:actions>
                 <x-mary-button label="{{ __('Return') }}" icon="o-arrow-uturn-left" class="btn-accent dark:btn-info"
                     link="{{ route('todo.index') }}" />
-                <x-mary-button label="{{ __('Calendar View') }}" icon="o-calendar-days" class="btn-primary"
-                    link="{{ route('todo.calendar') }}" no-wire-navigate />
+                <x-mary-button label="{{ __('Calendar View') }}" icon="o-calendar-days"
+                    class="btn-primary text-white dark:text-black" link="{{ route('todo.calendar') }}" no-wire-navigate />
                 @if (auth()->user()->is_admin || auth()->user()->can('create_todo'))
                     <x-mary-button label="{{ __('Add New') }}" icon="o-plus" class="btn-success"
                         link="{{ route('todo.create') }}" />
