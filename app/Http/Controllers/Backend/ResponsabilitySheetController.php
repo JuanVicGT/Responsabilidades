@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\ResponsabilitySheet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ResponsabilitySheetController extends Controller
 {
@@ -14,6 +15,7 @@ class ResponsabilitySheetController extends Controller
     public function index()
     {
         //
+        Gate::authorize('index', ResponsabilitySheet::class);
         return view('backend.responsability.IndexResponsability');
     }
 
@@ -23,6 +25,7 @@ class ResponsabilitySheetController extends Controller
     public function create()
     {
         //
+        Gate::authorize('create', ResponsabilitySheet::class);
         return view('backend.responsability.CreateResponsability');
     }
 
@@ -49,6 +52,7 @@ class ResponsabilitySheetController extends Controller
     public function edit(ResponsabilitySheet $responsabilitySheet)
     {
         //
+        Gate::authorize('edit', new ResponsabilitySheet());
         return view('backend.responsability.EditResponsability', compact('responsabilitySheet'));
     }
 

@@ -17,6 +17,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 
+    <script type="text/javascript" src="{{ asset('assets/js/mary-currency.js') }}"></script>
+
     <!-- Custom Styles and Scripts -->
     @yield('custom-css')
     @yield('custom-js')

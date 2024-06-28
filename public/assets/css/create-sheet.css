@@ -1,0 +1,22 @@
+.external-choice {
+    display: flex;
+}
+
+.external-choice>input {
+    border: none !important;
+}
+
+.steps .step-primary::after {
+    color: white;
+    font-weight: bold;
+}
+
+.steps .step-primary::before {
+    background-color: var(--fallback-p, oklch(var(--p)/var(--tw-bg-opacity)));
+}
+
+.steps {
+    @media (min-width: 768px) {
+        width: 100%;
+    }
+}
