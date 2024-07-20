@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Backend\Responsability;
 
+use App\Models\LineResponsabilitySheet;
 use App\Models\User;
 use Livewire\Component;
 
@@ -14,12 +15,14 @@ class ResponsabilitySheetCreate extends Component
     /** === Form Attributes === */
     public $id_responsible;
     public $series;
-    public $money;
+    public $total;
+    /** @var LineResponsabilitySheet[] */
+    public $lines;
 
     public function mount()
     {
         $this->step = 1;
-        $this->money = 54000.12;
+        $this->lines = [];
 
         $this->search();
     }
@@ -67,7 +70,8 @@ class ResponsabilitySheetCreate extends Component
     protected function validateStep1()
     {
         $this->validate([
-            'series' => 'starts_with:Hello|ends_with:world',
+            'series' => ['required', 'string', 'max:150'],
+            'id_responsible' => ['required'],
         ]);
     }
 

@@ -1,0 +1,27 @@
+@startgantt "July - 2024"
+
+project starts the 2024/07/01
+
+<style>
+ganttDiagram {
+    task {
+        BackGroundColor GreenYellow
+        LineColor Green
+        unstarted {
+            BackGroundColor Fuchsia
+            LineColor FireBrick
+        }
+    }
+}
+</style>
+
+-- Julio de 2024 --
+[Redacción de documento] as [doc] requires 28 days
+[Creación de diagrama de GANTT] as [doc_gantt] requires 3 days
+
+[doc_gantt] starts 2024-07-15
+[doc_meet] starts 2024-07-11
+
+[Reunión agendada] as [doc_meet] requires 1 days
+
+@endgantt
