@@ -1,4 +1,4 @@
-@startuml "DC 01 - Identificación de entidades"
+@startuml "DC 02 - Identificación de entidades"
 
 /' === Fuertes === '/
 entity users as "Usuarios" {
@@ -140,8 +140,8 @@ users "  1..*  " ||--o| "  0..1  " todos
 users "  1..*  " ||--o| "  0..1  " attendances
 users "  1..*  " ||--o| "  0..1  " responsability_sheets
 
-responsability_sheets "  1..*  " ||--o{ "  0..*  " detail_responsibility_sheets
+responsability_sheets "  1..*  " ||--o{ "  0..*  " line_responsibility_sheets
 responsability_sheets "  1..*  " ||--o{ "  0..*  " observation_responsibility_sheets
-items "  1..*  " ||--o{ "  0..*  " detail_responsibility_sheets
+items "  1..*  " ||--o{ "  0..*  " line_responsibility_sheets
 
 @enduml

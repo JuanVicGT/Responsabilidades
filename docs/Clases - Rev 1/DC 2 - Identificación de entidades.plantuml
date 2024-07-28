@@ -1,0 +1,217 @@
+@startuml "DC 02 - Identificación de entidades"
+
+/' === Fuertes === '/
+entity users as "usuarios" {
+    id : Integer
+
+    birthdate : date
+    code : string
+    avatar : string
+    name : string
+    last_name : string
+    is_admin : boolean
+    is_active : boolean
+    status : boolean
+    email : string
+    phone : string
+    address : string
+    password : string
+    username : string
+    work_position : string
+    work_row : string
+    dependence : string
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity events as "eventos" {
+    id : Integer
+    id_responsible : Integer <<foreign>>
+    created_by : Integer <<foreign>>
+
+    name : string
+    start_date : date
+    end_date : date
+    status : string
+    start_hour : time
+    end_hour : time
+    description : string
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity dependences as "dependencias" {
+    id : Integer
+
+    code : string
+    name : string
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity items as "elementos" {
+    id : Integer
+
+    code : string
+    name : string
+    quantity : integer
+    description : text
+    series : string
+    observations : text
+    unit_value : float
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity responsibility_sheets as "hojas_de_responsabilidad" {
+    id : Integer
+    created_by : Integer <<foreign>>
+    id_responsible : Integer <<foreign>>
+
+    series : string
+    total : float
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+/' === Débiles === '/
+entity todos as "tareas" {
+    id : Integer
+    id_user : Integer <<foreign>>
+    created_by : Integer <<foreign>>
+
+    name : string
+    status : string
+    start_date : date
+    end_date : date
+    description : string
+    year : date
+    month : date
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity attendances as "asistencias" {
+    id : Integer
+    id_user : Integer <<foreign>>
+
+    name : string
+    date : date
+    start_hour : number
+    end_hour : number
+    extra_hours : number
+    description : string
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity line_responsibility_sheets as "detalles_de_hoja_de_responsabilidad" {
+    id : Integer
+    id_item : Integer <<foreign>>
+    id_responsibility_sheet : Integer <<foreign>>
+
+    quantity : float
+    subtotal : float
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity observation_responsibility_sheets as "observaciones_de_hoja_de_responsabilidad" {
+    id : Integer
+    added_by : Integer <<foreign>>
+    id_responsibility_sheet : Integer <<foreign>>
+
+    name : string
+    description : string
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity roles as "roles" {
+    id : Integer
+
+    name : string
+    description : string
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity permissions as "permisos" {
+    id : Integer
+
+    name : string
+    description : string
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity item_transfers as "transferencias_de_elementos" {
+    id : Integer
+    id_item : Integer <<foreign>>
+    id_from_responsibility_sheet : Integer <<foreign>>
+    id_to_responsibility_sheet : Integer <<foreign>>
+    created_by : Integer <<foreign>>
+
+    transfer_date : date
+    status : string
+    description : text
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity observation_events as "observaciones_de_eventos" {
+    id : Integer
+    id_event : Integer <<foreign>>
+    added_by : Integer <<foreign>>
+
+    name : string
+    description : string
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity observation_todos as "observaciones_de_tareas" {
+    id : Integer
+    id_todo : Integer <<foreign>>
+    added_by : Integer <<foreign>>
+
+    name : string
+    description : string
+
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+/' === Relaciones === '/
+users "  0..*  " }o--|{ "  1..*  " dependences
+users "  1..*  " ||--o| "  0..1  " events
+users "  1..*  " ||--o| "  0..1  " todos
+users "  1..*  " ||--o| "  0..1  " attendances
+users "  1..*  " ||--o| "  0..1  " responsibility_sheets
+
+responsibility_sheets "  1..*  " ||--o{ "  0..*  " line_responsibility_sheets
+responsibility_sheets "  1..*  " ||--o{ "  0..*  " observation_responsibility_sheets
+items "  1..*  " ||--o{ "  0..*  " line_responsibility_sheets
+
+roles "  0..*  " ||--o| "  0..1  " users
+permissions "  0..*  " ||--o| "  0..*  " roles
+item_transfers "  1..*  " ||--o| "  0..1  " items
+item_transfers "  1..*  " ||--o| "  0..1  " responsibility_sheets
+
+events "  1..*  " ||--o{ "  0..*  " observation_events
+todos "  1..*  " ||--o{ "  0..*  " observation_todos
+
+@enduml

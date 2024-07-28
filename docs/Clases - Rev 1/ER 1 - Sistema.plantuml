@@ -1,0 +1,188 @@
+@startuml "ERD - Sistema de Responsabilidades y RRHH"
+
+/' === Fuertes === '/
+entity users as "usuarios" {
+    +id : Integer [PK]
+    birthdate : date
+    code : string
+    avatar : string
+    name : string
+    last_name : string
+    admin : boolean
+    status : boolean
+    email : string
+    phone : string
+    address : string
+    password : string
+    username : string
+    work_position : string
+    work_row : string
+    dependence : string
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity events as "eventos" {
+    +id : Integer [PK]
+    id_responsible : Integer [FK] <<usuarios>>
+    created_by : Integer [FK] <<usuarios>>
+    name : string
+    start_date : date
+    end_date : date
+    status : string
+    start_hour : time
+    end_hour : time
+    description : string
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity dependences as "dependencias" {
+    +id : Integer [PK]
+    code : string
+    name : string
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity items as "elementos" {
+    +id : Integer [PK]
+    code : string
+    name : string
+    quantity : integer
+    description : text
+    series : string
+    observations : text
+    unit_value : float
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity responsibility_sheets as "hojas_de_responsabilidad" {
+    +id : Integer [PK]
+    created_by : Integer [FK] <<usuarios>>
+    id_responsible : Integer [FK] <<usuarios>>
+    series : string
+    total : float
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+/' === Débiles === '/
+entity todos as "tareas" {
+    +id : Integer [PK]
+    id_user : Integer [FK] <<usuarios>>
+    created_by : Integer [FK] <<usuarios>>
+    name : string
+    status : string
+    start_date : date
+    end_date : date
+    description : string
+    year : date
+    month : date
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity attendances as "asistencias" {
+    +id : Integer [PK]
+    id_user : Integer [FK] <<usuarios>>
+    name : string
+    date : date
+    start_hour : number
+    end_hour : number
+    extra_hours : number
+    description : string
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity line_responsibility_sheets as "detalles_de_hoja_de_responsabilidad" {
+    +id : Integer [PK]
+    id_item : Integer [FK] <<elementos>>
+    id_responsibility_sheet : Integer [FK] <<hojas_de_responsabilidad>>
+    quantity : float
+    subtotal : float
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity observation_responsibility_sheets as "observaciones_de_hoja_de_responsabilidad" {
+    +id : Integer [PK]
+    added_by : Integer [FK] <<usuarios>>
+    id_responsibility_sheet : Integer [FK] <<hojas_de_responsabilidad>>
+    name : string
+    description : string
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity roles as "roles" {
+    +id : Integer [PK]
+    name : string
+    description : string
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity permissions as "permisos" {
+    +id : Integer [PK]
+    name : string
+    description : string
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity item_transfers as "transferencias_de_elementos" {
+    +id : Integer [PK]
+    id_item : Integer [FK] <<elementos>>
+    id_from_responsibility_sheet : Integer [FK] <<hojas_de_responsabilidad>>
+    id_to_responsibility_sheet : Integer [FK] <<hojas_de_responsabilidad>>
+    created_by : Integer [FK] <<usuarios>>
+    transfer_date : date
+    status : string
+    description : text
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity event_observations as "observaciones_de_eventos" {
+    +id : Integer [PK]
+    id_event : Integer [FK] <<eventos>>
+    added_by : Integer [FK] <<usuarios>>
+    name : string
+    description : string
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+entity todo_observations as "observaciones_de_tareas" {
+    +id : Integer [PK]
+    id_todo : Integer [FK] <<tareas>>
+    added_by : Integer [FK] <<usuarios>>
+    name : string
+    description : string
+    created_at : timestamp
+    updated_at : timestamp
+}
+
+/' === Relaciones === '/
+usuarios "  0..*  " }o--|{ "  1..*  " dependencias
+usuarios "  1..*  " ||--o| "  0..1  " eventos
+usuarios "  1..*  " ||--o| "  0..1  " tareas
+usuarios "  1..*  " ||--o| "  0..1  " asistencias
+usuarios "  1..*  " ||--o| "  0..1  " hojas_de_responsabilidad
+
+hojas_de_responsabilidad "  1..*  " ||--o{ "  0..*  " detalles_de_hoja_de_responsabilidad
+hojas_de_responsabilidad "  1..*  " ||--o{ "  0..*  " observaciones_de_hoja_de_responsabilidad
+elementos "  1..*  " ||--o{ "  0..*  " detalles_de_hoja_de_responsabilidad
+
+roles "  0..*  " ||--o| "  0..1  " usuarios
+permisos "  0..*  " ||--o| "  0..*  " roles
+transferencias_de_elementos "  1..*  " ||--o| "  0..1  " elementos
+transferencias_de_elementos "  1..*  " ||--o| "  0..1  " hojas_de_responsabilidad
+
+eventos "  1..*  " ||--o{ "  0..*  " observaciones_de_eventos
+tareas "  1..*  " ||--o{ "  0..*  " observaciones_de_tareas
+
+@enduml

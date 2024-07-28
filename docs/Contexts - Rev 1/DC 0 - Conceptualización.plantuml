@@ -1,0 +1,39 @@
+@startmindmap "Diagrama de contexto 0 - Conceptualización"
+
+<style>
+mindmapDiagram {
+    .green {
+        BackgroundColor lightgreen
+    }
+    .rose {
+        BackgroundColor #FFBBCC
+    }
+    .blue {
+        BackgroundColor lightblue
+    }
+    .yellow {
+        BackgroundColor lightyellow
+    }
+    .orange {
+        BackgroundColor #FECF79
+    }
+    .white {
+        BackgroundColor white
+    }
+}
+</style>
+
++ Sistema de Responsabilidades \ny cuestiones básicas de RRHH <<rose>>
+
+** Items <<blue>>
+** Eventos <<blue>>
+** Horarios <<blue>>
+** Hojas de responsabilidades <<blue>>
+
+left side
+
+-- Roles <<blue>>
+-- Permisos <<blue>>
+-- Tareas <<blue>>
+-- Consulta sin usuario <<blue>>
+@endmindmap

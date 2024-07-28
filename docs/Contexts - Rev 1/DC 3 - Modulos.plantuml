@@ -1,0 +1,56 @@
+@startmindmap "Diagrama de contexto 3 - Planteamiento de módulos"
+
+<style>
+mindmapDiagram {
+    .green {
+        BackgroundColor lightgreen
+    }
+    .rose {
+        BackgroundColor #FFBBCC
+    }
+    .blue {
+        BackgroundColor lightblue
+    }
+    .yellow {
+        BackgroundColor lightyellow
+    }
+    .orange {
+        BackgroundColor #FECF79
+    }
+    .white {
+        BackgroundColor white
+    }
+}
+</style>
+
+* Módulos <<green>>
+
+++ Autenticación <<orange>>
++++ Inicio de sesión
++++ Manejo de roles
++++ Permisos de edición, consulta y creación
+
+++ RRHH <<orange>>
++++ Dependencias <<blue>>
+++++ Creación de dependencia
++++ Usuarios/Colaboradores <<blue>>
+++++ Creación de Usuarios
+++++ Asignación de rol
+++++ Asignación de dependencia
+++++ Gestión de horarios de entrada y salida
++++ Eventos <<blue>>
+++++ Ingresar evento
+++++ Cancelar evento
+++++ Reagendar evento
++++ Tareas <<blue>>
+++++ Ingresar tarea
+++++ Editar tarea
+
+++ Responsabilidades <<orange>>
++++ Items <<blue>>
+++++ Registro de items
+++++ Edición de items
++++ Asignación de items 
++++ Generación de QR
+
+@endmindmap

@@ -1,0 +1,95 @@
+@startmindmap "Diagrama de contexto 2 - Planteamiento general"
+
+<style>
+mindmapDiagram {
+    .green {
+        BackgroundColor lightgreen
+    }
+    .rose {
+        BackgroundColor #FFBBCC
+    }
+    .blue {
+        BackgroundColor lightblue
+    }
+    .yellow {
+        BackgroundColor lightyellow
+    }
+    .orange {
+        BackgroundColor #FECF79
+    }
+    .white {
+        BackgroundColor white
+    }
+}
+</style>
+
+* Sistema de Responsabilidades \ny cuestiones básicas de RRHH <<green>>
+
+
+++ Super Administrador <<blue>>
++++ Autorización <<orange>>
+++++ Permisos <<blue>>
++++++ Ingresar permiso
++++++ Editar permiso
++++++ Eliminar permiso
+++++ Roles <<blue>>
++++++ Ingresar rol
++++++ Editar rol
++++++ Eliminar rol
++++++ Asignación de permisos <<yellow>>
++++ Acceso completo <<yellow>>
+++ Empleado <<blue>>
++++ Personal <<orange>>
+++++ Editar información propia
+++++ Editar la contraseña propia
++++ Horario <<orange>>
+++++ Ingreso de entrada
+++++ Ingreso de salida
++++ Tareas <<orange>>
+++++ Ingresar tareas
+++++ Actualizar tareas
+++++ Consultar tareas propias
++++ Eventos <<orange>>
+++++ Consultar eventos
+++++ Imprimir calendarización
++++ Hojas de responsabilidades <<orange>>
+++++ Consultar hoja de responsabilidades
+++++ Imprimir hoja de responsabilidades
+
+++ Invitado <<blue>>
++++ Consultar QR de hojas de responsabilidades
+
+left side
+
+-- Administrador <<blue>>
+--- Dependencias <<orange>>
+---- Ingreso de dependencia
+---- Edición de dependencia
+--- Personal <<orange>>
+---- Creación de usuarios
+---- Actualización de contraseña para usuarios (aleatoria)
+---- Asignación de dependencia
+---- Asignación de rol <<yellow>>
+---- Bloquear acceso
+-- Encargado <<blue>>
+--- Tareas <<orange>>
+---- Ingresar tareas propias
+---- Editar tareas propias
+---- Consultar tareas de los empleados
+--- Eventos <<orange>>
+---- Calendarizar eventos
+---- Consultar calendarización
+---- Editar evento calendarizado
+---- Recalendizar evento
+---- Imprimir calendarización
+--- Items <<orange>>
+---- Ingresar items
+---- Editar items
+---- Consultar items
+--- Hojas de responsabilidades <<orange>>
+---- Generar hoja de responsabilidades
+---- Asignar items
+---- Generar QR
+---- Consultar hojas de responsabilidades
+---- Imprimir hoja de responsabilidades
+@endmindmap

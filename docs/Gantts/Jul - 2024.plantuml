@@ -17,11 +17,19 @@ ganttDiagram {
 
 -- Julio de 2024 --
 [Redacción de documento] as [doc] requires 28 days
-[Creación de diagrama de GANTT] as [doc_gantt] requires 3 days
+[Creación de diagrama de GANTT] as [doc_gantt] requires 5 days
+[doc_gantt] starts 2024-07-16
 
-[doc_gantt] starts 2024-07-15
-[doc_meet] starts 2024-07-11
+[Diagramación UML - conceptualización base] as [uml_1] requires 4 days
+[uml_1] starts 2024-07-21
 
 [Reunión agendada] as [doc_meet] requires 1 days
+[doc_meet] starts 2024-07-24
+
+[Análisis de reunión] as [rev_doc] requires 7 days
+[rev_doc] starts 2024-07-25
+
+[Diagramación UML - ajuste de procesos] as [uml_2] requires 4 days
+[uml_2] starts 2024-08-1
 
 @endgantt
