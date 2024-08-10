@@ -1,0 +1,34 @@
+@startuml "CU - 3 - Registro de paciente"
+
+left to right direction
+
+/' === Sección de actores === '/
+actor Usuario as usuario
+
+/' === Sección de elementos === '/
+package "Registro de Pacientes" {
+    usecase "Ingresar al sistema" as UC1
+    usecase "Ingresar datos primarios del paciente" as UC2
+    usecase "Ingresar campos completos del paciente" as UC3
+    usecase "Asignar numero de expediente" as UC3
+    usecase "Guardar Paciente" as UC4
+}
+
+("Validar Campos") as validar
+("Consultar Paciente") as comprobar
+("Finalizar Registro") as modificar
+("Registrar Paciente") as registrar
+
+/' === Sección de Relaciones === '/
+usuario --> UC1
+usuario --> UC2
+usuario --> UC3
+usuario --> UC4
+
+UC2 ..> comprobar : <<include>>
+comprobar <.. modificar : <<extends>>
+
+UC4 ..> validar : <<include>>
+validar <.. registrar : <<extends>>
+
+@enduml

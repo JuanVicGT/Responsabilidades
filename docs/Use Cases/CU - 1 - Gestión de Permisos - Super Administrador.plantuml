@@ -1,0 +1,41 @@
+@startuml "CU - 1 - Gestión de Permisos - Super Administrador"
+
+left to right direction
+
+/' === Sección de jerarquias === '/
+actor "Usuario Super Administrador" as sadmin1
+actor "Usuario Administrador" as admin1
+actor "Usuario Empleado" as user1
+sadmin1 --> admin1
+admin1 --> user1
+
+/' === Sección de actores === '/
+actor "Usuario Super Administrador" as sadmin
+
+/' === Sección de elementos === '/
+package "Módulo Autorización" {
+    usecase "Ingresar Permiso" as auth_permission_create
+    usecase "Editar Permiso" as auth_permission_edit
+    usecase "Eliminar Permiso" as auth_permission_delete
+}
+
+package "Módulo Roles" {
+    usecase "Asignar Permiso a Rol" as auth_permission_to_role
+    usecase "Crear Rol" as auth_role_create
+    usecase "Editar Rol" as auth_role_edit
+    usecase "Eliminar Rol" as auth_role_delete
+    usecase "Asignar Rol a Usuario" as auth_role_to_user
+}
+
+/' === Sección de Relaciones === '/
+sadmin --> auth_permission_create
+sadmin --> auth_permission_edit
+sadmin --> auth_permission_delete
+
+sadmin --> auth_permission_to_role
+sadmin --> auth_role_create
+sadmin --> auth_role_edit
+sadmin --> auth_role_delete
+sadmin --> auth_role_to_user
+
+@enduml

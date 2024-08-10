@@ -1,0 +1,30 @@
+@startuml "CU - 2 - Inicio de sesión"
+
+left to right direction
+
+/' === Sección de actores === '/
+actor Usuario as user
+
+/' === Sección de elementos === '/
+package "Inicio de sesión" {
+    usecase "Ingresar credenciales" as UC1
+    usecase "Recordar usuario" as UC2
+    usecase "Presionar botón (ver contraseña)" as UC4
+    usecase "Presionar botón (ingresar)" as UC3
+}
+
+(Recordar_Usuario) as recordar
+(Ingresar_al_Sistema) as ingresar
+(Autenticar_Usuario) as autenticar
+
+/' === Sección de Relaciones === '/
+user --> UC1
+user --> UC2
+user --> UC3
+user --> UC4
+
+UC2 ..> recordar : <<include>>
+UC3 ..> autenticar : <<include>>
+autenticar <.. ingresar : <<extends>>
+
+@enduml

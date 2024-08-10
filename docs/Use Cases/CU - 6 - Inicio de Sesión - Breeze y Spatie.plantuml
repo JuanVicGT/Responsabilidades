@@ -1,0 +1,31 @@
+@startuml "CU - 6 - Inicio de Sesión - Breeze y Spatie"
+
+left to right direction
+
+/' === Sección de actores === '/
+actor "Usuario" as user
+
+/' === Sección de elementos === '/
+package "Módulo Autenticación" {
+    usecase "Ingresar Credenciales" as auth_enter_credentials
+    usecase "Validar Credenciales" as auth_validate_credentials
+    usecase "Verificar Permisos" as auth_check_permissions
+    usecase "Redirigir a Dashboard" as auth_redirect_dashboard
+    usecase "Mostrar Calendario de Eventos" as show_calendar
+}
+
+/' === Sección de Relaciones === '/
+user --> auth_enter_credentials
+auth_enter_credentials --> auth_validate_credentials : <<include>>
+auth_validate_credentials --> auth_check_permissions : <<include>>
+auth_check_permissions --> auth_redirect_dashboard : <<include>>
+auth_redirect_dashboard --> show_calendar : <<include>>
+
+/' === Casos de uso extendidos === '/
+usecase "Mostrar Error de Credenciales Inválidas" as error_invalid_credentials
+auth_validate_credentials -left- error_invalid_credentials : <<extend>>
+
+usecase "Mostrar Error de Permisos Insuficientes" as error_insufficient_permissions
+auth_check_permissions -right- error_insufficient_permissions : <<extend>>
+
+@enduml

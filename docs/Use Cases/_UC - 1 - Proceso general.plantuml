@@ -1,0 +1,53 @@
+@startuml "CU - 1 - Interacción con los módulos super administrador"
+
+left to right direction
+
+/' === Sección de actores === '/
+actor "     Usuario \nsuper administrador" as sadmin
+actor "     Usuario \nadministrador" as admin
+actor "     Usuario \nempleado" as user
+
+/' === Sección de elementos === '/
+package "Sistema" {
+    package "Módulo Autenticación" {
+        usecase "Crear Permiso" as auth_permission
+        usecase "Asignar permiso a rol" as auth_permission_rol
+        usecase "Crear Rol" as auth_rol
+        usecase "Asignar rol a usuario" as auth_rol_user
+    }
+
+    package "Módulo Dependencias" {
+        usecase "Crear dependencias" as dep_create
+        usecase "Editar dependencias" as dep_edit
+        usecase "Eliminar dependencias" as dep_delete
+        usecase "Asignar dependencia a usuario" as dep_user
+    }
+
+    package "Módulo Personal" {
+        usecase "Listar expedientes" as me_listar
+    }
+
+    package "Módulo Tareas" {
+        usecase "Listar pacientes" as mp_listar
+    }
+
+    package "Módulo Eventos" {
+        usecase "Listar pacientes" as mp_listar
+    }
+
+    package "Módulo Items" {
+        usecase "Listar pacientes" as mp_listar
+    }
+
+    package "Módulo Responsabilidades" {
+        usecase "Listar pacientes" as mp_listar
+    }
+}
+
+/' === Sección de Relaciones === '/
+sadmin -> auth_permission
+sadmin -> auth_rol
+sadmin -> auth_permission_rol
+sadmin -> auth_rol_user
+
+@enduml
