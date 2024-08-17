@@ -1,0 +1,65 @@
+@startuml "DS - 5 - Diagrama de secuencia de registro de usuario"
+
+'======== Titulo ========'
+title "Registro de usuario"
+
+'======== Elementos/Secciones ========'
+actor "Usuario\nAdministrador" as user
+
+box "Sistema Web" #LightGoldenRodYellow
+participant "Vista" as view
+participant "Controlador" as controller
+participant "Modelo de usuario" as model
+end box
+
+box "Almacenamiento MySQL" #LightSkyBlue
+database "BD" as bd
+end box
+
+'======== Conexiones ========'
+
+user --> user : Ingreso de \ndatos \ndel usuario
+user -> view : Solicitar registro
+activate view
+
+view -> controller : Validar campos
+activate controller
+
+controller --> user !! : Campos \ninválidos
+controller --> controller : Instanciar modelo
+controller -> model : Asignar campos primarios
+activate model
+
+model -> bd : Consultar usuario
+activate bd
+bd --> bd : Ejecutar consulta
+bd -> model : Retornar respuesta
+deactivate bd
+
+model --> model : Procesar respuesta
+model -> controller : Indicar existencia del usuario
+deactivate model
+
+controller --> user !! : Usuario ya \nregistrado
+controller -> model : Asignar campos
+activate model
+
+model -> bd : Registrar usuario
+activate bd
+
+bd --> bd : Ejecutar consulta
+bd -> model : Retornar respuesta
+deactivate bd
+
+model --> model : Procesar respuesta
+model --> user !! : Error de registro
+model --> controller : Retornar mensaje\nusuario registrado
+deactivate model
+
+controller -> view : retornar mensaje
+deactivate controller
+
+view -> user : Mostrar mensaje
+deactivate view
+
+@enduml
