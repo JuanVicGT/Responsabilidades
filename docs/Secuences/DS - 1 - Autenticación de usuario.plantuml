@@ -1,0 +1,67 @@
+@startuml "DS - 1 - Autenticación de usuario"
+
+'======== Título ========'
+title "Diagrama de secuencia - Autenticación de Usuario"
+
+'======== Elementos/Secciones ========'
+actor "Usuario" as user
+
+box "Sistema Web" #LightGoldenRodYellow
+participant "Vista" as view
+participant "Controlador" as controller
+participant "Modelo de usuario" as model
+end box
+
+box "Almacenamiento MySQL" #LightSkyBlue
+database "BD" as bd
+end box
+
+'======== Conexiones ========'
+user -> view : Ingresar credenciales
+user -> view : Solicitar inicio de sesión
+activate view
+
+view -> controller : Validar credenciales
+activate controller
+
+controller -> model : Instanciar modelo de usuario
+activate model
+
+model -> bd : Solicitar usuario
+activate bd
+bd -> bd : Ejecutar consulta
+bd -> model : Retornar usuario encontrado
+deactivate bd
+
+model -> model : Comprobar credenciales
+
+group Credenciales inválidas
+    model -[#red]> controller : Rechazar credenciales
+    deactivate model
+    controller -[#red]> view : Mostrar mensaje de error
+    deactivate controller
+    view -[#red]> user !! : Solicitar reingreso de credenciales
+    deactivate view
+end
+
+model -> controller : Credenciales aceptadas
+deactivate model
+controller -> view : Redirigir a dashboard
+deactivate controller
+view -> controller : Solicitar acceso a recurso
+
+controller -> model : Verificar permisos
+
+group Permisos denegados
+    model -[#red]> controller : Denegar acceso
+    controller -[#red]> view : Mostrar mensaje de acceso denegado
+    view -[#red]> user !! : Bloquear ingreso
+    deactivate view
+end
+
+model -> controller : Permitir acceso
+controller -> view : Cargar dashboard
+view -> user : Proporcionar recurso
+deactivate view
+
+@enduml

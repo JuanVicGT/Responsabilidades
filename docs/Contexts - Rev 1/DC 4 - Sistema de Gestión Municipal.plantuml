@@ -1,0 +1,54 @@
+@startuml "Diagrama de Contexto - Sistema de Gestión Municipal"
+
+left to right direction
+
+/' === Sección de actores === '/
+actor "Super Administrador" as superadmin
+actor "Administrador" as admin
+actor "Encargado" as encargado
+actor "Empleado" as empleado
+actor "Invitado" as invitado
+
+/' === Sección de sistema === '/
+rectangle "Sistema Integral de Gestionamiento Municipal" as system {
+    package "Módulo Autenticación" {
+        component "Inicio de Sesión" as login
+    }
+    package "Módulo Autorización" {
+        component "Gestión de Permisos" as permisos
+        component "Gestión de Roles" as roles
+    }
+    package "Módulo Dependencias" {
+        component "Gestión de Dependencias" as dependencias
+    }
+    package "Módulo Usuarios" {
+        component "Gestión de Usuarios" as usuarios
+    }
+    package "Módulo Hojas de Responsabilidad" {
+        component "Gestión de Hojas de Responsabilidad" as hojas
+    }
+    package "Módulo Eventos" {
+        component "Gestión de Eventos" as eventos
+        component "Calendario de Eventos" as calendario
+    }
+}
+
+/' === Relaciones === '/
+superadmin --> permisos : "Gestiona"
+superadmin --> roles : "Gestiona"
+admin --> dependencias : "Gestiona"
+admin --> usuarios : "Gestiona"
+encargado --> hojas : "Gestiona"
+encargado --> eventos : "Gestiona"
+encargado --> calendario : "Consulta"
+empleado --> hojas : "Consulta"
+empleado --> eventos : "Consulta"
+empleado --> calendario : "Consulta"
+invitado --> hojas : "Consulta QR"
+
+superadmin --> login : "Inicia Sesión"
+admin --> login : "Inicia Sesión"
+encargado --> login : "Inicia Sesión"
+empleado --> login : "Inicia Sesión"
+
+@enduml

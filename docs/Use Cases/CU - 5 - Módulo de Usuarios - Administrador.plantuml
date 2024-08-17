@@ -1,0 +1,65 @@
+@startuml "CU - 5 - Módulo de Usuarios - Administrador"
+
+left to right direction
+
+/' === Sección de jerarquias === '/
+actor "Usuario Super Administrador" as sadmin1
+actor "Usuario Administrador" as admin1
+actor "Usuario Empleado" as user1
+sadmin1 --> admin1
+admin1 --> user1
+
+/' === Sección de actores === '/
+actor "Usuario Administrador" as admin
+
+package "Personal" {
+    actor "Usuario Empleado" as user
+}
+
+/' === Sección de elementos === '/
+package "Módulo Usuarios" {
+    usecase "Crear Usuario" as user_create
+    usecase "Editar Usuario" as user_edit
+    usecase "Deshabilitar Usuario" as user_block
+    usecase "Asignar Rol a Usuario" as user_assign_role
+    usecase "Asignar Dependencia a Usuario" as user_assign_dep
+    usecase "Generar Contraseña Aleatoria" as user_generate_password
+    usecase "Actualizar Contraseña" as user_update_password
+}
+
+(Validar Campos) as validate
+(Validar Contraseña) as validate_password
+(Impedir Registro) as denegate
+(Cargar Usuario) as load
+(Guardar Usuario) as save
+(Guardar Contraseña) as save_password
+(Impedir Cambio de Contraseña) as denegate_password
+(Cargar Roles) as load_roles
+(Cargar Dependencias) as load_deps
+
+/' === Sección de Relaciones === '/
+admin --> user_create
+admin --> user_edit
+admin --> user_block
+admin --> user_assign_role
+admin --> user_assign_dep
+admin --> user_generate_password
+
+user_create --> validate : <<include>>
+
+validate <.. save : <<extends>>
+validate <.. denegate : <<extends>>
+
+user_edit --> load : <<include>>
+user_edit --> validate : <<include>>
+
+user_assign_role --> load_roles : <<include>>
+user_assign_dep --> load_deps : <<include>>
+
+user --> user_edit
+user --> user_update_password
+user_update_password --> validate_password : <<include>>
+validate_password <.. save_password : <<extends>>
+validate_password <.. denegate_password : <<extends>>
+
+@enduml

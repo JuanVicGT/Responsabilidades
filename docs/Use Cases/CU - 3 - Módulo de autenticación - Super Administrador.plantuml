@@ -1,0 +1,63 @@
+@startuml "CU - 3 - Módulo de autenticación - Super Administrador"
+
+left to right direction
+
+/' === Sección de jerarquias === '/
+actor "Usuario Super Administrador" as sadmin1
+actor "Usuario Administrador" as admin1
+actor "Usuario Empleado" as user1
+sadmin1 --> admin1
+admin1 --> user1
+
+/' === Sección de actores === '/
+actor "Usuario Super Administrador" as sadmin
+
+/' === Sección de elementos === '/
+package "Módulo de autenticación" {
+    package "Permisos" {
+        usecase "Ingresar Permiso" as auth_permission_create
+        usecase "Editar Permiso" as auth_permission_edit
+        usecase "Eliminar Permiso" as auth_permission_delete
+    }
+
+    package "Roles" {
+        usecase "Asignar Permiso" as auth_permission_to_role
+        usecase "Crear Rol" as auth_role_create
+        usecase "Editar Rol" as auth_role_edit
+        usecase "Eliminar Rol" as auth_role_delete
+    }
+}
+
+(Cargar Permiso) as load_permission
+(Validar Permiso) as validate_permission
+(Impedir Eliminar Permiso) as denegate_delete_permission
+(Eliminar Permiso) as delete_permission
+
+(Cargar Permisos) as load_permissions
+(Cargar Rol) as load_role
+(Validar Rol) as validate_role
+(Impedir Eliminar Rol) as denegate_delete_role
+(Eliminar Rol) as delete_role
+
+/' === Sección de Relaciones === '/
+sadmin --> auth_permission_create
+sadmin --> auth_permission_edit
+sadmin --> auth_permission_delete
+
+auth_permission_edit --> load_permission : <<include>>
+auth_permission_delete --> validate_permission : <<include>>
+validate_permission <.. denegate_delete_permission : <<extends>>
+validate_permission <.. delete_permission : <<extends>>
+
+sadmin --> auth_permission_to_role
+sadmin --> auth_role_create
+sadmin --> auth_role_edit
+sadmin --> auth_role_delete
+
+auth_permission_to_role ..> load_permissions : <<include>>
+auth_role_edit --> load_role : <<include>>
+auth_role_delete --> validate_role : <<include>>
+validate_role <.. denegate_delete_role : <<extends>>
+validate_role <.. delete_role : <<extends>>
+
+@enduml

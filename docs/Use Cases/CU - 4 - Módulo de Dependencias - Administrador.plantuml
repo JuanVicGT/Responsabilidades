@@ -1,0 +1,39 @@
+@startuml "CU - 4 - Módulo de Dependencias - Administrador"
+
+left to right direction
+
+/' === Sección de jerarquias === '/
+actor "Usuario Super Administrador" as sadmin1
+actor "Usuario Administrador" as admin1
+actor "Usuario Empleado" as user1
+sadmin1 --> admin1
+admin1 --> user1
+
+/' === Sección de actores === '/
+actor "Usuario Administrador" as admin
+
+/' === Sección de elementos === '/
+package "Módulo Dependencias" {
+    usecase "Listar Dependencias" as dep_list
+    usecase "Ingresar Dependencia" as dep_create
+    usecase "Editar Dependencia" as dep_edit
+    usecase "Eliminar Dependencia" as dep_delete
+}
+
+(Cargar Dependencia) as load_dependency
+(Validar Dependencia) as validate_dependency
+(Impedir Eliminar Dependencia) as denegate_delete_dependency
+(Eliminar Dependencia) as delete_dependency
+
+/' === Sección de Relaciones === '/
+admin --> dep_list
+admin --> dep_create
+admin --> dep_edit
+admin --> dep_delete
+
+dep_edit ..> load_dependency : <<include>>
+dep_delete --> validate_dependency : <<include>>
+validate_dependency <.. denegate_delete_dependency : <<extends>>
+validate_dependency <.. delete_dependency : <<extends>>
+
+@enduml
