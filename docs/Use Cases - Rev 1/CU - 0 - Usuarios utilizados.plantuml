@@ -1,0 +1,18 @@
+@startuml "CU - 0 - Usuarios utilizados"
+
+left to right direction
+
+/'======== Título ========'/
+title "Usuarios utilizados"
+
+/' === Sección de usuarios === '/
+actor "Usuario Super Administrador" as sadmin
+actor "Usuario Administrador" as admin
+actor "Usuario Empleado" as employee
+actor "Usuario Empleado/Cajero" as employee_cashier
+actor "Invitado" as guest
+
+sadmin --> admin
+admin --> employee
+
+@enduml

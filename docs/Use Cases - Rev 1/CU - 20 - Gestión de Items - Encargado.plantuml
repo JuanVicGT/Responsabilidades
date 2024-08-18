@@ -1,0 +1,55 @@
+@startuml "CU - 7 - Módulo de Items - Encargado"
+
+left to right direction
+
+/' === Sección de jerarquías === '/
+actor "Usuario Super Administrador" as sadmin1
+actor "Usuario Administrador" as admin1
+actor "Usuario Encargado" as encargado1
+actor "Usuario Empleado" as user1
+sadmin1 --> admin1
+admin1 --> encargado1
+encargado1 --> user1
+
+/' === Sección de actores === '/
+actor "Usuario Encargado" as encargado
+
+package "Personal" {
+    actor "Usuario Empleado" as user
+}
+
+/' === Sección de elementos === '/
+package "Módulo Items" {
+    usecase "Crear Item" as item_create
+    usecase "Editar Item" as item_edit
+    usecase "Eliminar Item" as item_delete
+    usecase "Asignar Item a Hoja de Responsabilidad" as item_assign
+    usecase "Consultar Items" as item_consult
+}
+
+(Validar Campos de Item) as validate_item
+(Impedir Registro de Item) as denegate_item
+(Cargar Item) as load_item
+(Guardar Item) as save_item
+(Generar QR para Item) as generate_qr
+
+/' === Sección de Relaciones === '/
+encargado --> item_create
+encargado --> item_edit
+encargado --> item_delete
+encargado --> item_assign
+encargado --> item_consult
+
+item_create --> validate_item : <<include>>
+validate_item <.. save_item : <<extends>>
+validate_item <.. denegate_item : <<extends>>
+
+item_edit --> load_item : <<include>>
+item_edit --> validate_item : <<include>>
+
+item_assign --> load_item : <<include>>
+item_assign --> generate_qr : <<include>>
+
+user --> item_consult
+
+@enduml

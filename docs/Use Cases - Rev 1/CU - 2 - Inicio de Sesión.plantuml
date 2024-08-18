@@ -1,0 +1,41 @@
+@startuml "CU - 2 - Inicio de sesión"
+
+left to right direction
+
+/'======== Título ========'/
+title "Caso de uso - Inicio de sesión"
+
+/' === Sección de actores === '/
+actor Usuario as user
+
+/' === Sección de elementos === '/
+package "Módulo de autenticación" {
+    usecase "Ingresar credenciales" as _write
+    usecase "Recordar usuario" as _remember
+    usecase "Presionar botón (ver contraseña)" as _show_password
+    usecase "Presionar botón (ocultar contraseña)" as _hide_password
+    usecase "Presionar botón (ingresar)" as _login
+
+    (Recordar Usuario) as remember
+    (Mostrar contraseña) as show_password
+    (Ocultar contraseña) as hide_password
+}
+
+(Autenticar Usuario) as auth
+(Ingresar al Sistema) as login
+
+/' === Sección de Relaciones === '/
+user -- _write
+user -- _remember
+user -- _show_password
+user -- _hide_password
+user -- _login
+
+_remember ..> remember : <<include>>
+_show_password ..> show_password : <<include>>
+_hide_password ..> hide_password : <<include>>
+
+_login ..> auth : <<include>>
+auth <.. login : <<extends>>
+
+@enduml

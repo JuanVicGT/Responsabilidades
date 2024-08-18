@@ -1,0 +1,102 @@
+@startuml "CU - 1 - Caso de uso general"
+
+left to right direction
+
+/'======== Título ========'/
+title "Caso de uso - General"
+
+/' === Sección de actores === '/
+actor "     Usuario\n      Super\nAdministrador" as sadmin
+actor "     Usuario\nAdministrador" as admin
+actor "  Usuario\nEmpleado" as employee
+actor "Invitado" as guest
+
+/' === Sección de elementos === '/
+package "Sistema" {
+    package "Módulo de Autorización" {
+        package "Permisos" {
+            component "Gestión de permisos" as permission_management
+        }
+
+        package "Roles" {
+            component "Gestión de roles" as role_management
+        }
+    }
+
+    package "Módulo de Dependencias" {
+        component "Gestión de dependencias" as dependency_management
+    }
+
+    package "Módulo de Usuarios" {
+        usecase "Listar usuarios" as user_list
+        usecase "Registrar usuario" as user_create
+        usecase "Editar usuario" as user_edit
+        usecase "Eliminar usuario" as user_delete
+        usecase "Generar contraseña" as user_generate_pass
+        usecase "Actualizar contraseña" as user_change_pass
+        usecase "Deshabilitar usuario" as user_off
+        usecase "Habilitar usuario" as user_on
+    }
+
+    package "Módulo Autenticación" {
+        component "Inicio de sesión" as login
+    }
+
+    package "Módulo de Reportes" {
+        component "Generación de reportes" as report_management
+    }
+
+    package "Módulo Eventos" {
+        component "Gestión de Eventos" as event_management
+        component "Calendario de Eventos" as event_calendar
+    }
+
+    package "Módulo Tareas" {
+        component "Gestión de tareas" as task_management
+        component "Calendario de tareas" as task_calendar
+    }
+
+    package "Módulo de Responsabilidades" {
+        package "Items/Elementos" {
+            component "Gestión de elementos" as item_management
+        }
+
+        package "Hojas de responsabilidad" {
+            component "Gestión de responsabilidades" as sheet_management
+            component "Consulta de hoja" as sheet_view
+        }
+    }
+}
+
+/' === Sección de relaciones === '/
+sadmin -- permission_management
+sadmin -- role_management
+sadmin -- login
+
+admin -- dependency_management
+admin -- user_create
+admin -- user_edit
+admin -- user_delete
+admin -- user_generate_pass
+admin -- user_list
+admin -- user_off
+admin -- user_on
+admin -- login
+admin -- report_management
+admin -- event_management
+admin -- item_management
+admin -- sheet_management
+admin -- event_calendar
+admin -- task_calendar
+
+employee -up- login
+employee -up- user_change_pass
+employee -up- user_edit
+employee -up- task_management
+employee -up- task_calendar
+employee -up- event_calendar
+employee -up- sheet_view
+
+guest -up- sheet_view
+
+@enduml

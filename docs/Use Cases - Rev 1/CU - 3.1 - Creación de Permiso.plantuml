@@ -1,0 +1,33 @@
+@startuml "CU - 3.1 - Creación de Permiso"
+
+left to right direction
+
+'======== Título ========'
+title "Caso de uso - Creación de permiso"
+
+/' === Sección de actores === '/
+actor "     Usuario\n      Super\nAdministrador" as sadmin
+
+/' === Sección de elementos === '/
+package "Submódulo de Permisos" {
+    usecase "Regresar a la página anterior" as _return
+    usecase "Ingresar nombre" as _write_name
+    usecase "Guardar permiso" as _save
+}
+
+(Regresar a página de listado de permisos) as return
+(Validar Nombre) as validate
+(Impedir Guardar Permiso) as denegate_save
+(Guardar Permiso) as save
+
+/' === Sección de Relaciones === '/
+sadmin -- _return
+sadmin -- _write_name
+sadmin -- _save
+
+_return ..> return : <<include>>
+_save ..> validate : <<include>>
+validate <.. denegate_save : <<extends>>
+validate <.. save : <<extends>>
+
+@enduml

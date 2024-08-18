@@ -1,0 +1,35 @@
+@startuml "CU - 4.2 - Edición de Rol"
+
+left to right direction
+
+'======== Título ========'
+title "Caso de uso - Edición de rol"
+
+/' === Sección de actores === '/
+actor "     Usuario\n      Super\nAdministrador" as sadmin
+
+/' === Sección de elementos === '/
+package "Submódulo de Roles" {
+    usecase "Regresar a la página anterior" as _return
+    usecase "Cambiar nombre" as _write_name
+    usecase "Guardar rol" as _save
+
+    usecase "Asignar permiso" as _assign_permission
+}
+
+(Regresar a la página de listado de roles) as return
+(Validar Nombre) as validate
+(Impedir Guardar Rol) as denegate_save
+(Guardar Rol) as save
+
+/' === Sección de Relaciones === '/
+sadmin -- _return
+sadmin -- _write_name
+sadmin -- _save
+
+_return ..> return : <<include>>
+_save ..> validate : <<include>>
+validate <.. denegate_save : <<extends>>
+validate <.. save : <<extends>>
+
+@enduml

@@ -1,0 +1,49 @@
+@startuml "CU - 3 - Gestión de Permisos"
+
+left to right direction
+
+'======== Título ========'
+title "Caso de uso - Gestión de permisos"
+
+/' === Sección de actores === '/
+actor "     Usuario\n      Super\nAdministrador" as sadmin
+
+/' === Sección de elementos === '/
+package "Submódulo de Permisos" {
+    usecase "Listar permisos" as _list
+    usecase "Crear permiso" as _create
+    usecase "Editar permiso" as _edit
+    usecase "Eliminar permiso" as _delete
+}
+
+(Cargar Permiso) as load
+(Cargar Permisos) as loads
+
+(Validar Campos) as validate
+(Impedir Guardar Permiso) as denegate_save
+(Guardar Permiso) as save
+
+(Validar Permisos Asignados) as validate_delete
+(Impedir Eliminar Permiso) as denegate_delete
+(Eliminar Permiso) as delete
+
+/' === Sección de Relaciones === '/
+sadmin -- _list
+sadmin -- _create
+sadmin -- _edit
+sadmin -- _delete
+
+_list ..> loads : <<include>>
+
+_create ..> validate : <<include>>
+validate <.. denegate_save : <<extends>>
+validate <.. save : <<extends>>
+
+_edit ..> load : <<include>>
+_edit ..> validate : <<include>>
+
+_delete ..> validate_delete : <<include>>
+validate_delete <.. denegate_delete : <<extends>>
+validate_delete <.. delete : <<extends>>
+
+@enduml

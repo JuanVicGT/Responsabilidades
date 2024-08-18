@@ -1,0 +1,31 @@
+@startuml "CU - 8 - Gestión de Hojas de Responsabilidad - Encargado"
+
+left to right direction
+
+/' === Sección de jerarquias === '/
+actor "Usuario Super Administrador" as sadmin1
+actor "Usuario Administrador" as admin1
+actor "Usuario Empleado" as user1
+sadmin1 --> admin1
+admin1 --> user1
+
+/' === Sección de actores === '/
+actor "Usuario Encargado" as encargado
+
+/' === Sección de elementos === '/
+package "Módulo Hojas de Responsabilidad" {
+    usecase "Generar Hoja de Responsabilidad" as sheet_create
+    usecase "Asignar Items a Hoja de Responsabilidad" as sheet_assign_items
+    usecase "Generar QR de Hoja de Responsabilidad" as sheet_generate_qr
+    usecase "Consultar Hoja de Responsabilidad" as sheet_consult
+    usecase "Imprimir Hoja de Responsabilidad" as sheet_print
+}
+
+/' === Sección de Relaciones === '/
+encargado --> sheet_create
+encargado --> sheet_assign_items
+encargado --> sheet_generate_qr
+encargado --> sheet_consult
+encargado --> sheet_print
+
+@enduml

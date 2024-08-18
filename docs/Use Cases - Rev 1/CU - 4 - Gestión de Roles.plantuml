@@ -1,0 +1,51 @@
+@startuml "CU - 4 - Gestión de Roles"
+
+left to right direction
+
+'======== Título ========'
+title "Caso de uso - Gestión de roles"
+
+/' === Sección de actores === '/
+actor "     Usuario\n      Super\nAdministrador" as sadmin
+
+/' === Sección de elementos === '/
+package "Submódulo de Roles" {
+    usecase "Listar roles" as _list
+    usecase "Crear rol" as _create
+    usecase "Editar rol" as _edit
+    usecase "Eliminar rol" as _delete
+}
+
+(Cargar Rol) as load
+(Cargar Roles) as loads
+(Cargar Permisos) as load_permissions
+
+(Validar Campos) as validate
+(Impedir Guardar Rol) as denegate_save
+(Guardar Rol) as save
+
+(Validar Roles Asignados) as validate_delete
+(Impedir Eliminar Rol) as denegate_delete
+(Eliminar Rol) as delete
+
+/' === Sección de Relaciones === '/
+sadmin -- _list
+sadmin -- _create
+sadmin -- _edit
+sadmin -- _delete
+
+_list ..> loads : <<include>>
+
+_create ..> load_permissions : <<include>>
+_create ..> validate : <<include>>
+validate <.. denegate_save : <<extends>>
+validate <.. save : <<extends>>
+
+_edit ..> load_permissions : <<include>>
+_edit ..> load : <<include>>
+
+_delete ..> validate_delete : <<include>>
+validate_delete <.. denegate_delete : <<extends>>
+validate_delete <.. delete : <<extends>>
+
+@enduml
