@@ -19,9 +19,9 @@ package "Módulo de autenticación" {
     (Recordar Usuario) as remember
     (Mostrar contraseña) as show_password
     (Ocultar contraseña) as hide_password
+    (Autenticar Usuario) as auth
 }
 
-(Autenticar Usuario) as auth
 (Ingresar al Sistema) as login
 
 /' === Sección de Relaciones === '/

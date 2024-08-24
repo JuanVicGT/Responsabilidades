@@ -1,0 +1,54 @@
+@startuml "CU - 5.1 - Creación de Usuario"
+
+left to right direction
+
+'======== Título ========'
+title "Caso de uso - Creación de usuario"
+
+/' === Sección de actores === '/
+actor "    Usuario\nAdministrador" as admin
+
+/' === Sección de elementos === '/
+package "Submódulo de Usuarios" {
+    usecase "Regresar a la página anterior" as _return
+    usecase "Ingresar nombre" as _write_name
+    usecase "Ingresar NIT" as _write_nit
+    usecase "Asignar rol" as _assign_role
+    usecase "Asignar dependencia" as _assign_dependency
+    usecase "Guardar usuario" as _save
+}
+
+(Regresar a la página de listado de usuarios) as return
+(Validar Credenciales) as validate_credentials
+(Impedir Guardar) as denegate_save
+(Guardar Usuario) as save
+(Mostrar Contraseña Generada) as show_password
+
+package "Submódulo de Roles" {
+    (Listar Roles) as list_roles
+}
+
+package "Módulo de Dependencias" {
+    (Listar Dependencias) as list_dependencies
+}
+
+/' === Sección de Relaciones === '/
+admin -- _return
+admin -- _write_name
+admin -- _write_nit
+admin -- _assign_role
+admin -- _assign_dependency
+admin -- _save
+
+_assign_role ..> list_roles : <<include>>
+_assign_dependency ..> list_dependencies : <<include>>
+
+_return ..> return : <<include>>
+_save ..> validate_credentials : <<include>>
+
+validate_credentials <.. denegate_save : <<extends>>
+validate_credentials <.. save : <<extends>>
+
+save ..> show_password : <<include>>
+
+@enduml

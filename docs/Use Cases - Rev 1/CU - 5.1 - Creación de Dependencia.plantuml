@@ -1,0 +1,33 @@
+@startuml "CU - 5.1 - Creación de Dependencia"
+
+left to right direction
+
+'======== Título ========'
+title "Caso de uso - Creación de dependencia"
+
+/' === Sección de actores === '/
+actor "    Usuario\nAdministrador" as admin
+
+/' === Sección de elementos === '/
+package "Submódulo de Roles" {
+    usecase "Regresar a la página anterior" as _return
+    usecase "Ingresar nombre" as _write_name
+    usecase "Guardar" as _save
+}
+
+(Regresar a la página de listado de dependencias) as return
+(Validar Nombre) as validate
+(Impedir Guardar) as denegate_save
+(Guardar) as save
+
+/' === Sección de Relaciones === '/
+admin -- _return
+admin -- _write_name
+admin -- _save
+
+_return ..> return : <<include>>
+_save ..> validate : <<include>>
+validate <.. denegate_save : <<extends>>
+validate <.. save : <<extends>>
+
+@enduml

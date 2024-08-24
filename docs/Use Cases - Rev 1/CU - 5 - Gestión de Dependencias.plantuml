@@ -1,0 +1,49 @@
+@startuml "CU - 5 - Gestión de Dependencias"
+
+left to right direction
+
+'======== Título ========'
+title "Caso de uso - Gestión de dependencias"
+
+/' === Sección de actores === '/
+actor "    Usuario\nAdministrador" as admin
+
+/' === Sección de elementos === '/
+package "Módulo de Dependencias" {
+    usecase "Listar dependencias" as _list
+    usecase "Crear dependencia" as _create
+    usecase "Editar dependencia" as _edit
+    usecase "Eliminar dependencia" as _delete
+}
+
+(Cargar Dependencia) as load
+(Cargar Dependencias) as loads
+
+(Validar Campos) as validate
+(Impedir Guardar) as denegate_save
+(Guardar) as save
+
+(Validar Dependencias Asignados) as validate_delete
+(Impedir Eliminar) as denegate_delete
+(Eliminar) as delete
+
+/' === Sección de Relaciones === '/
+admin -- _list
+admin -- _create
+admin -- _edit
+admin -- _delete
+
+_list ..> loads : <<include>>
+
+_create ..> validate : <<include>>
+validate <.. denegate_save : <<extends>>
+validate <.. save : <<extends>>
+
+_edit ..> load : <<include>>
+load ..> validate : <<include>>
+
+_delete ..> validate_delete : <<include>>
+validate_delete <.. denegate_delete : <<extends>>
+validate_delete <.. delete : <<extends>>
+
+@enduml

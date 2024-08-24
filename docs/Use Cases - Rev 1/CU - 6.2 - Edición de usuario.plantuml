@@ -2,22 +2,18 @@
 
 left to right direction
 
-/' === Sección de jerarquias === '/
-actor "Usuario Super Administrador" as sadmin1
-actor "Usuario Administrador" as admin1
-actor "Usuario Empleado" as user1
-sadmin1 --> admin1
-admin1 --> user1
+'======== Título ========'
+title "Caso de uso - Creación de usuario"
 
 /' === Sección de actores === '/
-actor "Usuario Administrador" as admin
+actor "    Usuario\nAdministrador" as admin
 
 package "Personal" {
-    actor "Usuario Empleado" as user
+    actor "Usuario\nEmpleado" as user
 }
 
 /' === Sección de elementos === '/
-package "Módulo Usuarios" {
+package "Módulo de Usuarios" {
     usecase "Crear Usuario" as user_create
     usecase "Editar Usuario" as user_edit
     usecase "Deshabilitar Usuario" as user_block

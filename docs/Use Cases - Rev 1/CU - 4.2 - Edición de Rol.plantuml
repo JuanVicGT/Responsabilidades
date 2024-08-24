@@ -12,9 +12,10 @@ actor "     Usuario\n      Super\nAdministrador" as sadmin
 package "Submódulo de Roles" {
     usecase "Regresar a la página anterior" as _return
     usecase "Cambiar nombre" as _write_name
-    usecase "Guardar rol" as _save
+    usecase "Habilitar permiso" as _enable_permission
+    usecase "Deshabilitar permiso" as _disable_permission
 
-    usecase "Asignar permiso" as _assign_permission
+    usecase "Guardar rol" as _save
 }
 
 (Regresar a la página de listado de roles) as return
@@ -22,14 +23,25 @@ package "Submódulo de Roles" {
 (Impedir Guardar Rol) as denegate_save
 (Guardar Rol) as save
 
+(Cargar Permisos) as load_permissions
+(Habilitar Permisos) as enable_permission
+(Deshabilitar Permisos) as disable_permission
+
 /' === Sección de Relaciones === '/
 sadmin -- _return
 sadmin -- _write_name
 sadmin -- _save
+sadmin -- _enable_permission
+sadmin -- _disable_permission
 
 _return ..> return : <<include>>
 _save ..> validate : <<include>>
 validate <.. denegate_save : <<extends>>
 validate <.. save : <<extends>>
+
+_enable_permission ..> load_permissions : <<include>>
+_disable_permission ..> load_permissions : <<include>>
+load_permissions <.. enable_permission : <<extends>>
+load_permissions <.. disable_permission : <<extends>>
 
 @enduml

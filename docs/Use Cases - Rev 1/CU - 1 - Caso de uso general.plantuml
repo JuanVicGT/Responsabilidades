@@ -1,9 +1,9 @@
 @startuml "CU - 1 - Caso de uso general"
 
-left to right direction
-
 /'======== Título ========'/
 title "Caso de uso - General"
+
+left to right direction
 
 /' === Sección de actores === '/
 actor "     Usuario\n      Super\nAdministrador" as sadmin
@@ -28,14 +28,9 @@ package "Sistema" {
     }
 
     package "Módulo de Usuarios" {
-        usecase "Listar usuarios" as user_list
-        usecase "Registrar usuario" as user_create
+        usecase "Gestionar usuarios" as user_management
         usecase "Editar usuario" as user_edit
-        usecase "Eliminar usuario" as user_delete
-        usecase "Generar contraseña" as user_generate_pass
         usecase "Actualizar contraseña" as user_change_pass
-        usecase "Deshabilitar usuario" as user_off
-        usecase "Habilitar usuario" as user_on
     }
 
     package "Módulo Autenticación" {
@@ -74,13 +69,8 @@ sadmin -- role_management
 sadmin -- login
 
 admin -- dependency_management
-admin -- user_create
+admin -- user_management
 admin -- user_edit
-admin -- user_delete
-admin -- user_generate_pass
-admin -- user_list
-admin -- user_off
-admin -- user_on
 admin -- login
 admin -- report_management
 admin -- event_management
