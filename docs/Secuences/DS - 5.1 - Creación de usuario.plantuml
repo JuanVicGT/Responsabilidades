@@ -1,0 +1,61 @@
+@startuml "DS - 5.1 - Creación de Usuario"
+
+'======== Título ========'
+title "Diagrama de secuencia - Creación de Usuario"
+
+'======== Elementos/Secciones ========'
+actor "Usuario Administrador" as admin
+
+box "Sistema Web" #LightGoldenRodYellow
+participant "Vista" as view
+participant "Controlador" as controller
+participant "Modelo de Usuario" as model
+end box
+
+box "Almacenamiento MySQL" #LightSkyBlue
+database "BD" as bd
+end box
+
+'======== Conexiones ========'
+admin -> view : Ingresar datos del usuario
+activate view
+
+view -> controller : Enviar datos para validación
+activate controller
+
+controller -> model : Instanciar modelo de usuario
+activate model
+
+model -> model : Validar credenciales
+
+model -> bd : Consultar BD para validar campos únicos
+activate bd
+bd -> model : Retornar resultados de la validación
+deactivate bd
+
+group Credenciales inválidas o campos duplicados
+    model -[#red]> controller : Rechazar datos de usuario
+    deactivate model
+    controller -[#red]> view : Mostrar mensaje de error
+    deactivate controller
+    view -[#red]> admin !! : Solicitar corrección de datos
+    deactivate view
+end
+
+model -> bd : Guardar usuario en la BD
+activate bd
+bd -> bd : Ejecutar inserción
+bd -> model : Confirmar inserción exitosa
+deactivate bd
+deactivate model
+
+model -> controller : Confirmar creación del usuario
+deactivate model
+
+controller -> view : Mostrar la contraseña generada
+deactivate controller
+
+view -> admin : Refrescar una nueva vista de creación
+deactivate view
+
+@enduml

@@ -1,0 +1,59 @@
+@startuml "DS - 2 - Inicio de sesión"
+
+'======== Título ========'
+title "Diagrama de secuencia - Inicio de sesión"
+
+'======== Elementos/Secciones ========'
+actor "Usuario" as user
+
+box "Sistema Web" #LightGoldenRodYellow
+participant "Vista de Inicio de Sesión" as view
+participant "Controlador de Autenticación" as controller
+participant "Modelo de Autenticación" as model
+end box
+
+box "Almacenamiento MySQL" #LightSkyBlue
+database "BD" as bd
+end box
+
+'======== Conexiones ========'
+user -> view : Ingresar credenciales
+user -> view : Solicitar inicio de sesión
+activate view
+
+view -> controller : Enviar credenciales
+activate controller
+
+group Recordar usuario
+    view -> controller : Solicitar recordar usuario
+    controller -> model : Guardar preferencia de usuario
+end
+
+controller -> model : Validar credenciales
+activate model
+
+model -> bd : Solicitar datos del usuario
+activate bd
+bd -> bd : Ejecutar consulta
+bd -> model : Retornar datos del usuario
+deactivate bd
+
+model -> model : Comprobar credenciales
+
+group Credenciales inválidas
+    model -[#red]> controller : Rechazar credenciales
+    deactivate model
+    controller -[#red]> view : Mostrar mensaje de error
+    deactivate controller
+    view -[#red]> user !! : Solicitar reingreso de credenciales
+    deactivate view
+end
+
+model -> controller : Credenciales válidas
+deactivate model
+controller -> view : Redirigir al dashboard
+deactivate controller
+view -> user : Acceso concedido, mostrar dashboard
+deactivate view
+
+@enduml

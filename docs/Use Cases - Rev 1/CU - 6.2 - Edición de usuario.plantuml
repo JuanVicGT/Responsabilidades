@@ -1,9 +1,9 @@
-@startuml "CU - 5 - Módulo de Usuarios - Administrador"
+@startuml "CU - 5 - Edición de usuario"
 
 left to right direction
 
 '======== Título ========'
-title "Caso de uso - Creación de usuario"
+title "Caso de uso - Edición de usuario"
 
 /' === Sección de actores === '/
 actor "    Usuario\nAdministrador" as admin
@@ -39,27 +39,29 @@ package "Módulo de Usuarios" {
 (Cargar Dependencias) as load_deps
 
 /' === Sección de Relaciones === '/
-admin --> user_create
-admin --> user_edit
-admin --> user_block
-admin --> user_assign_role
-admin --> user_assign_dep
-admin --> user_generate_password
+admin -- user_list
+admin -- user_create
+admin -- user_edit
+admin -- user_block
+admin -- user_assign_role
+admin -- user_assign_dep
+admin -- user_generate_password
+admin -- user_delete
 
-user_create --> validate : <<include>>
+user_create -- validate : <<include>>
 
 validate <.. save : <<extends>>
 validate <.. denegate : <<extends>>
 
-user_edit --> load : <<include>>
-user_edit --> validate : <<include>>
+user_edit -- load : <<include>>
+user_edit -- validate : <<include>>
 
-user_assign_role --> load_roles : <<include>>
-user_assign_dep --> load_deps : <<include>>
+user_assign_role -- load_roles : <<include>>
+user_assign_dep -- load_deps : <<include>>
 
-user --> user_edit
-user --> user_update_password
-user_update_password --> validate_password : <<include>>
+user -- user_edit
+user -- user_update_password
+user_update_password -- validate_password : <<include>>
 validate_password <.. save_password : <<extends>>
 validate_password <.. denegate_password : <<extends>>
 

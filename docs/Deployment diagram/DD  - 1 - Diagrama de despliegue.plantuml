@@ -1,0 +1,20 @@
+@startuml "DD - Diagrama de Despliegue"
+
+' ======== Título ========
+title "Diagrama de Despliegue del Sistema"
+
+' === Sección de Servidores ===
+node "Servidor Principal" {
+    [Aplicación Web]
+    [Base de Datos]
+}
+
+node "Computadora del Usuario" {
+    [Navegador Web]
+}
+
+' === Conexiones ===
+[Aplicación Web] --> [Navegador Web] : HTTP/HTTPS
+[Aplicación Web] --> [Base de Datos] : Conexión a la BD
+
+@enduml

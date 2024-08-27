@@ -9,7 +9,7 @@ title "Caso de uso - Creación de usuario"
 actor "    Usuario\nAdministrador" as admin
 
 /' === Sección de elementos === '/
-package "Submódulo de Usuarios" {
+package "Módulo de Usuarios" {
     usecase "Regresar a la página anterior" as _return
     usecase "Ingresar nombre" as _write_name
     usecase "Ingresar NIT" as _write_nit
