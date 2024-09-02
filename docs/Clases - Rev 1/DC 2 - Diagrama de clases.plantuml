@@ -17,6 +17,8 @@ entity users as "usuarios" {
     +address : string
     -password : string
     +username : string
+    +dpi : string
+    +nit : string
     +work_position : string
     +work_row : string
     +dependence : string
@@ -32,6 +34,10 @@ entity users as "usuarios" {
     +assign_dependence(id_user: Integer, id_dependence: Integer) : void
     +generate_password(id: Integer) : string
     +update_password(id: Integer, new_password: string) : void
+
+    +login_with_username()
+    +login_with_cui()
+    +login_with_dpi()
 }
 
 entity events as "eventos" {

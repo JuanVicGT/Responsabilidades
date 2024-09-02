@@ -12,7 +12,6 @@
 
     {{-- MENU --}}
     <x-mary-menu activate-by-route active-bg-color="bg-sky-500/20" class="-mt-3">
-        <x-mary-theme-toggle class="hidden" />
 
         {{-- User --}}
         @if ($user = auth()->user())

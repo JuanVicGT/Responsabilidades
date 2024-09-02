@@ -64,6 +64,9 @@
 
     {{-- Scripts area --}}
     @livewireScripts
+
+    {{-- Theme toggle --}}
+    <x-mary-theme-toggle class="hidden" />
 </body>
 
 </html>
