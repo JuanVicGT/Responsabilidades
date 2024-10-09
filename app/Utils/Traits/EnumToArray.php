@@ -17,4 +17,15 @@ trait EnumToArray
         }
         return $array;
     }
+
+    /**
+     * The function `values` returns an array of values extracted from an array of objects obtained
+     * from the `cases` method.
+     * 
+     * @return array An array of values
+     */
+    public static function values(): array
+    {
+        return array_map(fn ($case) => $case->value, self::cases());
+    }
 }
