@@ -12,9 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('username', 30)->unique()->nullable()->change(); // now optional - login
-            $table->string('nit', 14)->unique()->nullable(); // optional - login
-            $table->string('dpi', 14)->unique(); // required - login
+            $table->boolean('first_access');
         });
     }
 
