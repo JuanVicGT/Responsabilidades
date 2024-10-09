@@ -58,7 +58,6 @@ class PermissionController extends Controller
     public function show(Permission $permission)
     {
         $this->general_auth('show', self::MODULE_NAME);
-        Gate::authorize('show', $permission);
 
         return view('backend.permission.ShowPermission', compact('permission'));
     }
@@ -69,7 +68,7 @@ class PermissionController extends Controller
     public function edit(int $id)
     {
         $this->general_auth('edit', self::MODULE_NAME);
-        
+
         $permission = Permission::find($id);
         return view('backend.permission.EditPermission', compact('permission'));
     }

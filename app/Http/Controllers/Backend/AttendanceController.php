@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Gate;
 
 class AttendanceController extends Controller
 {
+    const MODULE_NAME = 'attendance';
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-        Gate::authorize('index', Attendance::class);
+        $this->general_auth('index', self::MODULE_NAME);
         return view('backend.attendance.IndexAttendance');
     }
 
@@ -24,8 +25,7 @@ class AttendanceController extends Controller
      */
     public function create()
     {
-        //
-        Gate::authorize('create', Attendance::class);
+        $this->general_auth('create', self::MODULE_NAME);
         return view('backend.attendance.CreateAttendance');
     }
 
@@ -42,8 +42,7 @@ class AttendanceController extends Controller
      */
     public function show(Attendance $attendance)
     {
-        //
-        Gate::authorize('index', $attendance);
+        $this->general_auth('show', self::MODULE_NAME);
         return view('backend.attendance.ShowAttendance', compact('attendance'));
     }
 
@@ -52,9 +51,9 @@ class AttendanceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $this->general_auth('edit', self::MODULE_NAME);
+
         $attendance = Attendance::find($id);
-        Gate::authorize('edit', $attendance);
         return view('backend.attendance.EditAttendance', compact('attendance'));
     }
 

@@ -11,12 +11,14 @@ use Illuminate\Validation\Rule;
 
 class RoleController extends Controller
 {
+    const MODULE_NAME = 'role';
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        Gate::authorize('index', Role::class);
+        $this->general_auth('index', self::MODULE_NAME);
 
         return view('backend.role.IndexRole');
     }
@@ -26,7 +28,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        Gate::authorize('create', Role::class);
+        $this->general_auth('create', self::MODULE_NAME);
 
         return view('backend.role.CreateRole');
     }
@@ -54,7 +56,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        Gate::authorize('show', $role);
+        $this->general_auth('show', self::MODULE_NAME);
 
         return view('backend.role.ShowRole', compact('role'));
     }
@@ -64,9 +66,9 @@ class RoleController extends Controller
      */
     public function edit(int $id)
     {
-        $role = Role::find($id);
-        Gate::authorize('show', $role);
+        $this->general_auth('edit', self::MODULE_NAME);
 
+        $role = Role::find($id);
         return view('backend.role.EditRole', compact('role'));
     }
 

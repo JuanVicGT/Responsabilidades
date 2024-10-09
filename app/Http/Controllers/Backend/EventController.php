@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Gate;
 
 class EventController extends Controller
 {
+    const MODULE_NAME = 'event';
+
     public function dashboard()
     {
         $current_date = date('Y-m-d');
@@ -60,8 +62,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
-        Gate::authorize('index', Event::class);
+        $this->general_auth('index', self::MODULE_NAME);
         return view('backend.event.IndexEvent');
     }
 
@@ -70,8 +71,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
-        Gate::authorize('create', Event::class);
+        $this->general_auth('create', self::MODULE_NAME);
 
         $status_options = StatusEvent::array();
         return view('backend.event.CreateEvent', compact('status_options'));
@@ -107,7 +107,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        $this->general_auth('show', self::MODULE_NAME);
         return view('backend.event.ShowEvent', compact('event'));
     }
 
@@ -116,8 +116,7 @@ class EventController extends Controller
      */
     public function edit(?int $id)
     {
-        //
-        Gate::authorize('edit', new Event());
+        $this->general_auth('edit', self::MODULE_NAME);
 
         $status_options = StatusEvent::array();
         return view('backend.event.EditEvent', compact('status_options', 'id'));

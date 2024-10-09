@@ -12,13 +12,14 @@ use Illuminate\Support\Facades\Gate;
 
 class ItemController extends Controller
 {
+    const MODULE_NAME = 'item';
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-        Gate::authorize('index', Item::class);
+        $this->general_auth('index', self::MODULE_NAME);
         return view('backend.item.IndexItem');
     }
 
@@ -27,8 +28,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
-        Gate::authorize('create', Item::class);
+        $this->general_auth('create', self::MODULE_NAME);
         return view('backend.item.CreateItem');
     }
 
@@ -64,8 +64,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        //
-        Gate::authorize('show', $item);
+        $this->general_auth('show', self::MODULE_NAME);
         return view('backend.item.ShowItem', compact('item'));
     }
 
@@ -74,8 +73,7 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        //
-        Gate::authorize('edit', new Item());
+        $this->general_auth('edit', self::MODULE_NAME);
 
         $item = Item::find($id);
         return view('backend.item.EditItem', compact('item'));

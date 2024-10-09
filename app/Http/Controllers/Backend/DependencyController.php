@@ -12,12 +12,14 @@ use Illuminate\Support\Facades\Gate;
 
 class DependencyController extends Controller
 {
+    const MODULE_NAME = 'dependency';
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        Gate::authorize('index', Dependency::class);
+        $this->general_auth('index', self::MODULE_NAME);
 
         return view('backend.dependency.IndexDependency');
     }
@@ -27,7 +29,7 @@ class DependencyController extends Controller
      */
     public function create()
     {
-        Gate::authorize('create', Dependency::class);
+        $this->general_auth('create', self::MODULE_NAME);
 
         return view('backend.dependency.CreateDependency');
     }
@@ -56,7 +58,7 @@ class DependencyController extends Controller
      */
     public function show(Dependency $dependency)
     {
-        Gate::authorize('show', $dependency);
+        $this->general_auth('show', self::MODULE_NAME);
 
         return view('backend.dependency.ShowDependency', compact('dependency'));
     }
@@ -66,9 +68,9 @@ class DependencyController extends Controller
      */
     public function edit(int $id)
     {
-        $dependency = Dependency::find($id);
-        Gate::authorize('show', $dependency);
+        $this->general_auth('edit', self::MODULE_NAME);
 
+        $dependency = Dependency::find($id);
         return view('backend.dependency.EditDependency', compact('dependency'));
     }
 

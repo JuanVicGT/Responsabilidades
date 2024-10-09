@@ -16,12 +16,14 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    private const MODULE_NAME = 'user';
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        Gate::authorize('index', User::class);
+        $this->general_auth('index', self::MODULE_NAME);
         return view('backend.user.IndexUser');
     }
 
@@ -30,8 +32,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
-        Gate::authorize('create', Role::class);
+        $this->general_auth('create', self::MODULE_NAME);
 
         $dependencies = Dependency::all();
         $roles = Role::all();
@@ -80,8 +81,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
-        Gate::authorize('show', $user);
+        $this->general_auth('show', self::MODULE_NAME);
         return view('backend.user.Show', compact('user'));
     }
 
@@ -90,9 +90,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $this->general_auth('edit', self::MODULE_NAME);
+
         $user = User::find($id);
-        Gate::authorize('show', $user);
 
         $roles = Role::all();
         $dependencies = Dependency::all();
