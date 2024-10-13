@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_first_access');
-            $table->boolean('need_reset_password')->nullable();
+            $table->boolean('is_first_login');
+            $table->boolean('need_password_reset')->nullable();
         });
     }
 

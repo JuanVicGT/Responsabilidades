@@ -22,11 +22,6 @@
 
             <div class="grid sm:grid-cols-2 gap-4">
                 <div>
-                    <x-mary-input label="{{ __('Code') }}" name="code" required autofocus
-                        value="{{ old('code') }}" />
-                    <x-input-error class="mt-2" :messages="$errors->get('code')" />
-                </div>
-                <div>
                     <x-mary-input label="{{ __('Username') }}" name="username" required value="{{ old('username') }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('username')" />
                 </div>

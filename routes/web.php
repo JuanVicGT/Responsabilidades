@@ -3,17 +3,34 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend;
+use App\Http\Controllers\Public;
 use App\Http\Controllers\Backend\EventController;
 use App\Http\Controllers\Backend\TodoController;
 use Illuminate\Support\Facades\Redirect;
 
-// Dashboard (the dahsboard is in the event controller)
-Route::get('/', function () {
-    return Redirect::to('/dashboard');
-})->middleware(['auth', 'verified']);
+// Request to reset password
+Route::middleware('guest')->controller(Public\PasswordResetRequestController::class)->prefix('/forgot-password')
+    ->name('prequest.')
+    ->group(function () {
+        Route::get('/', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+    });
+
+// First Login Routes (only for authenticated users)
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::controller(Backend\FirstLoginController::class)->prefix('/first_login')
+        ->group(function () {
+            Route::get('/', 'show_first_login')->name('first_login');
+            Route::put('/Update/Password', 'update_password')->name('first_login.password');
+        });
+});
 
 // Routes
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', function () {
+        return Redirect::to('/dashboard');
+    });
+
     // Dashboard
     Route::get('/dashboard', [EventController::class, 'dashboard'])->name('dashboard');
 
@@ -60,14 +77,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // Views
             Route::get('/', 'index')->name('index');
             Route::get('/Create', 'create')->name('create');
+            Route::get('/FirstLogin', 'first_login')->name('first_login');
             Route::get('/Edit/{id}', 'edit')->name('edit');
             Route::get('/Show/{id}', 'show')->name('show');
 
             // Actions
             Route::post('/Store', 'store')->name('store');
             Route::patch('/Update', 'update')->name('update');
-            Route::patch('/Update/Password', 'update_password')->name('update.password');
             Route::delete('/Delete', 'delete')->name('destroy');
+
+            Route::post('/Refuse/Password', 'refuse_password')->name('refuse.password');
+            Route::patch('/Accept/Password', 'apply_password_reset')->name('accept.password');
         });
 
     Route::controller(Backend\AttendanceController::class)->prefix('/Attendance')->name('attendance.')

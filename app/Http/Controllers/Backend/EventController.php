@@ -8,7 +8,7 @@ use App\Http\Requests\Event\UpdateEventRequest;
 use App\Models\Event;
 use App\Utils\Enums\AlertType;
 use App\Utils\Enums\StatusEvent;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -16,6 +16,11 @@ class EventController extends Controller
 
     public function dashboard()
     {
+        // Antes de dibujar el calendario, comprobamos que sea el primer inicio del usuario
+        if (Auth::user()->is_first_login) {
+            return redirect()->route('first_login');
+        }
+
         $current_date = date('Y-m-d');
 
         // First day of the month.

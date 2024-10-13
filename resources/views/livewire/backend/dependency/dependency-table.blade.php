@@ -17,11 +17,6 @@
                     {{ $header['label'] }}
                 </h2>
             @endscope
-            @scope('header_code', $header)
-                <h2 class="text-xl font-bold inline">
-                    {{ $header['label'] }}
-                </h2>
-            @endscope
             @scope('header_name', $header)
                 <h2 class="text-xl font-bold inline">
                     {{ $header['label'] }}

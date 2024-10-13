@@ -25,14 +25,9 @@
 
             <input type="hidden" name="id" value="{{ $dependency->id }}">
 
-            <div class="grid sm:grid-cols-2 gap-4">
+            <div class="grid gap-4">
                 <div>
-                    <x-mary-input label="{{ __('Code') }}" type="text" name='code' required autofocus
-                        value="{{ old('code', $dependency->code) }}" />
-                    <x-input-error class="mt-2" :messages="$errors->get('code')" />
-                </div>
-                <div>
-                    <x-mary-input label="{{ __('Name') }}" type="text" name='name'
+                    <x-mary-input label="{{ __('Name') }}" type="text" name='name' required autofocus
                         value="{{ old('name', $dependency->name) }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('name')" />
                 </div>

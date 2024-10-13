@@ -4,7 +4,7 @@ namespace App\Utils\Enums;
 
 use App\Utils\Traits\EnumToArray;
 
-enum StatusResetPasswordRequest: string
+enum StatusPasswordResetRequest: string
 {
     use EnumToArray;
 

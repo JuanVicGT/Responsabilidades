@@ -1,6 +1,6 @@
 <?php
 
-use App\Utils\Enums\StatusResetPasswordRequest;
+use App\Utils\Enums\StatusPasswordResetRequest;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,11 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reset_password_requests', function (Blueprint $table) {
+        Schema::create('password_reset_requests', function (Blueprint $table) {
             $table->id();
-            $table->string('applicant_username');
             $table->string('description')->nullable();
-            $table->enum('status', StatusResetPasswordRequest::values())->nullable();
+            $table->enum('status', StatusPasswordResetRequest::values())->nullable();
+
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -29,3 +30,4 @@ return new class extends Migration
         Schema::dropIfExists('reset_password_requests');
     }
 };
+

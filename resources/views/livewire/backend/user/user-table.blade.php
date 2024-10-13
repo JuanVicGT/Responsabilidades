@@ -17,11 +17,6 @@
                     {{ $header['label'] }}
                 </h2>
             @endscope
-            @scope('header_code', $header)
-                <h2 class="text-xl font-bold inline">
-                    {{ $header['label'] }}
-                </h2>
-            @endscope
             @scope('header_role', $header)
                 <h2 class="text-xl font-bold inline">
                     {{ $header['label'] }}
@@ -37,9 +32,15 @@
                     {{ $header['label'] }}
                 </h2>
             @endscope
+            @scope('header_need_password_reset', $header)
+                <h2 class="text-xl font-bold inline">
+                    {{ $header['label'] }}
+                </h2>
+            @endscope
 
             @scope('cell_role', $row)
-                <x-mary-badge value="{{ $row->roles()->first()->name ?? '---' }}" class="badge-info text-white dark:text-black" />
+                <x-mary-badge value="{{ $row->roles()->first()->name ?? '---' }}"
+                    class="badge-info text-white dark:text-black" />
             @endscope
 
             @scope('cell_is_active', $row)
@@ -47,6 +48,14 @@
                     <x-mary-badge value="{{ __('YES') }}" class="badge-success" />
                 @else
                     <x-mary-badge value="{{ __('NO') }}" class="badge-error text-white dark:text-black" />
+                @endif
+            @endscope
+
+            @scope('cell_need_password_reset', $row)
+                @if ($row->need_password_reset)
+                    <x-mary-badge value="{{ __('YES') }}" class="badge-warning text-white dark:text-black" />
+                @else
+                    ---
                 @endif
             @endscope
 

@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Utils\Enums\StatusResetPasswordRequest;
+use App\Utils\Enums\StatusPasswordResetRequest;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ResetPasswordRequest>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PasswordResetRequest>
  */
-class ResetPasswordRequestFactory extends Factory
+class PasswordResetRequestFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class ResetPasswordRequestFactory extends Factory
     public function definition(): array
     {
         return [
-            'status' => StatusResetPasswordRequest::NotVerified
+            'status' => StatusPasswordResetRequest::NotVerified
         ];
     }
 }

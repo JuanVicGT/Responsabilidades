@@ -14,7 +14,7 @@
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
-            <form class="bg-opacity-90 bg-white rounded-2xl p-6" method="POST" action="{{ route('login') }}">
+            <form class="bg-opacity-90 bg-white p-6 sm:rounded-2xl" method="POST" action="{{ route('login') }}">
                 @csrf
 
                 <div class="mb-6">
@@ -57,8 +57,8 @@
                         </label>
                     </div>
                     <div>
-                        @if (Route::has('password.request'))
-                            <a class="text-sm font-semibold hover:underline" href="{{ route('password.request') }}">
+                        @if (Route::has('prequest.create'))
+                            <a class="text-sm font-semibold hover:underline" href="{{ route('prequest.create') }}">
                                 {{ __('Forgot Your Password?') }}
                             </a>
                         @endif
@@ -79,3 +79,4 @@
         </div>
     </div>
 </x-guest-layout>
+

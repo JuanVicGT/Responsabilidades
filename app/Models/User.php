@@ -3,10 +3,16 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\PasswordResetRequest;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use App\Utils\Enums\StatusPasswordResetRequest;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -25,7 +31,6 @@ class User extends Authenticatable
         'address',
         'birthdate',
         'last_name',
-        'code',
         'work_row',
         'work_position',
         'dependency',
@@ -33,6 +38,7 @@ class User extends Authenticatable
         'status',
         'password',
         'avatar',
+        'is_first_login'
     ];
 
     /**
@@ -43,8 +49,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'is_first_access',
-        'need_reset_password'
+        'need_password_reset'
     ];
 
     /**
@@ -58,5 +63,60 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get the password reset requests for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function passwordResetRequests(): HasMany
+    {
+        return $this->hasMany(PasswordResetRequest::class);
+    }
+
+    /**
+     * Get the pending password reset request for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function pendingPasswordResetRequest(): HasOne
+    {
+        return $this->hasOne(PasswordResetRequest::class)
+            ->where('status', StatusPasswordResetRequest::NotVerified)->latestOfMany();
+    }
+
+    /**
+     * Refuse the pending password reset request and set the need_password_reset column to false.
+     * @return void
+     */
+    public function refusePasswordResetRequest(): void
+    {
+        $passwordResetRequest = $this->pendingPasswordResetRequest;
+        if ($passwordResetRequest) {
+            $passwordResetRequest->update(['status' => StatusPasswordResetRequest::Refused]);
+            $this->update(['need_password_reset' => false]);
+        }
+    }
+
+    /**
+     * Apply the password reset request and set the need_password_reset column to false.
+     * @return bool
+     */
+    public function applyPasswordResetRequest(string $new_password): bool
+    {
+        $passwordResetRequest = $this->pendingPasswordResetRequest;
+        if ($passwordResetRequest->status === StatusPasswordResetRequest::NotVerified->value) {
+            $this->password = Hash::make($new_password);
+            $this->need_password_reset = false;
+            $hasUpdated = $this->save();
+
+            if ($hasUpdated) {
+                $passwordResetRequest->update(['status' => StatusPasswordResetRequest::Processed->value]);
+                return true;
+            }
+        }
+
+        return false;
     }
 }

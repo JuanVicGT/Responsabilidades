@@ -1,27 +1,33 @@
-<x-layouts.app>
+<x-layouts.guest-custom>
     @section('tab-title')
-        {{ __('Add New') }}
+        {{ __('Password Reset') }}
     @endsection
 
     @section('content-header')
-        <x-mary-header title="{{ __('Add New Dependency') }}">
+        <x-mary-header title="{{ __('Request to Password Reset') }}">
             <x-slot:actions>
                 <x-mary-button label="{{ __('Return') }}" icon="o-arrow-uturn-left" class="btn-accent dark:btn-info"
-                    link="{{ route('dependency.index') }}" />
+                    link="{{ route('login') }}" no-wire-navigate />
             </x-slot:actions>
         </x-mary-header>
     @endsection
 
+    {{-- Form --}}
     <x-mary-card shadow>
-        <x-mary-form method="POST" action="{{ route('dependency.store') }}" x-data="{ submitButtonDisabled: false }"
+        <x-mary-form method="POST" action="{{ route('prequest.store') }}" x-data="{ submitButtonDisabled: false }"
             x-on:submit="submitButtonDisabled = true">
             @csrf
 
             <div class="grid gap-4">
                 <div>
-                    <x-mary-input label="{{ __('Name') }}" type="text" name='name' required autofocus
-                        value="{{ old('name') }}" />
-                    <x-input-error class="mt-2" :messages="$errors->get('name')" />
+                    <x-mary-input label="{{ __('Username') }}" type="text" name="username" required autofocus
+                        value="{{ old('username') }}" />
+                    <x-input-error class="mt-2" :messages="$errors->get('username')" />
+                </div>
+                <div>
+                    <x-mary-textarea label="{{ __('Petition to password reset') }}" name="description" rows="5"
+                        required></x-mary-textarea>
+                    <x-input-error class="mt-2" :messages="$errors->get('description')" />
                 </div>
             </div>
 
@@ -42,4 +48,4 @@
         </x-mary-form>
     </x-mary-card>
 
-</x-layouts.app>
+</x-layouts.guest-custom>

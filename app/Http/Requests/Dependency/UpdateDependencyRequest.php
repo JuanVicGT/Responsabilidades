@@ -28,8 +28,7 @@ class UpdateDependencyRequest extends FormRequest
     {
         return [
             'id' => ['required'],
-            'name' => ['required', 'string', 'max:150'],
-            'code' => ['required', 'string', 'max:30', Rule::unique(Dependency::class)->ignore($this->request->get('id'))],
+            'name' => ['required', 'string', 'max:150', Rule::unique(Dependency::class)->ignore($this->request->get('id'))]
         ];
     }
 }

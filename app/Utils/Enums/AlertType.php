@@ -9,7 +9,7 @@ enum AlertType: string
     use EnumToArray;
 
     case Default = '';
-    case Error = 'alert-danger';
+    case Error = 'alert-error';
     case Warning = 'alert-warning';
     case Info = 'alert-info';
     case Success = 'alert-success';

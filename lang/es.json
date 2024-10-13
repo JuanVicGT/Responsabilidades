@@ -159,5 +159,14 @@
     "Verify Responsibilities": "Verificar",
     "Previous": "Anterior",
     "Next": "Siguiente",
-    "Change Theme": "Cambiar Tema"
+    "Change Theme": "Cambiar Tema",
+    "Is your first login, you will need to change your password": "Es tu primer inicio de sesión, necesitarás cambiar tu contraceña",
+    "First Login :name": "Primer Inicio de sesión: :name",
+    "There is already a pending password change request for this user. Please wait for it to be verified.": "Ya existe una solicitud de cambio de contrase a pendiente para este usuario. Por favor, espere a que se verifique.",
+    "A password change request has been created. Please wait for it to be verified.": "Se ha creado una solicitud de cambio de contrase a. Por favor, espere a que se verifique.",
+    "Need Password Reset?": "¿Necesita restablecer la contraseña?",
+    "Refuse Request": "Rechazar Solicitud",
+    "Request to Password Reset": "Solicitar restablecimiento de contraseña",
+    "Petition to password reset": "Describe por que se solicita el restablecimiento de contraseña",
+    "Could not be updated": "No se ha podido actualizar"
 }

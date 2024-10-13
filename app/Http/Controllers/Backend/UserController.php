@@ -10,7 +10,7 @@ use App\Models\Dependency;
 use App\Models\Role;
 use App\Models\User;
 use App\Utils\Enums\AlertType;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -46,7 +46,6 @@ class UserController extends Controller
     {
         //
         $user = new User();
-        $user->code = $request->code;
         $user->username = $request->username;
         $user->name = $request->name;
         $user->last_name = $request->last_name;
@@ -59,6 +58,7 @@ class UserController extends Controller
         $user->address = $request->address;
         $user->is_admin = $request->is_admin;
         $user->is_active = $request->is_active;
+        $user->is_first_login = true;
 
         $password = Str::random(8);
         $user->password = Hash::make($password);
@@ -96,24 +96,44 @@ class UserController extends Controller
 
         $roles = Role::all();
         $dependencies = Dependency::all();
-        $currentRole = $user->roles()->first();
-        return view('backend.user.EditUser', compact('user', 'roles', 'dependencies', 'currentRole'));
+        $current_role = $user->roles()->first();
+
+        return view('backend.user.EditUser', compact(
+            'user',
+            'roles',
+            'dependencies',
+            'current_role'
+        ));
     }
 
-    public function update_password(UpdateUserPasswordRequest $request)
+    /**
+     * Apply the random password reset
+     */
+    public function apply_password_reset(UpdateUserPasswordRequest $request)
     {
+        /** @var User */
         $user = User::find($request->id);
 
         $password = Str::random(8);
-        $user->password = Hash::make($password);
-        $save = $user->save();
-
-        if (!$save)
-            $this->addAlert(AlertType::Error, __('Could not be stored'));
-
-        if ($save)
+        if ($user->applyPasswordResetRequest($password)) {
             $this->addAlert(AlertType::Success, __('Updated successfully, password: ' . $password));
+        } else {
+            $this->addAlert(AlertType::Error, __('Could not be updated'));
+        }
 
+        return redirect()->route('user.edit', $user->id)->with('alerts', $this->getAlerts());
+    }
+
+    /**
+     * Refuse the password reset
+     */
+    public function refuse_password_reset(UpdateUserPasswordRequest $request)
+    {
+        $user = User::find($request->id);
+
+        $user->refusePasswordResetRequest();
+
+        $this->addAlert(AlertType::Success, __('Password reset refused'));
         return redirect()->route('user.edit', $user->id)->with('alerts', $this->getAlerts());
     }
 
@@ -123,7 +143,6 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request)
     {
         $user = User::find($request->id);
-        $user->code = $request->code;
         $user->username = $request->username;
         $user->name = $request->name;
         $user->last_name = $request->last_name;

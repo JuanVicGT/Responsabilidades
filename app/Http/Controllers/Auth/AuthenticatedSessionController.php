@@ -28,6 +28,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $isFirstLogin = Auth::user()->is_first_login ?? false;
+        if ($isFirstLogin) {
+            return redirect()->route('first_login');
+        }
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

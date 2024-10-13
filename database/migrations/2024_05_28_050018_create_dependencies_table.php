@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('dependencies', function (Blueprint $table) {
             $table->id();
 
-            $table->string('code', 30);
             $table->string('name', 150);
 
             $table->timestamps();

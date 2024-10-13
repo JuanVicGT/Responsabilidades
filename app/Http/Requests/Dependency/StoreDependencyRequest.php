@@ -27,8 +27,7 @@ class StoreDependencyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'string', 'max:30', Rule::unique(Dependency::class)],
-            'name' => ['required', 'string', 'max:150'],
+            'name' => ['required', 'string', 'max:150', Rule::unique(Dependency::class)],
         ];
     }
 }

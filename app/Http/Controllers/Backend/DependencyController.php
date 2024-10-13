@@ -40,7 +40,6 @@ class DependencyController extends Controller
     public function store(StoreDependencyRequest $request)
     {
         $dependency = new Dependency();
-        $dependency->code = $request->code;
         $dependency->name = $request->name;
         $save = $dependency->save();
 
@@ -80,7 +79,6 @@ class DependencyController extends Controller
     public function update(UpdateDependencyRequest $request)
     {
         $dependency = Dependency::find($request->id);
-        $dependency->code = $request->code;
         $dependency->name = $request->name;
         $save = $dependency->save();
 

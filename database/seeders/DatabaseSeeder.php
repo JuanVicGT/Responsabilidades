@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'admin',
             'is_active' => true,
             'is_admin' => true,
-            'is_first_access' => false
+            'is_first_login' => false
         ]);
     }
 }

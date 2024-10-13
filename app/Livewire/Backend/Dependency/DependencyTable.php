@@ -24,13 +24,12 @@ class DependencyTable extends Component
     // Filters
     public int $pagination = 10;
     public string $search = '';
-    public array $sortBy = ['column' => 'code', 'direction' => 'desc'];
+    public array $sortBy = ['column' => 'name', 'direction' => 'desc'];
 
     protected function getTableHeaders(): array
     {
         return [
             ['key' => 'id', 'label' => '#', 'class' => 'bg-red-500/20 w-1'],
-            ['key' => 'code', 'label' => __('Code')],
             ['key' => 'name', 'label' => __('Name')],
         ];
     }
@@ -40,9 +39,8 @@ class DependencyTable extends Component
         return Dependency::when(
             $this->search,
 
-            fn ($query) =>
-            $query->where('code', 'like', "%{$this->search}%")
-                ->orWhere('name', 'like', "%{$this->search}%")
+            fn($query) =>
+            $query->where('name', 'like', "%{$this->search}%")
         )
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->pagination);

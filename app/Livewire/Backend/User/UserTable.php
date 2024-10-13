@@ -31,10 +31,10 @@ class UserTable extends Component
     {
         return [
             ['key' => 'id', 'label' => '#', 'class' => 'bg-red-500/20 w-1'],
-            ['key' => 'code', 'label' => __('Code')],
             ['key' => 'name', 'label' => __('Name')],
             ['key' => 'role', 'label' => __('Role')],
             ['key' => 'is_active', 'label' => __('Is Active')],
+            ['key' => 'need_password_reset', 'label' => __('Need Password Reset?')],
         ];
     }
 
@@ -43,15 +43,14 @@ class UserTable extends Component
         return User::when(
             !Auth::user()->is_admin,
 
-            fn ($query) =>
+            fn($query) =>
             $query->whereNull('is_admin')
         )
             ->when(
                 $this->search,
 
-                fn ($query) =>
-                $query->where('code', 'like', "%{$this->search}%")
-                    ->orWhere('name', 'like', "%{$this->search}%")
+                fn($query) =>
+                $query->where('name', 'like', "%{$this->search}%")
             )
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->pagination);

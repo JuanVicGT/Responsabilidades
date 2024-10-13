@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string update_at
  * @property string created_at
 
- * @property string code
  * @property string name
  */
 class Dependency extends Model
@@ -19,5 +18,7 @@ class Dependency extends Model
 
     /* When you set `` to an empty array `[]`, it means
     that all attributes of the model are mass assignable */
-    protected $guarded = [];
+    protected $fillable = [
+        'name'
+    ];
 }
