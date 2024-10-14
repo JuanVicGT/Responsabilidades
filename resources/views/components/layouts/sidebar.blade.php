@@ -94,6 +94,8 @@
         @if (auth()->user()->is_admin || auth()->user()->can('index_user'))
             <x-mary-menu-item title="{{ __('Collaborators') }}" icon="o-user-group"
                 link="{{ route('user.index') }}" />
+            <x-mary-menu-item title="{{ __('Password Reset Requests') }}" icon="o-user-group"
+                link="{{ route('pass_reset_request.index') }}" />
         @endif
 
         {{-- Sección de responsabilidades --}}

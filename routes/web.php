@@ -9,7 +9,7 @@ use App\Http\Controllers\Backend\TodoController;
 use Illuminate\Support\Facades\Redirect;
 
 // Request to reset password
-Route::middleware('guest')->controller(Public\PasswordResetRequestController::class)->prefix('/forgot-password')
+Route::middleware('guest')->controller(Public\PasswordResetRequestPublicController::class)->prefix('/forgot-password')
     ->name('prequest.')
     ->group(function () {
         Route::get('/', 'create')->name('create');
@@ -86,9 +86,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::patch('/Update', 'update')->name('update');
             Route::delete('/Delete', 'delete')->name('destroy');
 
-            Route::post('/Refuse/Password', 'refuse_password')->name('refuse.password');
+            Route::post('/Refuse/Password', 'refuse_password_reset')->name('refuse.password');
             Route::patch('/Accept/Password', 'apply_password_reset')->name('accept.password');
         });
+
+    Route::controller(Backend\PasswordResetRequestController::class)->prefix('/Prequest')->name('pass_reset_request.')
+    ->group(function () {
+        // Views
+        Route::get('/', 'index')->name('index');
+    });    
 
     Route::controller(Backend\AttendanceController::class)->prefix('/Attendance')->name('attendance.')
         ->group(function () {

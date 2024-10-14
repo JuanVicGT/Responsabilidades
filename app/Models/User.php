@@ -90,13 +90,20 @@ class User extends Authenticatable
      * Refuse the pending password reset request and set the need_password_reset column to false.
      * @return void
      */
-    public function refusePasswordResetRequest(): void
+    public function refusePasswordResetRequest(): bool
     {
         $passwordResetRequest = $this->pendingPasswordResetRequest;
-        if ($passwordResetRequest) {
-            $passwordResetRequest->update(['status' => StatusPasswordResetRequest::Refused]);
-            $this->update(['need_password_reset' => false]);
+        if ($passwordResetRequest->status === StatusPasswordResetRequest::NotVerified->value) {
+            $this->need_password_reset = false;
+            $hasUpdated = $this->save();
+
+            if ($hasUpdated) {
+                $passwordResetRequest->update(['status' => StatusPasswordResetRequest::Refused->value]);
+                return true;
+            }
         }
+
+        return false;
     }
 
     /**

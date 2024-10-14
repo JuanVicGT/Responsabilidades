@@ -131,9 +131,12 @@ class UserController extends Controller
     {
         $user = User::find($request->id);
 
-        $user->refusePasswordResetRequest();
+        if ($user->refusePasswordResetRequest()) {
+            $this->addAlert(AlertType::Success, __('Password reset refused'));
+        } else {
+            $this->addAlert(AlertType::Error, __('Could not be updated'));
+        }
 
-        $this->addAlert(AlertType::Success, __('Password reset refused'));
         return redirect()->route('user.edit', $user->id)->with('alerts', $this->getAlerts());
     }
 
