@@ -94,7 +94,7 @@
         @if (auth()->user()->is_admin || auth()->user()->can('index_user'))
             <x-mary-menu-item title="{{ __('Collaborators') }}" icon="o-user-group"
                 link="{{ route('user.index') }}" />
-            <x-mary-menu-item title="{{ __('Password Reset Requests') }}" icon="o-user-group"
+            <x-mary-menu-item title="{{ __('Password Reset Requests') }}" icon="o-chat-bubble-bottom-center-text"
                 link="{{ route('pass_reset_request.index') }}" />
         @endif
 
@@ -109,6 +109,17 @@
         @if (auth()->user()->is_admin || auth()->user()->can('index_responsibility'))
             <x-mary-menu-item title="{{ __('Responsability Sheets') }}" icon="c-clipboard-document-check"
                 link="{{ route('responsability-sheet.index') }}" />
+        @endif
+
+        {{-- Sección de RH --}}
+        @if (auth()->user()->is_admin || auth()->user()->can('index_app_setting'))
+            <span class="text-lg font-bold flex items-center">
+                <hr class="w-full mx-4">
+                <p class="mary-hideable mr-2">{{ __('Control') }}</p>
+            </span>
+
+            <x-mary-menu-item title="{{ __('Configuration') }}" icon="o-cog-6-tooth"
+                link="{{ route('app_setting.index') }}" />
         @endif
     </x-mary-menu>
 </x-slot:sidebar>

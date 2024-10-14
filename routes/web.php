@@ -44,6 +44,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('/Delete', 'destroy')->name('destroy');
         });
 
+    // Configuraciones
+    Route::controller(Backend\AppSettingController::class)->prefix('/Config')->name('app_setting.')
+        ->group(function () {
+            // Views
+            Route::get('/', 'index')->name('index');
+
+            // Actions
+            Route::post('/Store', 'store')->name('store');
+        });
+
     Route::controller(Backend\PermissionController::class)->prefix('/Permission')->name('permission.')
         ->group(function () {
             // Views
@@ -91,10 +101,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
     Route::controller(Backend\PasswordResetRequestController::class)->prefix('/Prequest')->name('pass_reset_request.')
-    ->group(function () {
-        // Views
-        Route::get('/', 'index')->name('index');
-    });    
+        ->group(function () {
+            // Views
+            Route::get('/', 'index')->name('index');
+        });
 
     Route::controller(Backend\AttendanceController::class)->prefix('/Attendance')->name('attendance.')
         ->group(function () {

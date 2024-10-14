@@ -4,7 +4,7 @@
     @endsection
 
     @section('content-header')
-        <x-mary-header title="{{ __('Todos  List') }}">
+        <x-mary-header title="{{ __('Todos List') }}">
             <x-slot:actions>
                 <x-mary-button label="{{ __('Calendar View') }}" icon="o-calendar-days"
                     class="btn-primary text-white dark:text-black" link="{{ route('todo.calendar') }}" no-wire-navigate />

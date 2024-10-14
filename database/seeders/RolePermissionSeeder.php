@@ -33,7 +33,8 @@ class RolePermissionSeeder extends Seeder
             'item',
             'role',
             'permission',
-            'reset_password'
+            'reset_password',
+            'app_setting'
         ];
     }
 

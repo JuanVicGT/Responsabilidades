@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\AppSettingService;
+use App\Models\AppSetting;
 use App\Utils\Alerts;
 
 // Use to authorize views (without model)
@@ -12,6 +14,14 @@ use Illuminate\Support\Facades\Gate;
 abstract class Controller
 {
     use Alerts;
+
+    protected $config;
+
+    public function __construct()
+    {
+        $settings = AppSetting::getFullSettings();
+        $this->config = app(AppSettingService::class, compact('settings'));
+    }
 
     /**
      * Checks if the current user is allowed to realize a specific action on a

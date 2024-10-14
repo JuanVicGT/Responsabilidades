@@ -10,7 +10,6 @@ use App\Models\Dependency;
 use App\Models\Role;
 use App\Models\User;
 use App\Utils\Enums\AlertType;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
