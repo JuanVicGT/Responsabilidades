@@ -87,14 +87,72 @@ entity responsibility_sheets as "hojas_de_responsabilidad" {
     +created_by : Integer <<foreign>>
     +id_responsible : Integer <<foreign>>
 
-    +series : string
-    +total : float
+    +status : string
+    +number : string
+    +balance : float
 
     +created_at : timestamp
     +updated_at : timestamp
 }
 
 /' === Débiles === '/
+entity line_responsibility_sheets as "detalles_de_hoja_de_responsabilidad" {
+    +id : Integer
+    +id_item : Integer <<foreign>>
+    +id_responsibility_sheet : Integer <<foreign>>
+
+    +is_active : boolean
+
+    +quantity : float
+    +subtotal : float
+
+    +created_at : timestamp
+    +updated_at : timestamp
+}
+
+entity transfer_responsibility_sheets as "transferencias_de_elementos" {
+    +id : Integer
+    +id_item : Integer <<foreign>>
+
+    +date : date
+    +description : text
+
+    +id_from_sheet : Integer <<foreign>>
+    +id_to_sheet : Integer <<foreign>>
+
+    +id_from_line : Integer <<foreign>>
+    +id_to_line : Integer <<foreign>>
+
+    +created_by : Integer <<foreign>>
+    +created_at : timestamp
+
+    +updated_by : Integer <<foreign>>
+    +updated_at : timestamp
+}
+
+entity damaged_items as "elementos_dañados" {
+    +id : Integer
+    +id_item : Integer <<foreign>>
+
+    +date : date
+    +description : text
+
+    +created_at : timestamp
+    +updated_at : timestamp
+}
+
+entity observation_responsibility_sheets as "observaciones_de_hoja_de_responsabilidad" {
+    +id : Integer
+    +added_by : Integer <<foreign>>
+    +id_sheet : Integer <<foreign>>
+
+    +name : string
+    +description : string
+
+    +created_at : timestamp
+    +updated_at : timestamp
+}
+
 entity todos as "tareas" {
     +id : Integer
     +id_user : Integer <<foreign>>
@@ -121,30 +179,6 @@ entity attendances as "asistencias" {
     +start_hour : number
     +end_hour : number
     +extra_hours : number
-    +description : string
-
-    +created_at : timestamp
-    +updated_at : timestamp
-}
-
-entity line_responsibility_sheets as "detalles_de_hoja_de_responsabilidad" {
-    +id : Integer
-    +id_item : Integer <<foreign>>
-    +id_responsibility_sheet : Integer <<foreign>>
-
-    +quantity : float
-    +subtotal : float
-
-    +created_at : timestamp
-    +updated_at : timestamp
-}
-
-entity observation_responsibility_sheets as "observaciones_de_hoja_de_responsabilidad" {
-    +id : Integer
-    +added_by : Integer <<foreign>>
-    +id_responsibility_sheet : Integer <<foreign>>
-
-    +name : string
     +description : string
 
     +created_at : timestamp
@@ -183,21 +217,6 @@ entity permissions as "permisos" {
     +delete_permission(id: Integer) : void
 }
 
-entity item_transfers as "transferencias_de_elementos" {
-    +id : Integer
-    +id_item : Integer <<foreign>>
-    +id_from_responsibility_sheet : Integer <<foreign>>
-    +id_to_responsibility_sheet : Integer <<foreign>>
-    +created_by : Integer <<foreign>>
-
-    +transfer_date : date
-    +status : string
-    +description : text
-
-    +created_at : timestamp
-    +updated_at : timestamp
-}
-
 entity observation_events as "observaciones_de_eventos" {
     +id : Integer
     +id_event : Integer <<foreign>>
@@ -217,16 +236,6 @@ entity observation_todos as "observaciones_de_tareas" {
 
     +name : string
     +description : string
-
-    +created_at : timestamp
-    +updated_at : timestamp
-}
-
-entity damaged_items as "elementos_dañados" {
-    +id : Integer
-    +id_item : Integer <<foreign>>
-    +description : text
-    +repair_status : string
 
     +created_at : timestamp
     +updated_at : timestamp

@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('line_responsability_sheets', function (Blueprint $table) {
+        Schema::create('damaged_items', function (Blueprint $table) {
             $table->id();
 
-            $table->float('quantity')->nullable();
-            $table->float('subtotal')->nullable();
+            $table->date('date')->nullable();
+            $table->text('description')->nullable();
 
             $table->foreignId('id_item')->constrained('items')->onDelete('cascade');
-            $table->foreignId('id_sheet')->constrained('responsability_sheets')->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('line_responsability_sheets');
+        Schema::dropIfExists('damaged_items');
     }
 };

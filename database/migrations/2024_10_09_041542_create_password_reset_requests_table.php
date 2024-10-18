@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->enum('status', StatusPasswordResetRequest::values())->nullable();
 
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -18,10 +18,7 @@ return new class extends Migration
             $table->string('description')->nullable();
 
             $table->foreignId('added_by')->constrained('users')->onDelete('cascade');
-            $table->foreignId('id_responsability_sheet')->constrained(
-                table: 'responsability_sheets',
-                indexName: 'ob_responsability_sheet'
-            )->onDelete('cascade');
+            $table->foreignId('id_sheet')->constrained('responsability_sheets')->onDelete('cascade');
 
             $table->timestamps();
         });
