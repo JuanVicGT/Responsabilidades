@@ -195,6 +195,11 @@
     "Requested at": "Solicitado el",
     "Requested by": "Solicitado por",
     "conf-mayor": "Alcalde",
-    "conf-sequence-start": "El número de secuencia comienza en",
-    "conf-sequence-start-description": "Indica el número con el cual iniciará la secuencia de las tarjetas de responsabilidades."
+    "conf-sequence-start": "Siguiente número de tarjeta de responsabilidad",
+    "conf-sequence-start-description": "Indica el número con el que se creará la siguiente tarjeta de responsabilidad, si no se indica, se creará la primera tarjeta de responsabilidad con el número 1.",
+    "conf-sequence-prefix": "Prefijo para tarjetas de responsabilidad",
+    "conf-sequence-prefix-description": "Indica el prefijo con el que se creará las tarjetas de responsabilidad, si no se indica, las tarjetas no tendrán prefijo y el código será unicamente numerico.",
+    "Code ID": "Número de identificación",
+    "conf-afmin": "Director AFIM",
+    "director-afmin": "Director AFIM"
 }

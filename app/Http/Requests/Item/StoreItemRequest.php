@@ -27,12 +27,10 @@ class StoreItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'string', 'max:30', Rule::unique(Item::class)],
-            'name' => ['required', 'string', 'max:150'],
-            'serial' => ['required', 'string', 'max:150'],
+            'code' => ['required', 'string', 'max:150', Rule::unique(Item::class)],
             'quantity' => ['required', 'integer', 'min:1'],
-            'unit_value' => ['required', 'string'],
-            'amount' => ['nullable', 'string'],
+            'unit_value' => ['required', 'numeric'],
+            'amount' => ['nullable', 'numeric'],
             'description' => ['nullable', 'string'],
             'observations' => ['nullable', 'string'],
         ];

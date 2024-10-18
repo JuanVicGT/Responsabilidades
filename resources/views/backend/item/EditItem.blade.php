@@ -16,7 +16,7 @@
                     link="{{ route('item.index') }}" />
                 @if (auth()->user()->is_admin || auth()->user()->can('create_item'))
                     <x-mary-button label="{{ __('Add New') }}" icon="o-plus" class="btn-success"
-                        link="{{ route('item.create') }}" no-wire-navigate />
+                        link="{{ route('item.create') }}" />
                 @endif
             </x-slot:actions>
         </x-mary-header>
@@ -33,7 +33,7 @@
 
             <div class="grid sm:grid-cols-2 gap-4">
                 <div>
-                    <x-mary-input label="{{ __('Code') }}" type="text" name='code' required autofocus
+                    <x-mary-input label="{{ __('Code ID' ) }}" type="text" name='code' required autofocus
                         value="{{ old('code', $item?->code) }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('code')" />
                 </div>

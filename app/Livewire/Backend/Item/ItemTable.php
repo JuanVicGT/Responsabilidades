@@ -24,18 +24,17 @@ class ItemTable extends Component
     // Filters
     public int $pagination = 10;
     public string $search = '';
-    public array $sortBy = ['column' => 'name', 'direction' => 'desc'];
+    public array $sortBy = ['column' => 'description', 'direction' => 'desc'];
 
     protected function getTableHeaders(): array
     {
         return [
             ['key' => 'id', 'label' => '#', 'class' => 'bg-red-500/20 w-1'],
             ['key' => 'code', 'label' => __('Code')],
-            ['key' => 'name', 'label' => __('Name')],
-            ['key' => 'serial', 'label' => __('Serial')],
+            ['key' => 'description', 'label' => __('Description')],
             ['key' => 'unit_value', 'label' => __('Unit Value')],
             ['key' => 'quantity', 'label' => __('Quantity')],
-            ['key' => 'amount', 'label' => __('Total Amount')],
+            ['key' => 'amount', 'label' => __('Total Amount')]
         ];
     }
 
@@ -44,9 +43,9 @@ class ItemTable extends Component
         return Item::when(
             $this->search,
 
-            fn ($query) =>
+            fn($query) =>
             $query->where('code', 'like', "%{$this->search}%")
-                ->orWhere('name', 'like', "%{$this->search}%")
+                ->orWhere('description', 'like', "%{$this->search}%")
         )
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->pagination);

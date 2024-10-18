@@ -14,14 +14,12 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
 
-            $table->string('code', 30)->nullable()->unique();
-            $table->string('name', 150)->nullable();
-            $table->string('serial', 150)->nullable();
+            $table->string('code', 150)->nullable()->unique();
             $table->integer('quantity')->nullable();
             $table->text('description')->nullable();
             $table->text('observations')->nullable();
-            $table->float('unit_value')->nullable();
-            $table->float('amount')->nullable();
+            $table->double('unit_value')->nullable();
+            $table->double('amount')->nullable();
 
             $table->timestamps();
         });

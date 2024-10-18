@@ -8,7 +8,8 @@
         </div>
 
         {{-- You can use any `$wire.METHOD` on `@row-click` --}}
-        <x-mary-table :headers="$headers" :rows="$rows" with-pagination :sort-by="$sortBy" class="pb-4" striped>
+        <x-mary-table :headers="$headers" :rows="$rows" with-pagination :sort-by="$sortBy" class="pb-4" striped
+            link="Item/Edit/{id}">
 
             {{-- Overrides headers --}}
             @scope('header_id', $header)
@@ -21,12 +22,7 @@
                     {{ $header['label'] }}
                 </h2>
             @endscope
-            @scope('header_name', $header)
-                <h2 class="text-xl font-bold inline">
-                    {{ $header['label'] }}
-                </h2>
-            @endscope
-            @scope('header_serial', $header)
+            @scope('header_description', $header)
                 <h2 class="text-xl font-bold inline">
                     {{ $header['label'] }}
                 </h2>
@@ -56,10 +52,13 @@
 
             @scope('actions', $row)
                 <div class="flex space-x-2">
+                    {{-- 
+                    Este código se mantiene por si acaso, sé que es una mala práctica (perdoname mi yo del futuro D:)
                     @if (auth()->user()->is_admin || auth()->user()->can('edit_item'))
                         <x-mary-button icon="o-pencil" spinner class="btn-sm btn-primary text-white"
                             link="{{ route('item.edit', $row->id) }}" no-wire-navigate />
-                    @endif
+                    @endif 
+                    --}}
                     @if (auth()->user()->is_admin || auth()->user()->can('delete_item'))
                         <x-mary-button icon="o-trash" spinner class="btn-sm btn-error text-white"
                             wire:click="showDeleteModal({{ $row->id }})" />
@@ -74,7 +73,8 @@
                 <div class="w-full flex justify-end space-x-4">
                     <x-mary-button label="{{ __('Cancel') }}" class="btn-neutral"
                         @click="$wire.deleteModal = false" />
-                    <x-mary-button label="{{ __('Confirm') }}" class="btn-error text-white dark:text-black" type="submit" spinner="delete" />
+                    <x-mary-button label="{{ __('Confirm') }}" class="btn-error text-white dark:text-black"
+                        type="submit" spinner="delete" />
                 </div>
             </x-mary-form>
         </x-mary-modal>

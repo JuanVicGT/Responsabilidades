@@ -28,13 +28,11 @@ class UpdateItemRequest extends FormRequest
     {
         return [
             'id' => ['required', 'integer'],
-            'code' => ['required', 'string', 'max:30', Rule::unique(Item::class)->ignore($this->request->get('id'))],
-            'name' => ['required', 'string', 'max:150'],
-            'serial' => ['required', 'string', 'max:150'],
+            'code' => ['required', 'string', 'max:150', Rule::unique(Item::class)->ignore($this->request->get('id'))],
             'quantity' => ['required', 'integer', 'min:1'],
-            'unit_value' => ['required', 'string'],
-            'amount' => ['nullable', 'string'],
-            'description' => ['nullable', 'string'],
+            'amount' => ['required', 'numeric'],
+            'unit_value' => ['nullable', 'numeric'],
+            'description' => ['required', 'string'],
             'observations' => ['nullable', 'string'],
         ];
     }

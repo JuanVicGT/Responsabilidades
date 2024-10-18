@@ -11,12 +11,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string created_at
 
  * @property string code
- * @property string name
  * @property int quantity
  * @property string description
- * @property string series
  * @property string observations
  * @property float unit_value
+ * @property float amount
  */
 class Item extends Model
 {

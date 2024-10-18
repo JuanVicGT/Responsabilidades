@@ -34,7 +34,9 @@ class AppSetting extends Model
     {
         return [
             ['key' => 'mayor', 'type' => 'text', 'title' => __('conf-mayor')],
+            ['key' => 'director_afim', 'type' => 'text', 'title' => __('conf-afmin')],
             ['key' => 'sequence_start', 'type' => 'number', 'title' => __('conf-sequence-start'), 'description' => __('conf-sequence-start-description')],
+            ['key' => 'sequence_prefix', 'type' => 'text', 'title' => __('conf-sequence-prefix'), 'description' => __('conf-sequence-prefix-description')],
         ];
     }
 }

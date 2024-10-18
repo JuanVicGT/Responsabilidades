@@ -1,7 +1,6 @@
 <x-layouts.app>
 
     @section('custom-js')
-        <script src="{{ asset('assets/js/utils.js') }}"></script>
         <script src="{{ asset('assets/js/create_item.js') }}"></script>
     @endsection
 
@@ -26,24 +25,13 @@
 
             <div class="grid sm:grid-cols-2 gap-4">
                 <div>
-                    <x-mary-input label="{{ __('Code') }}" type="text" name='code' required autofocus
+                    <x-mary-input label="{{ __('Code ID') }}" type="text" name='code' required autofocus
                         value="{{ old('code') }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('code')" />
                 </div>
                 <div>
-                    <x-mary-input label="{{ __('Name') }}" type="text" name='name' required
-                        value="{{ old('name') }}" />
-                    <x-input-error class="mt-2" :messages="$errors->get('name')" />
-                </div>
-                <div>
-                    <x-mary-input label="{{ __('Serial') }}" type="text" name='serial' required
-                        value="{{ old('serial') }}" />
-                    <x-input-error class="mt-2" :messages="$errors->get('serial')" />
-                </div>
-                <div>
-                    <x-input-label for="unit_value" :value="__('Unit Value') . '*'" />
-                    <input name='unit_value' required value="{{ old('unit_value') }}"
-                        class="input input-primary w-full peer mt-2" x-mask:dynamic="$money($input)" />
+                    <x-mary-input label="{{ __('Unit Value') }}" name='unit_value' value="{{ old('unit_value') }}"
+                        prefix="Q" type="number" step="any" required />
                     <x-input-error class="mt-2" :messages="$errors->get('unit_value')" />
                 </div>
                 <div>
@@ -52,12 +40,12 @@
                     <x-input-error class="mt-2" :messages="$errors->get('quantity')" />
                 </div>
                 <div>
-                    <x-mary-input label="{{ __('Total') }}" name='amount' x-mask:dynamic="$money($input)"
-                        value="{{ old('amount') }}" readonly icon="o-currency-dollar" />
+                    <x-mary-input label="{{ __('Total') }}" name='amount' value="{{ old('amount') }}"
+                        prefix="Q" type="number" step="any" required />
                     <x-input-error class="mt-2" :messages="$errors->get('amount')" />
                 </div>
                 <div>
-                    <x-mary-textarea label="{{ __('Description') }}" type="text" name='description'
+                    <x-mary-textarea label="{{ __('Description') }}" type="text" name='description' required
                         rows="5">{{ old('description') }}</x-mary-textarea>
                     <x-input-error class="mt-2" :messages="$errors->get('description')" />
                 </div>

@@ -7,8 +7,6 @@ use App\Http\Requests\Item\StoreItemRequest;
 use App\Http\Requests\Item\UpdateItemRequest;
 use App\Models\Item;
 use App\Utils\Enums\AlertType;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class ItemController extends Controller
 {
@@ -38,14 +36,12 @@ class ItemController extends Controller
     public function store(StoreItemRequest $request)
     {
         // Clear the format of the current inputs
-        $amount = str_replace(',', '', $request->amount);
-        $unit_value = str_replace(',', '', $request->unit_value);
+        $amount = $request->amount ?? 0;
+        $unit_value = $request->unit_value ?? 0;
 
         $item = new Item();
         $item->code = $request->code;
-        $item->name = $request->name;
         $item->amount = $amount;
-        $item->serial = $request->serial;
         $item->quantity = $request->quantity;
         $item->unit_value = $unit_value;
         $item->description = $request->description;
@@ -85,14 +81,12 @@ class ItemController extends Controller
     public function update(UpdateItemRequest $request)
     {
         // Clear the format of the current inputs
-        $amount = str_replace(',', '', $request->amount);
-        $unit_value = str_replace(',', '', $request->unit_value);
+        $amount = $request->amount ?? 0;
+        $unit_value = $request->unit_value ?? 0;
 
         $item = Item::find($request->id);
         $item->code = $request->code;
-        $item->name = $request->name;
         $item->amount = $amount;
-        $item->serial = $request->serial;
         $item->quantity = $request->quantity;
         $item->unit_value = $unit_value;
         $item->description = $request->description;
