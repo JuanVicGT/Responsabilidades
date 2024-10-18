@@ -21,8 +21,7 @@ return new class extends Migration
 
             $table->string('status', 20)->nullable(); // Queda abierto
 
-            $table->foreignId('approved_by')->constrained('users')->onDelete('cascade');
-
+            $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('cascade');
         });
     }
 

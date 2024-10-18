@@ -20,13 +20,13 @@ return new class extends Migration
             $table->foreignId('id_item')->constrained('items')->onDelete('cascade');
 
             $table->foreignId('id_from_sheet')->constrained('responsability_sheets')->onDelete('cascade');
-            $table->foreignId('id_to_sheet')->constrained('responsability_sheets')->nullable();
+            $table->foreignId('id_to_sheet')->nullable()->constrained('responsability_sheets');
 
             $table->foreignId('id_from_line')->constrained('line_responsability_sheets')->onDelete('cascade');
-            $table->foreignId('id_to_line')->constrained('line_responsability_sheets')->nullable();
+            $table->foreignId('id_to_line')->nullable()->constrained('line_responsability_sheets');
 
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
-            $table->foreignId('updated_by')->constrained('users')->nullable();
+            $table->foreignId('updated_by')->nullable()->constrained('users');
 
             $table->timestamps();
         });
