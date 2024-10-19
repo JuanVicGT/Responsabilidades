@@ -17,7 +17,6 @@ return new class extends Migration
             $table->double('subtotal')->nullable()->change();
 
             // Nuevas columnas
-            $table->double('subtotal')->nullable()->change();
             $table->boolean('is_active')->default(true);
 
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
