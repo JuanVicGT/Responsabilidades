@@ -201,5 +201,6 @@
     "conf-sequence-prefix-description": "Indica el prefijo con el que se creará las tarjetas de responsabilidad, si no se indica, las tarjetas no tendrán prefijo y el código será unicamente numerico.",
     "Code ID": "Número de identificación",
     "conf-afmin": "Director AFIM",
-    "director-afmin": "Director AFIM"
+    "director-afmin": "Director AFIM",
+    "Number": "Número"
 }

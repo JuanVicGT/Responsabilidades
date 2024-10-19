@@ -16,10 +16,11 @@ return new class extends Migration
             $table->dropColumn(['series', 'total']);
 
             // Nuevas columnas
-            $table->string('number')->nullable();
+            $table->integer('number')->nullable();
+            $table->string('prefix_number')->nullable();
             $table->double('balance')->nullable();
 
-            $table->string('status', 20)->nullable(); // Queda abierto
+            $table->string('status', 20)->nullable(); // Queda abierto porque no me decido que pueda contener
 
             $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('cascade');
         });

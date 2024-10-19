@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,5 +23,16 @@ class DatabaseSeeder extends Seeder
             'is_admin' => true,
             'is_first_login' => false
         ]);
+
+        for ($i = 0; $i < 20000; $i++) {
+            $username = '';
+            do {
+                $username = Str::random(10);
+            } while (User::where('username', $username)->exists());
+
+            User::factory()->create([
+                'username' => $username
+            ]);
+        }
     }
 }

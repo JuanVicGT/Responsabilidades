@@ -2,8 +2,8 @@
 
 namespace App\Utils;
 
-use App\Utils\Enums\AlertIcon;
-use App\Utils\Enums\AlertType;
+use App\Utils\Enums\AlertIconEnum;
+use App\Utils\Enums\AlertTypeEnum;
 
 trait Alerts
 {
@@ -18,8 +18,8 @@ trait Alerts
     /**
      * The function "addAlert" adds an alert to an array with a specified type, message, attributes, and
      * translation option.
-     * 
-     * @param AlertType alert_type The alert type parameter is of type AlertType, which is an enum that
+     *
+     * @param AlertTypeEnum alert_type The alert type parameter is of type AlertTypeEnum, which is an enum that
      * represents different types of alerts (e.g., Info, Success, Warning, Error).
      * @param string Is a string that represents the content of the alert message.
      * @param ?array attributes An optional array of attributes that can be used to replace placeholders in the
@@ -27,17 +27,17 @@ trait Alerts
      * @param ?bool trans Is a boolean flag that indicates whether the message should be
      * translated or not.
      */
-    public function addAlert(AlertType $alert_type = AlertType::Info, string $message = '', ?array $attributes = [], ?bool $trans = true): void
+    public function addAlert(AlertTypeEnum $alert_type = AlertTypeEnum::Info, string $message = '', ?array $attributes = [], ?bool $trans = true): void
     {
         $this->alerts[] = (object) [
             'type' => $alert_type,
             'message' => ($trans) ? __($message, $attributes) : $message,
             'icon' => match ($alert_type) {
-                AlertType::Info => AlertIcon::Info,
-                AlertType::Error => AlertIcon::Error,
-                AlertType::Default => AlertIcon::Default,
-                AlertType::Warning => AlertIcon::Warning,
-                AlertType::Success => AlertIcon::Success
+                AlertTypeEnum::Info => AlertIconEnum::Info,
+                AlertTypeEnum::Error => AlertIconEnum::Error,
+                AlertTypeEnum::Default => AlertIconEnum::Default,
+                AlertTypeEnum::Warning => AlertIconEnum::Warning,
+                AlertTypeEnum::Success => AlertIconEnum::Success
             },
         ];
     }

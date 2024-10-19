@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Permission;
-use App\Utils\Enums\AlertType;
+use App\Utils\Enums\AlertTypeEnum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
@@ -45,9 +45,9 @@ class PermissionController extends Controller
         $permission->guard_name = 'web';
 
         if ($permission->save())
-            $this->addAlert(AlertType::Success, __('Created successfully'));
+            $this->addAlert(AlertTypeEnum::Success, __('Created successfully'));
         else
-            $this->addAlert(AlertType::Error, __('Could not be created'));
+            $this->addAlert(AlertTypeEnum::Error, __('Could not be created'));
 
         return redirect()->route('permission.create')->with('alerts', $this->getAlerts());
     }
@@ -86,9 +86,9 @@ class PermissionController extends Controller
         $permission->name = $request->name;
 
         if ($permission->save())
-            $this->addAlert(AlertType::Success, __('Created successfully'));
+            $this->addAlert(AlertTypeEnum::Success, __('Created successfully'));
         else
-            $this->addAlert(AlertType::Error, __('Could not be created'));
+            $this->addAlert(AlertTypeEnum::Error, __('Could not be created'));
 
         return redirect()->route('permission.edit', $request->id)->with('alerts', $this->getAlerts());
     }

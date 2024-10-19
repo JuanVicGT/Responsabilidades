@@ -4,7 +4,7 @@ namespace App\Utils\Enums;
 
 use App\Utils\Traits\EnumToArray;
 
-enum AlertType: string
+enum AlertTypeEnum: string
 {
     use EnumToArray;
 

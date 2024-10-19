@@ -9,13 +9,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int id
  * @property string update_at
  * @property string created_at
-
- * @property string name
- * @property string description
-
- * ---- Foreign keys
- * @property int added_by
+ * @property string observation
  * @property int id_responsability_sheet
+ * @property int created_by
  */
 class ObservationResponsabilitySheet extends Model
 {

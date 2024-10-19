@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Utils\Enums\AlertIcon;
-use App\Utils\Enums\AlertType;
+use App\Utils\Enums\AlertIconEnum;
+use App\Utils\Enums\AlertTypeEnum;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
@@ -29,8 +29,8 @@ class FirstLoginController extends Controller
         return view('backend.user.FirstLogin', [
             'user' => $request->user(),
             'alert_message' => __('Is your first login, you will need to change your password'),
-            'alert_type' => AlertType::Warning,
-            'alert_icon' => AlertIcon::Warning
+            'alert_type' => AlertTypeEnum::Warning,
+            'alert_icon' => AlertIconEnum::Warning
         ]);
     }
 
@@ -46,7 +46,7 @@ class FirstLoginController extends Controller
             'is_first_login' => false
         ]);
 
-        $this->addAlert(AlertType::Success, __('Your password has been updated!'));
+        $this->addAlert(AlertTypeEnum::Success, __('Your password has been updated!'));
         return redirect()->route('dashboard')->with('alerts', $this->getAlerts());
     }
 }

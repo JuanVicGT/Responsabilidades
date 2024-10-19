@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Event\StoreEventRequest;
 use App\Http\Requests\Event\UpdateEventRequest;
 use App\Models\Event;
-use App\Utils\Enums\AlertType;
-use App\Utils\Enums\StatusEvent;
+use App\Utils\Enums\AlertTypeEnum;
+use App\Utils\Enums\StatusEventEnum;
 use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
@@ -51,9 +51,9 @@ class EventController extends Controller
 
                 // Set the background color of the event.
                 $event->color = match ($event->status) {
-                    StatusEvent::Active->value => '#00A96E',
-                    StatusEvent::Cancelled->value => '#FF5861',
-                    StatusEvent::Finished->value => '#0073A0',
+                    StatusEventEnum::Active->value => '#00A96E',
+                    StatusEventEnum::Cancelled->value => '#FF5861',
+                    StatusEventEnum::Finished->value => '#0073A0',
                 };
                 return $event;
             })
@@ -78,7 +78,7 @@ class EventController extends Controller
     {
         $this->general_auth('create', self::MODULE_NAME);
 
-        $status_options = StatusEvent::array();
+        $status_options = StatusEventEnum::array();
         return view('backend.event.CreateEvent', compact('status_options'));
     }
 
@@ -100,9 +100,9 @@ class EventController extends Controller
         $event->save();
 
         if ($event->save())
-            $this->addAlert(AlertType::Success, __('Created successfully'));
+            $this->addAlert(AlertTypeEnum::Success, __('Created successfully'));
         else
-            $this->addAlert(AlertType::Error, __('Could not be created'));
+            $this->addAlert(AlertTypeEnum::Error, __('Could not be created'));
 
         return redirect()->route('event.create')->with('alerts', $this->getAlerts());
     }
@@ -123,7 +123,7 @@ class EventController extends Controller
     {
         $this->general_auth('edit', self::MODULE_NAME);
 
-        $status_options = StatusEvent::array();
+        $status_options = StatusEventEnum::array();
         return view('backend.event.EditEvent', compact('status_options', 'id'));
     }
 
@@ -145,9 +145,9 @@ class EventController extends Controller
         $event->save();
 
         if ($event->save())
-            $this->addAlert(AlertType::Success, __('Created successfully'));
+            $this->addAlert(AlertTypeEnum::Success, __('Created successfully'));
         else
-            $this->addAlert(AlertType::Error, __('Could not be created'));
+            $this->addAlert(AlertTypeEnum::Error, __('Could not be created'));
 
         return redirect()->route('event.edit', $event->id)->with('alerts', $this->getAlerts());
     }

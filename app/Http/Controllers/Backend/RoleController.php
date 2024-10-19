@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
-use App\Utils\Enums\AlertType;
+use App\Utils\Enums\AlertTypeEnum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
@@ -44,9 +44,9 @@ class RoleController extends Controller
         $role->name = $request->name;
         $role->guard_name = 'web';
         if ($role->save())
-            $this->addAlert(AlertType::Success, __('Created successfully'));
+            $this->addAlert(AlertTypeEnum::Success, __('Created successfully'));
         else
-            $this->addAlert(AlertType::Error, __('Could not be created'));
+            $this->addAlert(AlertTypeEnum::Error, __('Could not be created'));
 
         return redirect()->route('role.create')->with('alerts', $this->getAlerts());
     }
@@ -83,9 +83,9 @@ class RoleController extends Controller
         $role->name = $request->name;
 
         if ($role->save())
-            $this->addAlert(AlertType::Success, __('Created successfully'));
+            $this->addAlert(AlertTypeEnum::Success, __('Created successfully'));
         else
-            $this->addAlert(AlertType::Error, __('Could not be created'));
+            $this->addAlert(AlertTypeEnum::Error, __('Could not be created'));
 
         return redirect()->route('role.edit', $request->id)->with('alerts', $this->getAlerts());
     }

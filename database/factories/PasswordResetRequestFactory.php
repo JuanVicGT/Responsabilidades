@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Utils\Enums\StatusPasswordResetRequest;
+use App\Utils\Enums\StatusPasswordResetRequestEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +18,7 @@ class PasswordResetRequestFactory extends Factory
     public function definition(): array
     {
         return [
-            'status' => StatusPasswordResetRequest::NotVerified
+            'status' => StatusPasswordResetRequestEnum::NotVerified
         ];
     }
 }

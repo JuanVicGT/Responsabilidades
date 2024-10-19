@@ -8,7 +8,7 @@ use App\Models\PasswordResetRequest;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
-use App\Utils\Enums\StatusPasswordResetRequest;
+use App\Utils\Enums\StatusPasswordResetRequestEnum;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -83,7 +83,7 @@ class User extends Authenticatable
     public function pendingPasswordResetRequest(): HasOne
     {
         return $this->hasOne(PasswordResetRequest::class)
-            ->where('status', StatusPasswordResetRequest::NotVerified)->latestOfMany();
+            ->where('status', StatusPasswordResetRequestEnum::NotVerified)->latestOfMany();
     }
 
     /**
@@ -93,12 +93,12 @@ class User extends Authenticatable
     public function refusePasswordResetRequest(): bool
     {
         $passwordResetRequest = $this->pendingPasswordResetRequest;
-        if ($passwordResetRequest->status === StatusPasswordResetRequest::NotVerified->value) {
+        if ($passwordResetRequest->status === StatusPasswordResetRequestEnum::NotVerified->value) {
             $this->need_password_reset = false;
             $hasUpdated = $this->save();
 
             if ($hasUpdated) {
-                $passwordResetRequest->update(['status' => StatusPasswordResetRequest::Refused->value]);
+                $passwordResetRequest->update(['status' => StatusPasswordResetRequestEnum::Refused->value]);
                 return true;
             }
         }
@@ -113,13 +113,13 @@ class User extends Authenticatable
     public function applyPasswordResetRequest(string $new_password): bool
     {
         $passwordResetRequest = $this->pendingPasswordResetRequest;
-        if ($passwordResetRequest->status === StatusPasswordResetRequest::NotVerified->value) {
+        if ($passwordResetRequest->status === StatusPasswordResetRequestEnum::NotVerified->value) {
             $this->password = Hash::make($new_password);
             $this->need_password_reset = false;
             $hasUpdated = $this->save();
 
             if ($hasUpdated) {
-                $passwordResetRequest->update(['status' => StatusPasswordResetRequest::Processed->value]);
+                $passwordResetRequest->update(['status' => StatusPasswordResetRequestEnum::Processed->value]);
                 return true;
             }
         }

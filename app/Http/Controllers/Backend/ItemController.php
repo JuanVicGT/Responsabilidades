@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Item\StoreItemRequest;
 use App\Http\Requests\Item\UpdateItemRequest;
 use App\Models\Item;
-use App\Utils\Enums\AlertType;
+use App\Utils\Enums\AlertTypeEnum;
 
 class ItemController extends Controller
 {
@@ -48,9 +48,9 @@ class ItemController extends Controller
         $item->observations = $request->observations;
 
         if ($item->save())
-            $this->addAlert(AlertType::Success, __('Created successfully'));
+            $this->addAlert(AlertTypeEnum::Success, __('Created successfully'));
         else
-            $this->addAlert(AlertType::Error, __('Could not be created'));
+            $this->addAlert(AlertTypeEnum::Error, __('Could not be created'));
 
         return redirect()->route('item.create')->with('alerts', $this->getAlerts());
     }
@@ -93,9 +93,9 @@ class ItemController extends Controller
         $item->observations = $request->observations;
 
         if ($item->save())
-            $this->addAlert(AlertType::Success, __('Updated successfully'));
+            $this->addAlert(AlertTypeEnum::Success, __('Updated successfully'));
         else
-            $this->addAlert(AlertType::Error, __('Could not be updated'));
+            $this->addAlert(AlertTypeEnum::Error, __('Could not be updated'));
 
         return redirect()->route('item.edit', $item->id)->with('alerts', $this->getAlerts());
     }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int id
+ * @property string settings
  * @property string update_at
  * @property string created_at
  */

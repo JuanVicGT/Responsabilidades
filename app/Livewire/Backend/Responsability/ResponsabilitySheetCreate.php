@@ -2,26 +2,47 @@
 
 namespace App\Livewire\Backend\Responsability;
 
+use App\Livewire\Backend\Responsability\CreateSteps\Step1;
+use App\Livewire\Backend\Responsability\CreateSteps\Step2;
+use App\Livewire\Backend\Responsability\CreateSteps\Step3;
 use App\Models\LineResponsabilitySheet;
 use App\Models\User;
 use Livewire\Component;
 
 class ResponsabilitySheetCreate extends Component
 {
+    /** === Form Attributes === */
+    protected Step1 $step1;
+    protected Step2 $step2;
+    protected Step3 $step3;
+
     /** === View Attributes === */
-    public $step; // show sections
+    public $current_step; // Show sections
     public $users; // option list
 
     /** === Form Attributes === */
-    public $id_responsible;
-    public $series;
-    public $total;
+    public $form_id_responsible;
+    public $form_number;
+    public $form_total;
+
+    public $form_id_line;
+    public $form_custom_line_amount;
+    public $form_custom_line_description;
+
     /** @var LineResponsabilitySheet[] */
     public $lines;
 
+    public function __construct()
+    {
+        $this->step1 = new Step1($this);
+        $this->step2 = new Step2($this);
+        $this->step3 = new Step3($this);
+    }
+
     public function mount()
     {
-        $this->step = 1;
+        // Se instancian los pasos
+        $this->current_step = 1;
         $this->lines = [];
 
         $this->search();
@@ -30,12 +51,12 @@ class ResponsabilitySheetCreate extends Component
     public function search(string $value = '')
     {
         // Besides the search results, you must include on demand selected option
-        $selectedOption = User::where('id', $this->id_responsible)->get();
+        $selectedOption = User::where('id', $this->form_id_responsible)->get();
 
         $this->users = User::query()
             ->where('name', 'like', "%$value%")
-            ->take(5)
-            ->orderBy('name')
+            ->take(15)
+            ->orderBy('name', 'asc')
             ->get()
             ->merge($selectedOption); // <-- Adds selected option
     }
@@ -47,36 +68,17 @@ class ResponsabilitySheetCreate extends Component
 
     public function nextStep()
     {
-        if ($this->step === 1)
-            return $this->finishStep1();
+        if ($this->current_step === 1)
+            return $this->step1->finish();
 
-        if ($this->step === 2)
-            return $this->finishStep2();
-
-        $this->step++;
+        if ($this->current_step === 2)
+            return $this->step2->finish();
     }
+
+
 
     public function save()
     {
-        $this->step = 1;
-    }
-
-    protected function finishStep1()
-    {
-        $this->validateStep1();
-        $this->step = 2;
-    }
-
-    protected function validateStep1()
-    {
-        $this->validate([
-            'series' => ['required', 'string', 'max:150'],
-            'id_responsible' => ['required'],
-        ]);
-    }
-
-    protected function finishStep2()
-    {
-        $this->step = 3;
+        $this->step3->save();
     }
 }

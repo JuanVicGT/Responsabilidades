@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dependency\StoreDependencyRequest;
 use App\Http\Requests\Dependency\UpdateDependencyRequest;
 use App\Models\Dependency;
-use App\Utils\Enums\AlertType;
+use App\Utils\Enums\AlertTypeEnum;
 use Illuminate\Support\Facades\Gate;
 
 
@@ -44,10 +44,10 @@ class DependencyController extends Controller
         $save = $dependency->save();
 
         if (!$save)
-            $this->addAlert(AlertType::Error, __('Could not be created'));
+            $this->addAlert(AlertTypeEnum::Error, __('Could not be created'));
 
         if ($save)
-            $this->addAlert(AlertType::Success, __('Created successfully'));
+            $this->addAlert(AlertTypeEnum::Success, __('Created successfully'));
 
         return redirect()->route('dependency.create')->with('alerts', $this->getAlerts());
     }
@@ -83,10 +83,10 @@ class DependencyController extends Controller
         $save = $dependency->save();
 
         if (!$save)
-            $this->addAlert(AlertType::Error, __('Could not be updated'));
+            $this->addAlert(AlertTypeEnum::Error, __('Could not be updated'));
 
         if ($save)
-            $this->addAlert(AlertType::Success, __('Updated successfully'));
+            $this->addAlert(AlertTypeEnum::Success, __('Updated successfully'));
 
         return redirect()->route('dependency.edit', $request->id)->with('alerts', $this->getAlerts());
     }

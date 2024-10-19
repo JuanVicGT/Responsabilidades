@@ -9,7 +9,7 @@ use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\Dependency;
 use App\Models\Role;
 use App\Models\User;
-use App\Utils\Enums\AlertType;
+use App\Utils\Enums\AlertTypeEnum;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -65,11 +65,11 @@ class UserController extends Controller
         $save = $user->save();
 
         if (!$save)
-            $this->addAlert(AlertType::Error, __('Could not be stored'));
+            $this->addAlert(AlertTypeEnum::Error, __('Could not be stored'));
 
         if ($save) {
             $user->assignRole($request->role);
-            $this->addAlert(AlertType::Success, __('Stored successfully. username: :username, password: :password', ['username' => $user->username, 'password' => $password]));
+            $this->addAlert(AlertTypeEnum::Success, __('Stored successfully. username: :username, password: :password', ['username' => $user->username, 'password' => $password]));
         }
 
         return redirect()->route('user.create')->with('alerts', $this->getAlerts());
@@ -115,9 +115,9 @@ class UserController extends Controller
 
         $password = Str::random(8);
         if ($user->applyPasswordResetRequest($password)) {
-            $this->addAlert(AlertType::Success, __('Updated successfully, password: ' . $password));
+            $this->addAlert(AlertTypeEnum::Success, __('Updated successfully, password: ' . $password));
         } else {
-            $this->addAlert(AlertType::Error, __('Could not be updated'));
+            $this->addAlert(AlertTypeEnum::Error, __('Could not be updated'));
         }
 
         return redirect()->route('user.edit', $user->id)->with('alerts', $this->getAlerts());
@@ -131,9 +131,9 @@ class UserController extends Controller
         $user = User::find($request->id);
 
         if ($user->refusePasswordResetRequest()) {
-            $this->addAlert(AlertType::Success, __('Password reset refused'));
+            $this->addAlert(AlertTypeEnum::Success, __('Password reset refused'));
         } else {
-            $this->addAlert(AlertType::Error, __('Could not be updated'));
+            $this->addAlert(AlertTypeEnum::Error, __('Could not be updated'));
         }
 
         return redirect()->route('user.edit', $user->id)->with('alerts', $this->getAlerts());
@@ -161,11 +161,11 @@ class UserController extends Controller
         $save = $user->save();
 
         if (!$save)
-            $this->addAlert(AlertType::Error, __('Could not be stored'));
+            $this->addAlert(AlertTypeEnum::Error, __('Could not be stored'));
 
         if ($save) {
             $user->syncRoles([$request->role]);
-            $this->addAlert(AlertType::Success, __('Updated successfully'));
+            $this->addAlert(AlertTypeEnum::Success, __('Updated successfully'));
         }
 
         return redirect()->route('user.edit', $user->id)->with('alerts', $this->getAlerts());

@@ -4,12 +4,11 @@ namespace App\Utils\Enums;
 
 use App\Utils\Traits\EnumToArray;
 
-enum StatusTodo: string
+enum StatusEventEnum: string
 {
     use EnumToArray;
 
-    case NotStarted = 'not_started';
-    case Started = 'started';
+    case Active = 'active';
     case Cancelled = 'cancelled';
     case Finished = 'finished';
 }

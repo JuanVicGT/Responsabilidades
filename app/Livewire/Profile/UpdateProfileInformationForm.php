@@ -5,7 +5,7 @@ namespace App\Livewire\Profile;
 use App\Utils\FileTools;
 use App\Utils\Alerts;
 use App\Models\User;
-use App\Utils\Enums\AlertType;
+use App\Utils\Enums\AlertTypeEnum;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
 use Livewire\Component;
@@ -81,7 +81,7 @@ class UpdateProfileInformationForm extends Component
 
         FileTools::clearTempFiles();
 
-        $this->addAlert(AlertType::Success, 'Your profile has been updated!');
+        $this->addAlert(AlertTypeEnum::Success, 'Your profile has been updated!');
 
         return redirect(route('profile.edit'))->with('alerts', $this->getAlerts());
     }

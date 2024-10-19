@@ -5,17 +5,18 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\ResponsabilitySheet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class ResponsabilitySheetController extends Controller
 {
+    const MODULE_NAME = 'responsability';
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
-        Gate::authorize('index', ResponsabilitySheet::class);
+        $this->general_auth('index', self::MODULE_NAME);
         return view('backend.responsability.IndexResponsability');
     }
 
@@ -25,7 +26,7 @@ class ResponsabilitySheetController extends Controller
     public function create()
     {
         //
-        Gate::authorize('create', ResponsabilitySheet::class);
+        $this->general_auth('create', self::MODULE_NAME);
         return view('backend.responsability.CreateResponsability');
     }
 
@@ -43,6 +44,7 @@ class ResponsabilitySheetController extends Controller
     public function show(ResponsabilitySheet $responsabilitySheet)
     {
         //
+        $this->general_auth('show', self::MODULE_NAME);
         return view('backend.responsability.ShowResponsability', compact('responsabilitySheet'));
     }
 
@@ -52,7 +54,7 @@ class ResponsabilitySheetController extends Controller
     public function edit(ResponsabilitySheet $responsabilitySheet)
     {
         //
-        Gate::authorize('edit', new ResponsabilitySheet());
+        $this->general_auth('edit', self::MODULE_NAME);
         return view('backend.responsability.EditResponsability', compact('responsabilitySheet'));
     }
 

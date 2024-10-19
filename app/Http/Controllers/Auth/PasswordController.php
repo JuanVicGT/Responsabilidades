@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Utils\Enums\AlertType;
+use App\Utils\Enums\AlertTypeEnum;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -25,7 +25,7 @@ class PasswordController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        $this->addAlert(AlertType::Success, 'Your password has been updated!');
+        $this->addAlert(AlertTypeEnum::Success, 'Your password has been updated!');
         return back()->with('alerts', $this->getAlerts());
     }
 }

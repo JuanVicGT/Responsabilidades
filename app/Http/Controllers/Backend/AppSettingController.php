@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\AppSetting;
-use App\Utils\Enums\AlertType;
+use App\Utils\Enums\AlertTypeEnum;
 use Illuminate\Http\Request;
 
 class AppSettingController extends Controller
@@ -37,7 +37,7 @@ class AppSettingController extends Controller
         }
 
         $this->config->setFromArray($newSettings);
-        $this->addAlert(AlertType::Success, __('Updated successfully'));
+        $this->addAlert(AlertTypeEnum::Success, __('Updated successfully'));
         return redirect()->route('app_setting.index')->with('alerts', $this->getAlerts());
     }
 }

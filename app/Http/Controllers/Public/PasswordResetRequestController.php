@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Models\PasswordResetRequest;
 use App\Models\User;
-use App\Utils\Enums\AlertType;
-use App\Utils\Enums\StatusPasswordResetRequest;
+use App\Utils\Enums\AlertTypeEnum;
+use App\Utils\Enums\StatusPasswordResetRequestEnum;
 use Illuminate\Http\Request;
 
 class PasswordResetRequestController extends Controller
@@ -33,21 +33,21 @@ class PasswordResetRequestController extends Controller
         $user = User::firstWhere('username', $validated['username']);
 
         $passwordResetRequest = $user->pendingPasswordResetRequest;
-        if (isset($passwordResetRequest->status) && $passwordResetRequest->status === StatusPasswordResetRequest::NotVerified->value) {
-            $this->addAlert(AlertType::Warning, __('There is already a pending password change request for this user. Please wait for it to be verified.'));
+        if (isset($passwordResetRequest->status) && $passwordResetRequest->status === StatusPasswordResetRequestEnum::NotVerified->value) {
+            $this->addAlert(AlertTypeEnum::Warning, __('There is already a pending password change request for this user. Please wait for it to be verified.'));
             return back()->with('alerts', $this->getAlerts());
         }
 
         PasswordResetRequest::create([
             'user_id' => $user->id,
             'description' => $request->description,
-            'status' => StatusPasswordResetRequest::NotVerified
+            'status' => StatusPasswordResetRequestEnum::NotVerified
         ]);
 
         $user->need_password_reset = true;
         $user->save();
 
-        $this->addAlert(AlertType::Success, __('A password change request has been created. Please wait for it to be verified.'));
+        $this->addAlert(AlertTypeEnum::Success, __('A password change request has been created. Please wait for it to be verified.'));
         return redirect()->route('prequest.create')->with('alerts', $this->getAlerts());
     }
 }
