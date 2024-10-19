@@ -1,14 +1,20 @@
 <section>
-    <x-mary-card shadow class="py-0">
-        <div class="flex py-4">
-            <div class="flex justify-end">
+    <x-mary-card shadow class="pt-0">
+        <div class="flex py-4 justify-between">
+            <div class="flex justify-start space-x-4">
                 <x-mary-input icon="o-magnifying-glass" wire:model.live='search' placeholder="{{ __('search') }}..."
-                    class="border-gray-500" />
+                    class="border-gray-500" clearable />
+                <x-mary-select :options="$pagination_options" wire:model.live="pagination" class="h-2" />
+            </div>
+            <div class="flex justify-start space-x-4">
+                <div>
+                    {{ $rows->onEachSide(0)->links('components.layouts.custom-pagination') }}
+                </div>
             </div>
         </div>
 
         {{-- You can use any `$wire.METHOD` on `@row-click` --}}
-        <x-mary-table :headers="$headers" :rows="$rows" with-pagination :sort-by="$sortBy" class="pb-4" striped
+        <x-mary-table :headers="$headers" :rows="$rows" :sort-by="$sortBy" class="pt-4" striped with-pagination
             link="User/Edit/{id}">
 
             {{-- Overrides headers --}}

@@ -202,5 +202,6 @@
     "Code ID": "Número de identificación",
     "conf-afmin": "Director AFIM",
     "director-afmin": "Director AFIM",
-    "Number": "Número"
+    "Number": "Número",
+    "conf-pagination": "Paginación por defecto"
 }

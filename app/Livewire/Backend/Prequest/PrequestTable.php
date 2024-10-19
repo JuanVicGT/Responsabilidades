@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Backend\Prequest;
 
+use App\Http\Services\AppSettingService;
 use App\Models\PasswordResetRequest;
 use Livewire\Component;
 
@@ -19,10 +20,22 @@ class PrequestTable extends Component
     public bool $deleteModal = false;
 
     // Filters
-    public int $pagination = 10;
     public string $search = '';
     public string $previousSearch = ''; // Use to reset pagination in case of a new search
     public array $sortBy = ['column' => 'id', 'direction' => 'desc'];
+
+    public int $pagination = 10;
+    public array $pagination_options = [['id' => 10, 'name' => '10'], ['id' => 25, 'name' => '25'], ['id' => 50, 'name' => '50'], ['id' => 75, 'name' => '75']];
+
+    public function mount()
+    {
+        $config = app(AppSettingService::class);
+
+        $pagination = $config->get('pagination');
+        if (is_numeric($pagination)) {
+            $this->pagination = $pagination;
+        }
+    }
 
     protected function getTableHeaders(): array
     {

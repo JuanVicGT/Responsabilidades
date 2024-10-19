@@ -1,14 +1,20 @@
 <section>
     <x-mary-card shadow class="py-0">
-        <div class="flex py-4">
-            <div class="flex justify-end">
+        <div class="flex py-4 justify-between">
+            <div class="flex justify-start space-x-4">
                 <x-mary-input icon="o-magnifying-glass" wire:model.live='search' placeholder="{{ __('search') }}..."
-                    class="border-gray-500" />
+                    class="border-gray-500" clearable />
+                <x-mary-select :options="$pagination_options" wire:model.live="pagination" class="h-2" />
+            </div>
+            <div class="flex justify-start space-x-4">
+                <div>
+                    {{ $rows->onEachSide(0)->links('components.layouts.custom-pagination') }}
+                </div>
             </div>
         </div>
 
         {{-- You can use any `$wire.METHOD` on `@row-click` --}}
-        <x-mary-table :headers="$headers" :rows="$rows" with-pagination :sort-by="$sortBy" class="pb-4" striped
+        <x-mary-table :headers="$headers" :rows="$rows" :sort-by="$sortBy" class="pb-4" with-pagination striped
             link="Permission/Edit/{id}">
 
             {{-- Overrides headers --}}
@@ -36,7 +42,8 @@
             <x-mary-form wire:submit="delete">
                 <div class="w-full flex justify-end space-x-4">
                     <x-mary-button label="{{ __('Cancel') }}" class="btn-neutral" @click="$wire.deleteModal = false" />
-                    <x-mary-button label="{{ __('Confirm') }}" class="btn-error text-white dark:text-black" type="submit" spinner="delete" />
+                    <x-mary-button label="{{ __('Confirm') }}" class="btn-error text-white dark:text-black"
+                        type="submit" spinner="delete" />
                 </div>
             </x-mary-form>
         </x-mary-modal>
