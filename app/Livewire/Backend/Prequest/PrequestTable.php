@@ -21,6 +21,7 @@ class PrequestTable extends Component
     // Filters
     public int $pagination = 10;
     public string $search = '';
+    public string $previousSearch = ''; // Use to reset pagination in case of a new search
     public array $sortBy = ['column' => 'id', 'direction' => 'desc'];
 
     protected function getTableHeaders(): array
@@ -37,15 +38,20 @@ class PrequestTable extends Component
 
     protected function getTableRows()
     {
+        if ($this->search !== '' && $this->search !== $this->previousSearch) {
+            $this->resetPage(); // Resetear la paginación
+            $this->previousSearch = $this->search;
+        }
+
         return PasswordResetRequest::when(
             $this->search,
 
-            fn ($query) =>
+            fn($query) =>
             $query->where('username', 'like', "%{$this->search}%")
         )
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->pagination)
-            ;
+        ;
     }
 
     public function render()

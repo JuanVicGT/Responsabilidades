@@ -24,6 +24,7 @@ class EventTable extends Component
     // Filters
     public int $pagination = 10;
     public string $search = '';
+    public string $previousSearch = ''; // Use to reset pagination in case of a new search
     public array $sortBy = ['column' => 'name', 'direction' => 'desc'];
 
     protected function getTableHeaders(): array
@@ -39,10 +40,15 @@ class EventTable extends Component
 
     protected function getTableRows()
     {
+        if ($this->search !== '' && $this->search !== $this->previousSearch) {
+            $this->resetPage(); // Resetear la paginación
+            $this->previousSearch = $this->search;
+        }
+
         return Event::when(
             $this->search,
 
-            fn ($query) =>
+            fn($query) =>
             $query->where('name', 'like', "%{$this->search}%")
         )
             ->orderBy(...array_values($this->sortBy))

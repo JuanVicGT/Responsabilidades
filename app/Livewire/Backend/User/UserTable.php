@@ -25,6 +25,7 @@ class UserTable extends Component
     // Filters
     public int $pagination = 10;
     public string $search = '';
+    public string $previousSearch = ''; // Use to reset pagination in case of a new search
     public array $sortBy = ['column' => 'name', 'direction' => 'desc'];
 
     protected function getTableHeaders(): array
@@ -40,6 +41,11 @@ class UserTable extends Component
 
     protected function getTableRows()
     {
+        if ($this->search !== '' && $this->search !== $this->previousSearch) {
+            $this->resetPage(); // Resetear la paginación
+            $this->previousSearch = $this->search;
+        }
+
         return User::when(
             !Auth::user()->is_admin,
 
