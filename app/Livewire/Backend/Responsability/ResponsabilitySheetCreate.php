@@ -2,15 +2,21 @@
 
 namespace App\Livewire\Backend\Responsability;
 
-use App\Livewire\Backend\Responsability\CreateSteps\Step1;
-use App\Livewire\Backend\Responsability\CreateSteps\Step2;
-use App\Livewire\Backend\Responsability\CreateSteps\Step3;
+use Mary\Traits\Toast;
+
+use App\Models\Item;
 use App\Models\LineResponsabilitySheet;
 use App\Models\User;
 use Livewire\Component;
 
+use App\Livewire\Backend\Responsability\CreateSteps\Step1;
+use App\Livewire\Backend\Responsability\CreateSteps\Step2;
+use App\Livewire\Backend\Responsability\CreateSteps\Step3;
+
 class ResponsabilitySheetCreate extends Component
 {
+    use Toast;
+
     /** === Form Attributes === */
     protected Step1 $step1;
     protected Step2 $step2;
@@ -18,18 +24,21 @@ class ResponsabilitySheetCreate extends Component
 
     /** === View Attributes === */
     public $current_step; // Show sections
-    public $users; // option list
+    public $option_users; // option list
+    public $option_items; // option list
+
+    public $table_item_headers; // Table headers
 
     /** === Form Attributes === */
     public $form_id_responsible;
     public $form_number;
     public $form_total;
 
-    public $form_id_line;
+    public $form_id_item;
     public $form_custom_line_amount;
     public $form_custom_line_description;
 
-    /** @var LineResponsabilitySheet[] */
+    /** @var Item[] */
     public $lines;
 
     public function __construct()
@@ -42,21 +51,41 @@ class ResponsabilitySheetCreate extends Component
     public function mount()
     {
         // Se instancian los pasos
-        $this->current_step = 1;
+        $this->current_step = 2;
         $this->lines = [];
 
-        $this->search();
+        $this->table_item_headers = [
+            ['key' => 'code', 'label' => __('Code')],
+            ['key' => 'description', 'label' => __('Description')],
+            ['key' => 'amount', 'label' => __('Amount')]
+        ];
+
+        $this->searchUsers();
+        $this->searchItems();
     }
 
-    public function search(string $value = '')
+    public function searchUsers(string $value = '')
     {
         // Besides the search results, you must include on demand selected option
         $selectedOption = User::where('id', $this->form_id_responsible)->get();
 
-        $this->users = User::query()
+        $this->option_users = User::query()
             ->where('name', 'like', "%$value%")
             ->take(15)
             ->orderBy('name', 'asc')
+            ->get()
+            ->merge($selectedOption); // <-- Adds selected option
+    }
+
+    public function searchItems(string $value = '')
+    {
+        // Besides the search results, you must include on demand selected option
+        $selectedOption = Item::where('id', $this->form_id_item)->get();
+
+        $this->option_items = Item::query()
+            ->where('description', 'like', "%$value%")
+            ->take(15)
+            ->orderBy('description', 'asc')
             ->get()
             ->merge($selectedOption); // <-- Adds selected option
     }
@@ -75,10 +104,27 @@ class ResponsabilitySheetCreate extends Component
             return $this->step2->finish();
     }
 
-
-
     public function save()
     {
         $this->step3->save();
+    }
+
+    public function addLine()
+    {
+        $item_id = $this->form_id_item;
+        if (empty($item_id)) {
+            $this->warning(__('Please select an item'), position: 'toast-top toast-center', timeout: 5000);
+            return;
+        }
+
+        if (!$this->step2->addLine($item_id)) {
+            $this->warning(__('Item not found'), position: 'toast-top toast-center', timeout: 5000);
+            return;
+        }
+
+        $this->success(__('Item added'), position: 'toast-top toast-center', timeout: 5000);
+
+        // Se limpian los campos
+        $this->form_id_item = null;
     }
 }

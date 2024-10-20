@@ -65,6 +65,7 @@
     "Attendance": "Asistencia",
     "Attendances": "Asistencias",
     "Dependencies": "Dependencias",
+    "Item": "Artículo",
     "Items": "Artículos",
     "Responsibilities": "Responsabilidades",
     "Responsability Sheets": "Hojas de Responsabilidades",
@@ -203,5 +204,13 @@
     "conf-afmin": "Director AFIM",
     "director-afmin": "Director AFIM",
     "Number": "Número",
-    "conf-pagination": "Paginación por defecto"
+    "conf-pagination": "Paginación por defecto",
+    "Assign Responsibilities": "Asignación de Responsabilidades",
+    "Add Line": "Anadir Linea",
+    "Create New Item": "Crear Nueva Artículo",
+    "Responsibilities Assigned": "Responsabilidades Asignadas",
+    "Create Item and Add Line": "Crear Artículo y Anadir Linea",
+    "Please select an item": "Por favor, seleccione un artículo",
+    "Item added": "Artículo agregado",
+    "Item not found": "Artículo no encontrado"
 }

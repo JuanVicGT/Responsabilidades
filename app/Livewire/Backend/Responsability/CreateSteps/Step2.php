@@ -3,6 +3,7 @@
 namespace App\Livewire\Backend\Responsability\CreateSteps;
 
 use App\Livewire\Backend\Responsability\ResponsabilitySheetCreate;
+use App\Models\Item;
 use App\Models\LineResponsabilitySheet;
 
 class Step2
@@ -19,11 +20,16 @@ class Step2
         $this->component->current_step++;
     }
 
-    public function add_line()
+    public function addLine(int $item_id): bool
     {
-        $line = new LineResponsabilitySheet();
+        $item = Item::find($item_id);
 
-        $this->component->lines[] = $line;
+        if (empty($item->id)) {
+            return false;
+        }
+
+        $this->component->lines[] = $item;
+        return true;
     }
 
     private function validate_line()

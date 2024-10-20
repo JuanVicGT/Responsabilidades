@@ -7,7 +7,7 @@
         <div class="flex justify-between">
             <x-mary-header title="{{ $user->name }}" subtitle="{{ __('Edit Profile') }}" class="mb-4" />
             <div class="flex items-center space-x-4">
-                <x-mary-theme-toggle label="{{ __('Change Theme') }}" icon="o-swatch" />
+                <x-mary-theme-toggle label="{{ __('Change Theme') }}" />
                 {{-- Logout --}}
                 <form method="POST" action="{{ route('logout') }}" class="flex">
                     @csrf

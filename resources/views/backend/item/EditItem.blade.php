@@ -33,19 +33,9 @@
 
             <div class="grid sm:grid-cols-2 gap-4">
                 <div>
-                    <x-mary-input label="{{ __('Code ID' ) }}" type="text" name='code' required autofocus
+                    <x-mary-input label="{{ __('Code ID') }}" type="text" name='code' required autofocus
                         value="{{ old('code', $item?->code) }}" />
                     <x-input-error class="mt-2" :messages="$errors->get('code')" />
-                </div>
-                <div>
-                    <x-mary-input label="{{ __('Name') }}" type="text" name='name' required
-                        value="{{ old('name', $item?->name) }}" />
-                    <x-input-error class="mt-2" :messages="$errors->get('name')" />
-                </div>
-                <div>
-                    <x-mary-input label="{{ __('Serial') }}" type="text" name='serial' required
-                        value="{{ old('serial', $item?->serial) }}" />
-                    <x-input-error class="mt-2" :messages="$errors->get('serial')" />
                 </div>
                 <div>
                     <x-input-label for="unit_value" :value="__('Unit Value') . '*'" />
