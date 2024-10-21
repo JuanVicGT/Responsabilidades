@@ -70,6 +70,7 @@ class UserTable extends Component
 
                 fn($query) =>
                 $query->where('name', 'like', "%{$this->search}%")
+                    ->orWhere('username', 'like', "%{$this->search}%")
             )
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->pagination);

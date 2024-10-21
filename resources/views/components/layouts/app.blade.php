@@ -17,8 +17,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 
-    <script type="text/javascript" src="{{ asset('assets/js/mary-currency.js') }}"></script>
-
     <!-- Custom Styles and Scripts -->
     @yield('custom-css')
     @yield('custom-js')
@@ -62,11 +60,11 @@
     {{-- Toast --}}
     <x-mary-toast />
 
-    {{-- Scripts area --}}
-    @livewireScripts
-
     {{-- Theme toggle --}}
     <x-mary-theme-toggle class="hidden" />
+
+    {{-- Scripts area --}}
+    @livewireScripts
 </body>
 
 </html>

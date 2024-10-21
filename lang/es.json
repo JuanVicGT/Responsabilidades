@@ -212,5 +212,18 @@
     "Create Item and Add Line": "Crear Artículo y Anadir Linea",
     "Please select an item": "Por favor, seleccione un artículo",
     "Item added": "Artículo agregado",
-    "Item not found": "Artículo no encontrado"
+    "Item not found": "Artículo no encontrado",
+    "Please fill all fields": "Por favor, rellene todos los campos",
+    "Item not created": "Artículo no creado",
+    "Item not loaded": "Artículo no cargado",
+    "Item already exists": "El artículo ya existe",
+    "Item already added": "Artículo ya agregado",
+    "Item loaded": "Artículo cargado",
+    "Cash in": "Debe",
+    "Cash out": "Haber",
+    "Balance": "Saldo",
+    "Item updated and added": "Artículo actualizado y agregado",
+    "Item created and added": "Artículo creado y agregado",
+    "Line already added": "Linea ya agregada",
+    "Line removed": "Linea removida"
 }

@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Profile;
 
-use App\Utils\FileTools;
 use App\Utils\Alerts;
 use App\Models\User;
 use App\Utils\Enums\AlertTypeEnum;
@@ -78,8 +77,6 @@ class UpdateProfileInformationForm extends Component
             'address' => $this->address,
             'avatar' => $avatar_path,
         ]);
-
-        FileTools::clearTempFiles();
 
         $this->addAlert(AlertTypeEnum::Success, 'Your profile has been updated!');
 

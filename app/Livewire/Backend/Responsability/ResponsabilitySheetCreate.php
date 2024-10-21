@@ -3,6 +3,7 @@
 namespace App\Livewire\Backend\Responsability;
 
 use Mary\Traits\Toast;
+use App\Utils\Alerts;
 
 use App\Models\Item;
 use App\Models\LineResponsabilitySheet;
@@ -12,10 +13,14 @@ use Livewire\Component;
 use App\Livewire\Backend\Responsability\CreateSteps\Step1;
 use App\Livewire\Backend\Responsability\CreateSteps\Step2;
 use App\Livewire\Backend\Responsability\CreateSteps\Step3;
+use App\Utils\Enums\AlertTypeEnum;
+
+use Illuminate\Support\Facades\Auth;
 
 class ResponsabilitySheetCreate extends Component
 {
-    use Toast;
+    use Toast; // Method to show messages to users
+    use Alerts; // Custom alerts to manager internal messages
 
     /** === Form Attributes === */
     protected Step1 $step1;
@@ -24,22 +29,28 @@ class ResponsabilitySheetCreate extends Component
 
     /** === View Attributes === */
     public $current_step; // Show sections
-    public $option_users; // option list
-    public $option_items; // option list
+    public $step1_option_users; // option list
+    public $step2_option_items; // option list
 
-    public $table_item_headers; // Table headers
+    public $step2_table_item_headers; // Table headers
 
     /** === Form Attributes === */
-    public $form_id_responsible;
-    public $form_number;
-    public $form_total;
+    public $form_step1_id_responsible;
+    public $form_step1_name_responsible;
+    public $form_step1_number;
 
-    public $form_id_item;
-    public $form_custom_line_amount;
-    public $form_custom_line_description;
+    public $form_step2_code;
+    public $form_step2_date;
+    public $form_step2_id_item;
+    public $form_step2_line_amount;
+    public $form_step2_line_quantity = 1;
+    public $form_step2_line_description;
+    public $form_step2_line_observation;
 
-    /** @var Item[] */
-    public $lines;
+    public $form_step3_total;
+
+    /** === Lines/Detail === */
+    public $step2_lines;
 
     public function __construct()
     {
@@ -52,13 +63,10 @@ class ResponsabilitySheetCreate extends Component
     {
         // Se instancian los pasos
         $this->current_step = 2;
-        $this->lines = [];
+        $this->step2_lines = [];
+        $this->form_step2_date = date('Y-m-d');
 
-        $this->table_item_headers = [
-            ['key' => 'code', 'label' => __('Code')],
-            ['key' => 'description', 'label' => __('Description')],
-            ['key' => 'amount', 'label' => __('Amount')]
-        ];
+        $this->step2_table_item_headers = $this->step2->getItemTableHeaders();
 
         $this->searchUsers();
         $this->searchItems();
@@ -67,9 +75,9 @@ class ResponsabilitySheetCreate extends Component
     public function searchUsers(string $value = '')
     {
         // Besides the search results, you must include on demand selected option
-        $selectedOption = User::where('id', $this->form_id_responsible)->get();
+        $selectedOption = User::where('id', $this->form_step1_id_responsible)->get();
 
-        $this->option_users = User::query()
+        $this->step1_option_users = User::query()
             ->where('name', 'like', "%$value%")
             ->take(15)
             ->orderBy('name', 'asc')
@@ -80,10 +88,11 @@ class ResponsabilitySheetCreate extends Component
     public function searchItems(string $value = '')
     {
         // Besides the search results, you must include on demand selected option
-        $selectedOption = Item::where('id', $this->form_id_item)->get();
+        $selectedOption = Item::where('id', $this->form_step2_id_item)->get();
 
-        $this->option_items = Item::query()
+        $this->step2_option_items = Item::query()
             ->where('description', 'like', "%$value%")
+            ->where('is_available', 1)
             ->take(15)
             ->orderBy('description', 'asc')
             ->get()
@@ -104,27 +113,63 @@ class ResponsabilitySheetCreate extends Component
             return $this->step2->finish();
     }
 
+    protected function processAlerts()
+    {
+        /** @var array $alerts */
+        foreach ($this->getAlertsArray() as $alert) {
+            $type = $alert->type->value;
+            $message = __("{$alert->message}");
+
+            if ($type === AlertTypeEnum::Success->value) {
+                $this->success($message, position: 'toast-top toast-center', timeout: 5000);
+            }
+
+            if ($type === AlertTypeEnum::Warning->value) {
+                $this->warning($message, position: 'toast-top toast-center', timeout: 5000);
+            }
+
+            if ($type === AlertTypeEnum::Error->value) {
+                $this->error($message, position: 'toast-top toast-center', timeout: 5000);
+            }
+
+            if ($type === AlertTypeEnum::Info->value) {
+                $this->info($message, position: 'toast-top toast-center', timeout: 5000);
+            }
+        }
+
+        $this->clearAlerts();
+    }
+
     public function save()
     {
         $this->step3->save();
     }
 
+    public function loadItem()
+    {
+        $this->step2->loadItem($this->form_step2_id_item);
+
+        $this->processAlerts();
+    }
+
     public function addLine()
     {
-        $item_id = $this->form_id_item;
-        if (empty($item_id)) {
-            $this->warning(__('Please select an item'), position: 'toast-top toast-center', timeout: 5000);
+        $alreadyAdded = $this->step2->duplicateLine($this->form_step2_id_item);
+
+        if ($alreadyAdded) {
+            $this->processAlerts();
             return;
         }
 
-        if (!$this->step2->addLine($item_id)) {
-            $this->warning(__('Item not found'), position: 'toast-top toast-center', timeout: 5000);
-            return;
-        }
+        $this->step2->addLine();
 
-        $this->success(__('Item added'), position: 'toast-top toast-center', timeout: 5000);
+        $this->processAlerts();
+    }
 
-        // Se limpian los campos
-        $this->form_id_item = null;
+    public function removeLine($item_id)
+    {
+        $this->step2->removeLine();
+
+        $this->processAlerts();
     }
 }

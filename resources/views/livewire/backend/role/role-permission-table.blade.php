@@ -8,7 +8,7 @@
             </div>
             <div class="flex justify-start space-x-4">
                 <div>
-                    {{ $rows->onEachSide(0)->links('components.layouts.custom-pagination') }}
+                    {{ $permissions->onEachSide(0)->links('components.layouts.custom-pagination') }}
                 </div>
             </div>
         </div>

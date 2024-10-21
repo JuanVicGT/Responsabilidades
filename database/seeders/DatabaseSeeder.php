@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'is_first_login' => false
         ]);
 
-        for ($i = 0; $i < 2000; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $dependency = Dependency::create([
                 'name' => fake()->name()
             ]);
@@ -49,14 +49,19 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        for ($i = 0; $i < 10000; $i++) {
+        for ($i = 0; $i < 100; $i++) {
+            $unit_value = fake()->randomDigitNotNull();
+            $quantity = fake()->randomDigitNotNull();
+            $amount = $unit_value * $quantity;
+
             Item::create([
                 'code' => fake()->unique()->ean8(),
-                'amount' => 1,
-                'unit_value' => 1,
+                'amount' => $amount,
+                'unit_value' => $unit_value,
                 'is_available' => true,
-                'quantity' => 1,
-                'description' => fake()->text(50)
+                'quantity' => $quantity,
+                'description' => fake()->text(50),
+                'observations' => fake()->text(50)
             ]);
         }
     }

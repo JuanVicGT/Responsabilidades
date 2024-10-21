@@ -46,4 +46,18 @@ trait Alerts
     {
         return session('alerts', $this->alerts);
     }
+
+    public function getAlertsArray(): array
+    {
+        if (empty($this->alerts)) {
+            return [];
+        }
+
+        return $this->alerts;
+    }
+
+    public function clearAlerts(): void
+    {
+        $this->alerts = [];
+    }
 }

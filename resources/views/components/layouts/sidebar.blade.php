@@ -106,7 +106,7 @@
         @if (auth()->user()->is_admin || auth()->user()->can('index_item'))
             <x-mary-menu-item title="{{ __('Items') }}" icon="o-rectangle-group" link="{{ route('item.index') }}" />
         @endif
-        @if (auth()->user()->is_admin || auth()->user()->can('index_responsibility'))
+        @if (auth()->user()->is_admin || auth()->user()->can('index_responsability'))
             <x-mary-menu-item title="{{ __('Responsability Sheets') }}" icon="c-clipboard-document-check"
                 link="{{ route('responsability-sheet.index') }}" />
         @endif
