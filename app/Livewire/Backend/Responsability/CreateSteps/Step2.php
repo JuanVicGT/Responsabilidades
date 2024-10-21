@@ -222,8 +222,8 @@ class Step2
     public function removeLine(int $item_id): void
     {
         $lines = [];
-        foreach ($this->component->lines as $key => $line) {
-            if ($line->item_id === $item_id) {
+        foreach ($this->component->step2_lines as $line) {
+            if ($line['item_id'] === $item_id) {
                 $this->component->addAlert(AlertTypeEnum::Success, __('Line removed'));
                 continue;
             }

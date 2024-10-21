@@ -168,7 +168,7 @@ class ResponsabilitySheetCreate extends Component
 
     public function removeLine($item_id)
     {
-        $this->step2->removeLine();
+        $this->step2->removeLine($item_id);
 
         $this->processAlerts();
     }
