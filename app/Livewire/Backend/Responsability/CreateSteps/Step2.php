@@ -93,7 +93,7 @@ class Step2
             $update = true;
         }
 
-        if ($item->amount !== $data['amount'] && !empty($data['amount'])) {
+        if ((float) $item->amount !== (float) $data['amount'] && !empty($data['amount'])) {
             $item->amount = $data['amount'];
 
             $item->unit_value = $data['amount'] / $data['quantity'];
@@ -105,7 +105,7 @@ class Step2
             return true;
         }
 
-        return false;
+        return $update;
     }
 
     public function addLine(): bool
@@ -136,9 +136,6 @@ class Step2
             $amount = $this->component->form_step2_line_amount;
             $quantity = $this->component->form_step2_line_quantity;
             $description = $this->component->form_step2_line_description;
-
-            dd($code, $amount, $quantity, $description);
-            return false;
 
             $item = Item::create([
                 'code' => $code,
@@ -219,7 +216,7 @@ class Step2
         return true;
     }
 
-    public function removeLine(int $item_id): void
+    public function removeLine(int $item_id): bool
     {
         $lines = [];
         foreach ($this->component->step2_lines as $line) {
@@ -231,6 +228,8 @@ class Step2
             $lines[] = $line;
         }
         $this->component->step2_lines = $lines;
+
+        return true;
     }
 
     private function validateInsert()

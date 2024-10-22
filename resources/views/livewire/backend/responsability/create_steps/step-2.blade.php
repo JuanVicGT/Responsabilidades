@@ -16,7 +16,7 @@
             <div class="col-span-4">
                 <x-mary-choices label="{{ __('Item') }}" debounce="500ms" wire:model="form_step2_id_item" single
                     x-ref="item_search" no-result-text="{{ __('No results found.') }}" :options="$step2_option_items" searchable
-                    search-function="searchItems">
+                    search-function="searchItems" @change-selection="$wire.loadItem">
 
                     {{-- Item slot --}}
                     @scope('item', $item)

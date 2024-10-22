@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float cash_out
 
  * ---- Foreign keys
- * @property int id_responsability_sheet
+ * @property int id_sheet
  * @property int id_item
  */
 class LineResponsabilitySheet extends Model

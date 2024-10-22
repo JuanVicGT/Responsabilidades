@@ -33,6 +33,11 @@
                     {{ $header['label'] }}
                 </h2>
             @endscope
+            @scope('header_is_available', $header)
+                <h2 class="text-xl font-bold inline">
+                    {{ $header['label'] }}
+                </h2>
+            @endscope
             @scope('header_unit_value', $header)
                 <h2 class="text-xl font-bold inline">
                     {{ $header['label'] }}
@@ -49,6 +54,15 @@
                 </h2>
             @endscope
 
+            @scope('cell_is_available', $row)
+                @if ($row->is_available)
+                    <x-mary-badge value="{{ __('Available') }}" class="badge-success" />
+                @endif
+
+                @if (!$row->is_available)
+                    <x-mary-badge value="{{ __('Assigned') }}" class="badge-warning" />
+                @endif
+            @endscope
             @scope('cell_unit_value', $row)
                 Q {{ number_format($row->unit_value) }}
             @endscope

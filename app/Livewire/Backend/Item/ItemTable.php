@@ -4,7 +4,9 @@ namespace App\Livewire\Backend\Item;
 
 use App\Http\Services\AppSettingService;
 use App\Models\Item;
+use App\Policies\GeneralPolicy;
 use App\Utils\Alerts;
+use Illuminate\Support\Facades\Auth;
 use Mary\Traits\Toast;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -46,6 +48,7 @@ class ItemTable extends Component
             ['key' => 'id', 'label' => '#', 'class' => 'bg-red-500/20 w-1'],
             ['key' => 'code', 'label' => __('Code')],
             ['key' => 'description', 'label' => __('Description')],
+            ['key' => 'is_available', 'label' => __('Available?')],
             ['key' => 'unit_value', 'label' => __('Unit Value')],
             ['key' => 'quantity', 'label' => __('Quantity')],
             ['key' => 'amount', 'label' => __('Total Amount')]
@@ -90,7 +93,22 @@ class ItemTable extends Component
     public function delete()
     {
         $event = Item::find($this->deleteId);
-        Gate::authorize('delete', $event);
+
+        $module_name = 'item';
+        $module_action = 'delete';
+        Gate::allowIf(GeneralPolicy::$module_action(Auth::user(), $module_name));
+
+        if (!$event->is_available) {
+            $this->warning(
+                title: __('Cannot be delete an item that in use'),
+                icon: 'o-x-circle',
+                position: 'toast-top toast-center',
+                timeout: 5000
+            );
+            $this->deleteModal = false;
+            return;
+        }
+
         $hasDeleted = $event->delete();
 
         $this->deleteId = null;

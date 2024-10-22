@@ -27,8 +27,7 @@ class ResponsabilitySheet extends Model
     that all attributes of the model are mass assignable */
     protected $guarded = [];
 
-
-    public static function getLastNumber()
+    public static function getNextNumber()
     {
         $appSettings = app(AppSettingService::class);
         $sequenceStart = $appSettings->get('sequence_start');
@@ -52,5 +51,15 @@ class ResponsabilitySheet extends Model
 
         // Si no existe una configuración y tampoco hay un registro, se inicia el contador en 1
         return 1;
+    }
+
+    public function responsible()
+    {
+        return $this->belongsTo(User::class, 'id_responsible', 'id');
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
     }
 }

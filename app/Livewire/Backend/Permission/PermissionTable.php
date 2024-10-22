@@ -4,11 +4,13 @@ namespace App\Livewire\Backend\Permission;
 
 use App\Http\Services\AppSettingService;
 use App\Models\Permission;
+use App\Policies\GeneralPolicy;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Mary\Traits\Toast;
 use Livewire\WithPagination;
 use App\Utils\Alerts;
+use Illuminate\Support\Facades\Auth;
 
 class PermissionTable extends Component
 {
@@ -85,7 +87,9 @@ class PermissionTable extends Component
     public function delete()
     {
         $permission = Permission::find($this->deleteId);
-        Gate::authorize('delete', $permission);
+        $module_name = 'permission';
+        $module_action = 'delete';
+        Gate::allowIf(GeneralPolicy::$module_action(Auth::user(), $module_name));
         $hasDeleted = $permission->delete();
 
         $this->deleteId = null;

@@ -51,11 +51,12 @@ class ResponsabilitySheetController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ResponsabilitySheet $responsabilitySheet)
+    public function edit(int $id)
     {
-        //
+        $sheet = ResponsabilitySheet::find($id);
+
         $this->general_auth('edit', self::MODULE_NAME);
-        return view('backend.responsability.EditResponsability', compact('responsabilitySheet'));
+        return view('backend.responsability.EditResponsability', compact('sheet'));
     }
 
     /**

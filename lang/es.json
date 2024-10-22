@@ -225,5 +225,20 @@
     "Item updated and added": "Artículo actualizado y agregado",
     "Item created and added": "Artículo creado y agregado",
     "Line already added": "Linea ya agregada",
-    "Line removed": "Linea removida"
+    "Line removed": "Linea removida",
+    "Total Items": "Cantidad de Responsabilidades",
+    "Total Cash In": "Total Debe",
+    "Total Cash Out": "Total Haber",
+    "Total Balance": "Saldo Total",
+    "Line could not be created": "Linea con el identificador (:code) no se pudo crear",
+    "Item could not be updated": "Linea con el identificador (:code) no se pudo crear",
+    "Press confirm button to dismiss": "Presione el botón de confirmación para cerrar",
+    "Dismissed Successfully": "Cerrado Correctamente",
+    "Could not be dismissed": "No se ha podido cerrar",
+    "Responsible": "Responsable",
+    "Edit Responsability Sheet": "Editar Hoja de Responsabilidades",
+    "Available?": "Estado",
+    "Available": "Disponible",
+    "Assigned": "Asignado",
+    "Cannot be delete an item that in use": "No se puede borrar un artículo que este en uso"
 }

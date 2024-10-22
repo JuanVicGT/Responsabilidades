@@ -14,8 +14,23 @@ class Step3
         $this->component = $component;
     }
 
-    public function save()
+    public function calcTotals()
     {
-        
+        $total_items = 0;
+        $total_cash_in = 0;
+        $total_cash_out = 0;
+        $total_balance = 0;
+
+        foreach ($this->component->step2_lines as $line) {
+            $total_items += $line['quantity'];
+            $total_cash_in += $line['cash_in'];
+            $total_cash_out += $line['cash_out'];
+            $total_balance += $line['balance'];
+        }
+
+        $this->component->step3_total_items = $total_items;
+        $this->component->step3_total_cash_in = $total_cash_in;
+        $this->component->step3_total_cash_out = $total_cash_out;
+        $this->component->step3_total_balance = $total_balance;
     }
 }

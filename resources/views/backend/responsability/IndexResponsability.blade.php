@@ -14,4 +14,8 @@
         </x-mary-header>
     @endsection
 
+    <div>
+        <livewire:backend.responsability.responsability-sheet-table />
+    </div>
+
 </x-layouts.app>

@@ -4,7 +4,9 @@ namespace App\Livewire\Backend\Event;
 
 use App\Http\Services\AppSettingService;
 use App\Models\Event;
+use App\Policies\GeneralPolicy;
 use App\Utils\Alerts;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -88,7 +90,9 @@ class EventTable extends Component
     public function delete()
     {
         $event = Event::find($this->deleteId);
-        Gate::authorize('delete', $event);
+        $module_name = 'event';
+        $module_action = 'delete';
+        Gate::allowIf(GeneralPolicy::$module_action(Auth::user(), $module_name));
         $hasDeleted = $event->delete();
 
         $this->deleteId = null;

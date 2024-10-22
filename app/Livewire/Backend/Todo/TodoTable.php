@@ -4,6 +4,7 @@ namespace App\Livewire\Backend\Todo;
 
 use App\Http\Services\AppSettingService;
 use App\Models\Todo;
+use App\Policies\GeneralPolicy;
 use App\Utils\Alerts;
 use Illuminate\Support\Facades\Auth;
 use Mary\Traits\Toast;
@@ -92,7 +93,9 @@ class TodoTable extends Component
     public function delete()
     {
         $todo = Todo::find($this->deleteId);
-        Gate::authorize('delete', $todo);
+        $module_name = 'todo';
+        $module_action = 'delete';
+        Gate::allowIf(GeneralPolicy::$module_action(Auth::user(), $module_name));
         $hasDeleted = $todo->delete();
 
         $this->deleteId = null;

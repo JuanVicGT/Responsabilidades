@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Livewire\Backend\Dependency;
+namespace App\Livewire\Backend\Responsability;
+
+use App\Models\ResponsabilitySheet;
+use Livewire\Component;
 
 use App\Http\Services\AppSettingService;
-use App\Models\Dependency;
 use App\Policies\GeneralPolicy;
-use Livewire\Component;
-use Mary\Traits\Toast;
-use Livewire\WithPagination;
 use App\Utils\Alerts;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Livewire\WithPagination;
+use Mary\Traits\Toast;
 
-class DependencyTable extends Component
+class ResponsabilitySheetTable extends Component
 {
     use Toast;
     use Alerts;
     use WithPagination;
 
     // Properties
-    public $deleteId;
+    public $dismissId;
 
     // Modals
     public bool $deleteModal = false;
@@ -27,7 +28,7 @@ class DependencyTable extends Component
     // Filters
     public string $search = '';
     public string $previousSearch = ''; // Use to reset pagination in case of a new search
-    public array $sortBy = ['column' => 'name', 'direction' => 'desc'];
+    public array $sortBy = ['column' => 'number', 'direction' => 'desc'];
 
     public int $pagination = 10;
     public array $pagination_options = [['id' => 10, 'name' => '10'], ['id' => 25, 'name' => '25'], ['id' => 50, 'name' => '50'], ['id' => 75, 'name' => '75']];
@@ -45,8 +46,11 @@ class DependencyTable extends Component
     protected function getTableHeaders(): array
     {
         return [
-            ['key' => 'id', 'label' => '#', 'class' => 'bg-red-500/20 w-1'],
-            ['key' => 'name', 'label' => __('Name')],
+            ['key' => 'number', 'label' => '#', 'class' => 'bg-red-500/20 w-1'],
+            ['key' => 'id_responsible', 'label' => __('Responsible')],
+            ['key' => 'cash_in', 'label' => __('Cash in')],
+            ['key' => 'cash_out', 'label' => __('Cash out')],
+            ['key' => 'balance', 'label' => __('Balance')],
         ];
     }
 
@@ -57,11 +61,11 @@ class DependencyTable extends Component
             $this->previousSearch = $this->search;
         }
 
-        return Dependency::when(
+        return ResponsabilitySheet::when(
             $this->search,
 
             fn($query) =>
-            $query->where('name', 'like', "%{$this->search}%")
+            $query->where('number', 'like', "%{$this->search}%")
         )
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->pagination);
@@ -70,7 +74,7 @@ class DependencyTable extends Component
     public function render()
     {
         return view(
-            'livewire.backend.dependency.dependency-table',
+            'livewire.backend.responsability.responsability-sheet-table',
             [
                 'rows' => $this->getTableRows(),
                 'headers' => $this->getTableHeaders(),
@@ -80,30 +84,32 @@ class DependencyTable extends Component
 
     public function showDeleteModal($id)
     {
-        $this->deleteId = $id;
+        $this->dismissId = $id;
         $this->deleteModal = true;
     }
 
-    public function delete()
+    public function dismiss()
     {
-        $dependency = Dependency::find($this->deleteId);
-        $module_name = 'dependency';
+        $sheet = ResponsabilitySheet::find($this->dismissId);
+        $module_name = 'responsability';
         $module_action = 'delete';
         Gate::allowIf(GeneralPolicy::$module_action(Auth::user(), $module_name));
-        $hasDeleted = $dependency->delete();
 
-        $this->deleteId = null;
+        $sheet->status = '0';
+        $hasDismiss = $sheet->save();
+
+        $this->dismissId = null;
         $this->deleteModal = false;
 
-        if ($hasDeleted)
+        if ($hasDismiss)
             $this->success(
-                title: __('Deleted Successfully'),
+                title: __('Dismissed Successfully'),
                 icon: 'o-check-circle',
                 position: 'toast-top toast-center'
             );
         else
             $this->error(
-                title: __('Could not be deleted'),
+                title: __('Could not be dismissed'),
                 icon: 'o-x-circle',
                 position: 'toast-top toast-center'
             );

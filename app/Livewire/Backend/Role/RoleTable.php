@@ -4,7 +4,9 @@ namespace App\Livewire\Backend\Role;
 
 use App\Http\Services\AppSettingService;
 use App\Models\Role;
+use App\Policies\GeneralPolicy;
 use App\Utils\Alerts;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -85,7 +87,9 @@ class RoleTable extends Component
     public function delete()
     {
         $role = Role::find($this->deleteId);
-        Gate::authorize('delete', $role);
+        $module_name = 'role';
+        $module_action = 'delete';
+        Gate::allowIf(GeneralPolicy::$module_action(Auth::user(), $module_name));
         $hasDeleted = $role->delete();
 
         $this->deleteId = null;

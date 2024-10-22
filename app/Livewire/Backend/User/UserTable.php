@@ -4,6 +4,7 @@ namespace App\Livewire\Backend\User;
 
 use App\Http\Services\AppSettingService;
 use App\Models\User;
+use App\Policies\GeneralPolicy;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Utils\Alerts;
@@ -96,7 +97,9 @@ class UserTable extends Component
     public function delete()
     {
         $collaborater = User::find($this->deleteId);
-        Gate::authorize('delete', $collaborater);
+        $module_name = 'user';
+        $module_action = 'delete';
+        Gate::allowIf(GeneralPolicy::$module_action(Auth::user(), $module_name));
         $hasDeleted = $collaborater->delete();
 
         $this->deleteId = null;
