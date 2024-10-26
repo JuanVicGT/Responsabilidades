@@ -36,10 +36,20 @@
                     </div>
                 @endif
             </div>
+
+            {{-- Botones para cuando esta disponible la hoja --}}
             <div x-show="$wire.isAvailable" class="flex col-span-4 justify-between mt-2">
                 <x-mary-button label="{{ __('Block Sheet') }}" icon="o-lock-closed" class="rounded-s-none btn-warning"
                     spinner wire:click="blockSheet" />
                 <x-btn-save spinner wire:click="save" />
+            </div>
+
+            {{-- Botones para cuando no esta disponible la hoja --}}
+            <div x-show="!$wire.isAvailable" class="flex col-span-4 justify-between mt-2">
+                <x-mary-button label="{{ __('Print') }}" icon="o-printer" class="rounded-s-none btn-accent" spinner
+                    wire:click="printSheet" />
+                <x-mary-button label="{{ __('Make Transfer') }}" icon="o-arrows-right-left"
+                    class="rounded-s-none btn-warning" spinner wire:click="showTransferModal" />
             </div>
         </x-mary-card>
     </section>

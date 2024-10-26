@@ -245,5 +245,6 @@
     "Show Create Button": "Mostrar Botón de Crear",
     "Show Create Button Description": "Indica si se debe mostrar el botón de crear items en la edición de hoja de responsabilidades. Por defecto es false.",
     "Block Sheet": "Finalizar",
-    "Sheet already closed": "Hoja ya cerrada"
+    "Sheet already closed": "Hoja ya cerrada",
+    "Sheet updated successfully": "Hoja de Responsabilidades actualizada correctamente"
 }

@@ -8,7 +8,6 @@ use App\Models\ResponsabilitySheet;
 use App\Models\User;
 use Livewire\Component;
 
-use App\Livewire\Backend\Responsability\ResponsabilitySheetCreate;
 use App\Utils\Enums\AlertTypeEnum;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -304,7 +303,7 @@ class ResponsabilitySheetEdit extends Component
             }
         }
 
-        $this->addAlert(AlertTypeEnum::Success, __('Sheet created successfully'));
+        $this->addAlert(AlertTypeEnum::Success, __('Sheet updated successfully'));
         DB::commit();
         redirect()->route('responsability-sheet.edit', $responsabilitySheet->id)->with('alerts', $this->getAlerts());
     }
@@ -645,5 +644,10 @@ class ResponsabilitySheetEdit extends Component
             'line_observation.required' => __('validation.required', ['attribute' => __('Observations')]),
             'line_date.required' => __('validation.required', ['attribute' => __('Date')]),
         ]);
+    }
+
+    public function printSheet()
+    {
+        
     }
 }
