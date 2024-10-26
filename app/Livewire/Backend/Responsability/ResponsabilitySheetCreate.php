@@ -16,6 +16,7 @@ use App\Utils\Enums\AlertTypeEnum;
 use App\Livewire\Backend\Responsability\CreateSteps\Step1;
 use App\Livewire\Backend\Responsability\CreateSteps\Step2;
 use App\Livewire\Backend\Responsability\CreateSteps\Step3;
+use App\Utils\Enums\ResponsabilitySheetStatusEnum;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -162,7 +163,8 @@ class ResponsabilitySheetCreate extends Component
             'balance' => $this->step3_total_balance,
             'cash_in' => $this->step3_total_cash_in,
             'cash_out' => $this->step3_total_cash_out,
-            'created_by' => Auth::user()->id
+            'created_by' => Auth::user()->id,
+            'status' => ResponsabilitySheetStatusEnum::Open->value
         ]);
 
         if (!$responsabilitySheet) {
@@ -175,11 +177,13 @@ class ResponsabilitySheetCreate extends Component
         foreach ($this->step2_lines as $line) {
             $line = LineResponsabilitySheet::create([
                 'id_sheet' => $responsabilitySheet->id,
+                'date' => $line['date'],
                 'id_item' => $line['item_id'],
                 'order' => $line['order'],
                 'balance' => $line['balance'],
                 'cash_in' => $line['cash_in'],
                 'cash_out' => $line['cash_out'],
+                'observations' => $line['observations'],
                 'created_by' => Auth::user()->id
             ]);
 
@@ -203,7 +207,7 @@ class ResponsabilitySheetCreate extends Component
 
         $this->addAlert(AlertTypeEnum::Success, __('Sheet created successfully'));
         DB::commit();
-        return redirect()->route('responsability-sheet.edit', $item->id)->with('alerts', $this->getAlerts());
+        return redirect()->route('responsability-sheet.edit', $responsabilitySheet->id)->with('alerts', $this->getAlerts());
     }
 
     public function loadItem()
@@ -236,5 +240,32 @@ class ResponsabilitySheetCreate extends Component
         }
 
         $this->processAlerts();
+    }
+
+    public function changeAmountColumn(int $index)
+    {
+        $line = $this->step2_lines[$index];
+
+        $cash_in = $line['cash_out'];
+        $cash_out = $line['cash_in'];
+
+        $line['cash_in'] = $cash_in;
+        $line['cash_out'] = $cash_out;
+
+        $this->step2_lines[$index] = $line;
+
+        $this->recalculateBalance();
+        $this->step3->calcTotals();
+    }
+
+    public function recalculateBalance()
+    {
+        $balance = 0;
+
+        foreach ($this->step2_lines as $key => $line) {
+            $balance += $line['cash_in'] - $line['cash_out'];
+
+            $this->step2_lines[$key]['balance'] = $balance;
+        }
     }
 }

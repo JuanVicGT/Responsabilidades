@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
  * @property string code
  * @property int quantity
+ * @property bool is_available
  * @property string description
  * @property string observations
  * @property float unit_value

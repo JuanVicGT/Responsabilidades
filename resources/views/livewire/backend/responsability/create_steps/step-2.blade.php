@@ -28,12 +28,10 @@
                         {{ $item->description }}
                     @endscope
 
-                    @if ($canCreate)
-                        <x-slot:append>
-                            <x-mary-button label="{{ __('Load Item') }}" icon="o-plus"
-                                class="rounded-s-none btn-accent dark:btn-info" wire:click='loadItem' spinner />
-                        </x-slot:append>
-                    @endif
+                    <x-slot:append>
+                        <x-mary-button label="{{ __('Load Item') }}" icon="o-plus"
+                            class="rounded-s-none btn-accent dark:btn-info" wire:click='loadItem' spinner />
+                    </x-slot:append>
                 </x-mary-choices>
             </div>
 
@@ -87,7 +85,7 @@
                     wire:model='form_step2_line_observation' />
             </div>
 
-            <div class="flex col-span-4 justify-end">
+            <div x-show="$wire.form_step2_code" class="flex col-span-4 justify-end">
                 <x-mary-button label="{{ __('Add Line') }}" icon="o-plus" class="rounded-s-none btn-success"
                     wire:click='addLine' spinner />
             </div>
@@ -158,8 +156,12 @@
             @endscope
 
             @scope('actions', $row)
-                <x-mary-button icon="o-minus-circle" class="btn-sm btn-error text-white dark:text-black" spinner
-                    wire:click="removeLine({{ $row['item_id'] }})" />
+                <div class="flex space-x-2">
+                    <x-mary-button icon="o-arrows-right-left" class="btn-sm btn-warning text-white dark:text-black" spinner
+                        wire:click="changeAmountColumn({{ $loop->index }})" />
+                    <x-mary-button icon="o-minus-circle" class="btn-sm btn-error text-white dark:text-black" spinner
+                        wire:click="removeLine({{ $row['item_id'] }})" />
+                </div>
             @endscope
         </x-mary-table>
     </section>

@@ -152,7 +152,7 @@ class Step2
             }
         }
 
-        if (!empty($item->id) && $havePermissionToEditItem) {
+        if (!empty($item->id) && $havePermissionToEditItem && !$newItem) {
             $this->validateUpdate();
 
             $code = $this->component->form_step2_code;

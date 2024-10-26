@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * ---- Foreign keys
  * @property int id_responsible
  * @property int created_by
+ * @property int updated_by
  */
 class ResponsabilitySheet extends Model
 {
@@ -61,5 +62,10 @@ class ResponsabilitySheet extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function lines()
+    {
+        return $this->hasMany(LineResponsabilitySheet::class, 'id_sheet', 'id');
     }
 }

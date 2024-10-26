@@ -240,5 +240,10 @@
     "Available?": "Estado",
     "Available": "Disponible",
     "Assigned": "Asignado",
-    "Cannot be delete an item that in use": "No se puede borrar un artículo que este en uso"
+    "Cannot be delete an item that in use": "No se puede borrar un artículo que este en uso",
+    "Sheet created successfully": "Hoja de Responsabilidades creada correctamente",
+    "Show Create Button": "Mostrar Botón de Crear",
+    "Show Create Button Description": "Indica si se debe mostrar el botón de crear items en la edición de hoja de responsabilidades. Por defecto es false.",
+    "Block Sheet": "Finalizar",
+    "Sheet already closed": "Hoja ya cerrada"
 }

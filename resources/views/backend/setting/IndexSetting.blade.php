@@ -13,15 +13,29 @@
             x-on:submit="submitButtonDisabled = true">
             @csrf
 
-            <div class="grid sm:grid-cols-2 gap-4">
-                @foreach ($settings as $setting)
-                    <x-mary-input label="{{ __($setting['title']) }}" type="{{ $setting['type'] }}"
-                        name="{{ $setting['key'] }}" value="{{ $config->get($setting['key']) }}"
-                        hint="{{ $setting['description'] ?? '' }}" />
-                @endforeach
-            </div>
-
             @if (!empty($settings))
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    @foreach ($settings as $setting)
+                        @if ($setting['type'] == 'text')
+                            <x-mary-input label="{{ __($setting['title']) }}" type="{{ $setting['type'] }}"
+                                name="{{ $setting['key'] }}" value="{{ $config->get($setting['key']) }}"
+                                hint="{{ $setting['description'] ?? '' }}" />
+                        @endif
+
+                        @if ($setting['type'] == 'number')
+                            <x-mary-input label="{{ __($setting['title']) }}" type="{{ $setting['type'] }}"
+                                name="{{ $setting['key'] }}" value="{{ $config->get($setting['key']) }}"
+                                hint="{{ $setting['description'] ?? '' }}" />
+                        @endif
+
+                        @if ($setting['type'] == 'checkbox')
+                            <x-mary-checkbox label="{{ __($setting['title']) }}" name="{{ $setting['key'] }}"
+                                hint="{{ $setting['description'] ?? '' }}" :checked="$config->get($setting['key'])" />
+                        @endif
+                    @endforeach
+                </div>
+
             @endif
 
             {{-- Submit Button --}}

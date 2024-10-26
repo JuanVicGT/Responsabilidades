@@ -17,4 +17,6 @@
         </x-mary-header>
     @endsection
 
+    <livewire:backend.responsability.responsability-sheet-edit :id="$sheet->id" />
+
 </x-layouts.app>
