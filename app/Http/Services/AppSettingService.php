@@ -34,9 +34,9 @@ class AppSettingService
         $this->settings = json_decode($appSettings->settings, true);
     }
 
-    public function get($field)
+    public function get($field, $default = null)
     {
-        return $this->settings[$field] ?? null;
+        return $this->settings[$field] ?? $default;
     }
 
     /**
@@ -58,8 +58,16 @@ class AppSettingService
 
         $this->settings[$field] = $value;
 
-        AppSetting::updateOrCreate(
-            ['id' => 1],
+        $appSetting = AppSetting::first();
+
+        if (empty($appSetting)) {
+            AppSetting::create([
+                'settings' => json_encode($this->settings)
+            ]);
+            return;
+        }
+
+        $appSetting->update(
             ['settings' => json_encode($this->settings)]
         );
     }
@@ -80,8 +88,16 @@ class AppSettingService
 
         $this->settings = $settings;
 
-        AppSetting::updateOrCreate(
-            ['id' => 1],
+        $appSetting = AppSetting::first();
+
+        if (empty($appSetting)) {
+            AppSetting::create([
+                'settings' => json_encode($this->settings)
+            ]);
+            return;
+        }
+
+        $appSetting->update(
             ['settings' => json_encode($this->settings)]
         );
     }

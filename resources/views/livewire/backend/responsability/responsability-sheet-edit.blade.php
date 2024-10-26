@@ -38,19 +38,31 @@
             </div>
 
             {{-- Botones para cuando esta disponible la hoja --}}
-            <div x-show="$wire.isAvailable" class="flex col-span-4 justify-between mt-2">
-                <x-mary-button label="{{ __('Block Sheet') }}" icon="o-lock-closed" class="rounded-s-none btn-warning"
-                    spinner wire:click="blockSheet" />
-                <x-btn-save spinner wire:click="save" />
-            </div>
+            @if ($isAvailable)
+                <div class="flex col-span-4 justify-between mt-2">
+                    <x-mary-button label="{{ __('Block Sheet') }}" icon="o-lock-closed" class=" btn-warning" spinner
+                        wire:click="blockSheet" />
+                    <x-btn-save spinner wire:click="save" />
+                </div>
+            @endif
 
-            {{-- Botones para cuando no esta disponible la hoja --}}
-            <div x-show="!$wire.isAvailable" class="flex col-span-4 justify-between mt-2">
-                <x-mary-button label="{{ __('Print') }}" icon="o-printer" class="rounded-s-none btn-accent" spinner
-                    wire:click="printSheet" />
-                <x-mary-button label="{{ __('Make Transfer') }}" icon="o-arrows-right-left"
-                    class="rounded-s-none btn-warning" spinner wire:click="showTransferModal" />
-            </div>
+            {{-- Botones para cuando esta bloqueada la hoja --}}
+            @if ($status === App\Utils\Enums\ResponsabilitySheetStatusEnum::Closed->value)
+                <div class="flex col-span-4 justify-between mt-2">
+                    <x-mary-button label="{{ __('Print') }}" icon="o-printer" class=" btn-accent" spinner
+                        link="{{ route('responsability-sheet.print', ['id' => $id]) }}" external />
+                    <x-mary-button label="{{ __('Make Transfer') }}" icon="o-arrows-right-left" class=" btn-warning"
+                        spinner @click="$wire.show_transfer_modal = true" />
+                </div>
+            @endif
+
+            {{-- Botones para cuando la hoja ha sido transferida --}}
+            @if ($status === App\Utils\Enums\ResponsabilitySheetStatusEnum::Transferred->value)
+                <div class="flex col-span-4 justify-between mt-2">
+                    <x-mary-button label="{{ __('Print') }}" icon="o-printer" class=" btn-accent" spinner
+                        link="{{ route('responsability-sheet.print', ['id' => $id]) }}" external />
+                </div>
+            @endif
         </x-mary-card>
     </section>
 
@@ -74,15 +86,15 @@
                     @endscope
 
                     <x-slot:append>
-                        <x-mary-button label="{{ __('Load Item') }}" icon="o-plus"
-                            class="rounded-s-none btn-accent dark:btn-info" wire:click='loadItem' spinner />
+                        <x-mary-button label="{{ __('Load Item') }}" icon="o-plus" class=" btn-accent dark:btn-info"
+                            wire:click='loadItem' spinner />
                     </x-slot:append>
                 </x-mary-choices>
 
                 @if ($canCreate)
                     <div x-show="$wire.show_create_btn" class="flex col-span-4 justify-center mt-2">
-                        <x-mary-button label="{{ __('Create New Item') }}" icon="o-plus"
-                            class="rounded-s-none btn-info" x-on:click="$wire.show_form = !$wire.show_form" />
+                        <x-mary-button label="{{ __('Create New Item') }}" icon="o-plus" class=" btn-info"
+                            x-on:click="$wire.show_form = !$wire.show_form" />
                     </div>
                 @endif
 
@@ -139,7 +151,7 @@
                     </div>
 
                     <div x-show="$wire.line_code" class="flex col-span-4 justify-end">
-                        <x-mary-button label="{{ __('Add Line') }}" icon="o-plus" class="rounded-s-none btn-success"
+                        <x-mary-button label="{{ __('Add Line') }}" icon="o-plus" class=" btn-success"
                             wire:click='addLine' spinner />
                     </div>
                 </div>
@@ -231,4 +243,35 @@
             </div>
         </x-mary-card>
     </section>
+
+    {{-- Sección 4 : Modals --}}
+    @if ($status === App\Utils\Enums\ResponsabilitySheetStatusEnum::Closed->value)
+        <x-mary-modal wire:model="show_transfer_modal" class="backdrop-blur">
+            {{-- Select new responsable --}}
+            <div class="min-h-96">
+                <x-mary-choices label="{{ __('Responsable') }}" debounce="500ms" wire:model="trans_responsible_id"
+                    single icon="o-user" no-result-text="{{ __('No results found.') }}" required
+                    class="max-h-16 external-choice" :options="$option_users" searchable search-function="searchUsers">
+                    {{-- Item slot --}}
+                    @scope('item', $user)
+                        <x-mary-list-item :item="$user" sub-value="work_position">
+                            <x-slot:avatar>
+                                @if ($user->avatar)
+                                    <x-mary-avatar image="{{ asset('storage/' . $user->avatar) }}"
+                                        class="bg-orange-100 w-8 h8 rounded-full" />
+                                @else
+                                    <x-mary-icon name="o-user" class="bg-orange-100 p-2 w-8 h8 rounded-full" />
+                                @endif
+                            </x-slot:avatar>
+                        </x-mary-list-item>
+                    @endscope
+                </x-mary-choices>
+            </div>
+            <div class="flex col-span-4 justify-between mt-2">
+                <x-mary-button label="Cancel" @click="$wire.show_transfer_modal = false" />
+                <x-mary-button label="{{ __('Make Transfer') }}" icon="o-arrows-right-left" class=" btn-warning"
+                    spinner wire:click="makeTransfer" />
+            </div>
+        </x-mary-modal>
+    @endif
 </div>

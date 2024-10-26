@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('status', 20)->nullable(); // Queda abierto porque no me decido que pueda contener
 
             $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('cascade');
         });
     }
 

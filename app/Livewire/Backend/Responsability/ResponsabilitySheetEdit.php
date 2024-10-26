@@ -37,6 +37,8 @@ class ResponsabilitySheetEdit extends Component
     public $show_form = false;
     public $show_create_btn = false;
 
+    public bool $show_transfer_modal = false;
+
     /** === Form Attributes === */
     public $id;
     public $number;
@@ -66,6 +68,9 @@ class ResponsabilitySheetEdit extends Component
 
     /** === Lines/Detail === */
     public $lines;
+
+    /** === Tranfer Form Attributes === */
+    public $trans_responsible_id;
 
     public function render()
     {
@@ -286,7 +291,7 @@ class ResponsabilitySheetEdit extends Component
             'balance' => $this->total_balance,
             'cash_in' => $this->total_cash_in,
             'cash_out' => $this->total_cash_out,
-            'approved_by' => Auth::user()->id,
+            'updated_by' => Auth::user()->id,
             'status' => ResponsabilitySheetStatusEnum::Open->value
         ]);
 
@@ -318,7 +323,8 @@ class ResponsabilitySheetEdit extends Component
 
         $sheet = ResponsabilitySheet::find($this->id);
         $sheet->update([
-            'status' => ResponsabilitySheetStatusEnum::Closed->value
+            'status' => ResponsabilitySheetStatusEnum::Closed->value,
+            'approved_by' => Auth::user()->id
         ]);
         redirect()->route('responsability-sheet.edit', $sheet->id)->with('alerts', $this->getAlerts());
     }
@@ -644,10 +650,5 @@ class ResponsabilitySheetEdit extends Component
             'line_observation.required' => __('validation.required', ['attribute' => __('Observations')]),
             'line_date.required' => __('validation.required', ['attribute' => __('Date')]),
         ]);
-    }
-
-    public function printSheet()
-    {
-        
     }
 }

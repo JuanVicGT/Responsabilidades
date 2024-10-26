@@ -29,4 +29,14 @@ class LineResponsabilitySheet extends Model
     /* When you set `` to an empty array `[]`, it means
     that all attributes of the model are mass assignable */
     protected $guarded = [];
+
+    /**
+     * Get the item that owns the LineResponsabilitySheet
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'id_item', 'id');
+    }
 }

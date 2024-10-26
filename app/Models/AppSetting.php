@@ -41,8 +41,10 @@ class AppSetting extends Model
             // Numbers
             ['key' => 'sequence_start', 'type' => 'number', 'title' => __('conf-sequence-start'), 'description' => __('conf-sequence-start-description')],
             ['key' => 'pagination', 'type' => 'number', 'title' => __('conf-pagination')],
+            ['key' => 'print_lines_per_page', 'type' => 'number', 'title' => __('conf-print-lines-per-page')],
             // Boolean
             ['key' => 'show_create_btn', 'type' => 'checkbox', 'title' => __('Show Create Button'), 'description' => __('Show Create Button Description')],
+            ['key' => 'show_sheet_header', 'type' => 'checkbox', 'title' => __('Show Sheet Header'), 'description' => __('Show Sheet Header Description')],
         ];
     }
 }

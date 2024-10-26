@@ -69,9 +69,6 @@
                     link="{{ route('todo.calendar') }}" no-wire-navigate />
             </x-mary-menu-sub>
         @endif
-        @if (auth()->user()->is_admin || auth()->user()->can('index_attendance'))
-            <x-mary-menu-item title="{{ __('Attendances') }}" icon="o-clock" link="{{ route('attendance.index') }}" />
-        @endif
 
         {{-- Sección de RH --}}
         @if (auth()->user()->is_admin || auth()->user()->can('index_user'))

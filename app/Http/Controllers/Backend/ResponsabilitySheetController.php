@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\AppSettingService;
 use App\Models\ResponsabilitySheet;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class ResponsabilitySheetController extends Controller
@@ -73,5 +75,25 @@ class ResponsabilitySheetController extends Controller
     public function destroy(ResponsabilitySheet $responsabilitySheet)
     {
         //
+    }
+
+    public function print(int $id)
+    {
+        $sheet = ResponsabilitySheet::find($id);
+        $appSettings = app(AppSettingService::class);
+
+        $showSheetHeader = $appSettings->get('show_sheet_header', false);
+        $maxLinesPerPage = $appSettings->get('print_lines_per_page', 13); // Define el máximo de líneas por página
+        $lines = $sheet->lines->chunk($maxLinesPerPage); // Divide las líneas en grupos
+
+        $data = [
+            'sheet' => $sheet,
+            'lines' => $lines,
+            'show_sheet_header' => $showSheetHeader
+        ];
+
+        $pdf = Pdf::loadView('backend.pdfs.print-responsability-sheet', $data);
+        $pdf->setPaper('letter', 'landscape');
+        return $pdf->stream('Hoja de Responsabilidades - ' . $sheet->number . '.pdf');
     }
 }

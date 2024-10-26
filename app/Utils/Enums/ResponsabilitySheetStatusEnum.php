@@ -9,7 +9,7 @@ enum ResponsabilitySheetStatusEnum: string
     use EnumToArray;
 
     case Open = 'open';
-    case Finished = 'finished';
+    case Canceled = 'canceled';
     case Transferred = 'transferred';
     case Closed = 'closed';
 }

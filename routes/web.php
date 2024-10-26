@@ -184,8 +184,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/Create', 'create')->name('create');
             Route::get('/Edit/{id}', 'edit')->name('edit');
             Route::get('/Show/{id}', 'show')->name('show');
-
+            
             // Actions
+            Route::get('/Print/{id}', 'print')->name('print'); // Print PDF
             Route::post('/Store', 'store')->name('store');
             Route::patch('/Update', 'update')->name('update');
             Route::delete('/Delete', 'delete')->name('destroy');

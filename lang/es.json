@@ -204,7 +204,7 @@
     "conf-afmin": "Director AFIM",
     "director-afmin": "Director AFIM",
     "Number": "Número",
-    "conf-pagination": "Paginación por defecto",
+    "conf-pagination": "Paginación por defecto, por defecto 10",
     "Assign Responsibilities": "Asignación de Responsabilidades",
     "Add Line": "Anadir Linea",
     "Create New Item": "Crear Nueva Artículo",
@@ -246,5 +246,8 @@
     "Show Create Button Description": "Indica si se debe mostrar el botón de crear items en la edición de hoja de responsabilidades. Por defecto es false.",
     "Block Sheet": "Finalizar",
     "Sheet already closed": "Hoja ya cerrada",
-    "Sheet updated successfully": "Hoja de Responsabilidades actualizada correctamente"
+    "Sheet updated successfully": "Hoja de Responsabilidades actualizada correctamente",
+    "conf-print-lines-per-page": "Líneas por página en impresión, por defecto 13",
+    "Show Sheet Header": "Encabezado y Pie de Hoja en Impresión",
+    "Show Sheet Header Description": "Indica si se debe mostrar el encabezado y el pie de hoja en la impresión. Por defecto es true."
 }
