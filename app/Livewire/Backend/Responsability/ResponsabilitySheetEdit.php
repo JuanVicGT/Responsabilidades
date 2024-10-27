@@ -71,6 +71,7 @@ class ResponsabilitySheetEdit extends Component
 
     /** === Tranfer Form Attributes === */
     public $trans_responsible_id;
+    public $transfer_lines = [];
 
     public function render()
     {
@@ -596,6 +597,17 @@ class ResponsabilitySheetEdit extends Component
         $this->total_cash_in = $total_cash_in;
         $this->total_cash_out = $total_cash_out;
         $this->total_balance = $total_balance;
+    }
+
+    public function updateTransferLine($line_id, $is_checked)
+    {
+        if ($is_checked) {
+            $this->transfer_lines[$line_id] = $line_id;
+        }
+
+        if (!$is_checked && isset($this->transfer_lines[$line_id])) {
+            unset($this->transfer_lines[$line_id]);
+        }
     }
 
     private function validateResponsable()
