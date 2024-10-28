@@ -35,6 +35,29 @@
                         <x-mary-input label="{{ __('Responsible') }}" wire:model="responsible_name" required readonly />
                     </div>
                 @endif
+
+                {{-- Crate Info --}}
+                <div>
+                    <x-mary-input label="{{ __('Create Date') }}" icon="o-calendar" type="text"
+                        value="{{ $created_at }}" readonly />
+                </div>
+                <div>
+                    <x-mary-input label="{{ __('Crate By') }}" wire:model="created_name" readonly />
+                </div>
+
+                {{-- Edit Info --}}
+                <div>
+                    <x-mary-input label="{{ __('Last Update') }}" icon="o-calendar" type="text"
+                        value="{{ $updated_at }}" readonly />
+                </div>
+                <div>
+                    <x-mary-input label="{{ __('Last Update By') }}" wire:model="updated_name" readonly />
+                </div>
+
+                {{-- Status --}}
+                <div class="col-span-4">
+                    <x-mary-input label="{{ __('Status') }}" wire:model="status_translate" readonly />
+                </div>
             </div>
 
             {{-- Botones para cuando esta disponible la hoja --}}
@@ -246,10 +269,35 @@
 
     {{-- Sección 4 : Modals --}}
     @if ($status === App\Utils\Enums\ResponsabilitySheetStatusEnum::Closed->value)
-        <x-mary-modal wire:model="show_transfer_modal" class="backdrop-blur">
+        <x-mary-modal wire:model="show_transfer_modal" class="backdrop-blur" box-class="min-w-[24rem] max-w-[64rem]">
+            <x-mary-header title="{{ __('Transfer Modal Title') }}" subtitle="{{ __('Transfer Modal Subtitle') }}"
+                class="mb-2" separator />
+
+            {{-- Description --}}
+            <div>
+                <p>{{ __('Transfer Modal Notice') }}</p>
+                <ul class="list-disc pl-4">
+                    @if ($transfer_second_method)
+                        <li>{{ __('Transfer Modal Notice 7') }}</li>
+                        <li>{{ __('Transfer Modal Notice 3') }}</li>
+                        <li>{{ __('Transfer Modal Notice 4') }}</li>
+                        <li>{{ __('Transfer Modal Notice 6') }}</li>
+                    @else
+                        <li>{{ __('Transfer Modal Notice 1') }}</li>
+                        <li>{{ __('Transfer Modal Notice 2') }}</li>
+                        <li>{{ __('Transfer Modal Notice 3') }}</li>
+                        <li>{{ __('Transfer Modal Notice 4') }}</li>
+                        <li>{{ __('Transfer Modal Notice 5') }}</li>
+                        <li>{{ __('Transfer Modal Notice 6') }}</li>
+                    @endif
+                </ul>
+            </div>
+
+            <hr class="my-4">
+
             <div class="min-h-96">
                 {{-- Select new responsable --}}
-                <x-mary-choices label="{{ __('Responsable') }}" debounce="500ms" wire:model="trans_responsible_id"
+                <x-mary-choices label="{{ __('Transfer To') }}" debounce="500ms" wire:model="transfer_responsible_id"
                     name="responsible_id" single icon="o-user" no-result-text="{{ __('No results found.') }}"
                     required class="max-h-16 external-choice" :options="$option_users" searchable
                     search-function="searchUsers">
@@ -269,33 +317,50 @@
                 </x-mary-choices>
 
                 @foreach ($lines as $line)
-                    <div class="flex items-center justify-start mt-4">
-                        <label
-                            class="flex cursor-pointer items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 [&:has(input:checked)]:text-black dark:[&:has(input:checked)]:text-white [&:has(input:disabled)]:opacity-75 [&:has(input:disabled)]:cursor-not-allowed">
-                            <div class="relative flex items-center">
-                                <input type="checkbox"
-                                    class="before:content[''] peer relative size-4 cursor-pointer appearance-none overflow-hidden rounded border border-slate-300 bg-slate-100 before:absolute before:inset-0 checked:border-blue-700 checked:before:bg-blue-700 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-slate-800 checked:focus:outline-blue-700 active:outline-offset-0 disabled:cursor-not-allowed dark:border-slate-700 dark:bg-slate-800 dark:checked:border-blue-600 dark:checked:before:bg-blue-600 dark:focus:outline-slate-300 dark:checked:focus:outline-blue-600"
-                                    wire:click='updateTransferLine({{ $line['line_id'] }}, $event.target.checked)' />
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"
-                                    stroke="currentColor" fill="none" stroke-width="4"
-                                    class="pointer-events-none invisible absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 text-slate-100 peer-checked:visible dark:text-slate-100">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                                </svg>
-                            </div>
-                            <span>{{ $line['description'] }}</span>
-                        </label>
-                    </div>
-                    <span class="ml-6 text-sm text-slate-700 dark:text-slate-300">{{ $line['code'] }}</span>
+                    @if ($line['cash_in'] > 0)
+                        <div class="flex items-center justify-start mt-4">
+                            <label
+                                class="w-full flex cursor-pointer items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 [&:has(input:checked)]:text-black dark:[&:has(input:checked)]:text-white [&:has(input:disabled)]:opacity-75 [&:has(input:disabled)]:cursor-not-allowed">
+
+                                <div class="flex items-center w-full">
+                                    <div class="relative flex items-center">
+                                        <input type="checkbox"
+                                            class="before:content[''] peer relative size-4 cursor-pointer appearance-none overflow-hidden rounded border border-slate-300 bg-slate-100 before:absolute before:inset-0 checked:border-blue-700 checked:before:bg-blue-700 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-slate-800 checked:focus:outline-blue-700 active:outline-offset-0 disabled:cursor-not-allowed dark:border-slate-700 dark:bg-slate-800 dark:checked:border-blue-600 dark:checked:before:bg-blue-600 dark:focus:outline-slate-300 dark:checked:focus:outline-blue-600"
+                                            wire:click='updateTransferLine({{ $line['line_id'] }}, $event.target.checked)'
+                                            @click="$wire.show_transfer_btn = false" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                            aria-hidden="true" stroke="currentColor" fill="none" stroke-width="4"
+                                            class="pointer-events-none invisible absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 text-slate-100 peer-checked:visible dark:text-slate-100">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M4.5 12.75l6 6 9-13.5" />
+                                        </svg>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 ml-6 w-full">
+                                        <span class="w-full">{{ $line['description'] }}</span>
+                                        <span
+                                            class="w-full text-sm text-slate-700 dark:text-slate-300">{{ $line['code'] }}</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <hr class="my-4">
+                    @endif
                 @endforeach
             </div>
+
+            <div>
+                <p class="text-center">
+                    {{ __('Transfer Count Items Selected', ['count' => count($transfer_lines)]) }}
+                </p>
+            </div>
+
             <div class="flex col-span-4 justify-between mt-2">
                 <x-mary-button label="Cancel" @click="$wire.show_transfer_modal = false" />
-                <x-mary-button label="{{ __('Make Transfer') }}" icon="o-arrows-right-left" class="btn-warning"
-                    spinner wire:click="makeTransfer" />
+                <x-mary-button x-show="$wire.show_transfer_btn" label="{{ __('Make Transfer') }}"
+                    icon="o-arrows-right-left" class="btn-warning" spinner wire:click="makeTransfer" />
             </div>
-            Lineas a trasnferir: {{ var_export($transfer_lines) }}
         </x-mary-modal>
-
-        Lineas a trasnferir: {{ var_export($transfer_lines) }}
     @endif
 </div>

@@ -46,7 +46,7 @@ class ResponsabilitySheet extends Model
         if ($lastRecord) {
             $lastNumber = $lastRecord->number;
             if (is_numeric($lastNumber)) {
-                return (int)$lastNumber + 1;
+                return ++$lastNumber;
             }
         }
 
@@ -67,5 +67,34 @@ class ResponsabilitySheet extends Model
     public function lines()
     {
         return $this->hasMany(LineResponsabilitySheet::class, 'id_sheet', 'id');
+    }
+
+    public function recalculate()
+    {
+        $cashIn = 0.0;
+        $cashOut = 0.0;
+        $balance = 0.0;
+
+        foreach ($this->lines as $key => $line) {
+            $cashIn += $line->cash_in;
+            $cashOut += $line->cash_out;
+
+            if ($line->cash_in > 0.0) {
+                $balance += $line->cash_in;
+            }
+
+            if ($line->cash_out > 0.0) {
+                $balance -= $line->cash_out;
+            }
+
+            $line->update([
+                'balance' => $balance,
+            ]);
+        }
+
+        $this->balance = $balance;
+        $this->cash_in = $cashIn;
+        $this->cash_out = $cashOut;
+        $this->save();
     }
 }

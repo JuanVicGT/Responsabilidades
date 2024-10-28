@@ -124,8 +124,7 @@
                     <table class="header-table">
                         <tr>
                             <td style="width: 80px;">
-                                <img src="{{ public_path('assets/images/logo.png') }}" alt="Logo de la municipalidad"
-                                    style="margin-left: 20mm;">
+                                <x-application-logo public style="margin-left: 20mm;" alt="Logo de la municipalidad" />
                             </td>
                             <td class="header-content" class="title">
                                 <p style="margin-left: -25mm;">Municipalidad de Santa María Chiquimula, Totonicapán</p>

@@ -45,6 +45,7 @@ class AppSetting extends Model
             // Boolean
             ['key' => 'show_create_btn', 'type' => 'checkbox', 'title' => __('Show Create Button'), 'description' => __('Show Create Button Description')],
             ['key' => 'show_sheet_header', 'type' => 'checkbox', 'title' => __('Show Sheet Header'), 'description' => __('Show Sheet Header Description')],
+            ['key' => 'second_transfer_method', 'type' => 'checkbox', 'title' => __('Second Transfer Method'), 'description' => __('Second Transfer Method Description')],
         ];
     }
 }

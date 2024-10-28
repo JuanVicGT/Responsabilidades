@@ -11,5 +11,7 @@ enum ResponsabilitySheetStatusEnum: string
     case Open = 'open';
     case Canceled = 'canceled';
     case Transferred = 'transferred';
+    case Received = 'received';
+    case Modified = 'modified';
     case Closed = 'closed';
 }

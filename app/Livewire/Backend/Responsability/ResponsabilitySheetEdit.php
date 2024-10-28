@@ -17,6 +17,7 @@ use Mary\Traits\Toast;
 use App\Utils\Alerts;
 
 use App\Utils\Enums\ResponsabilitySheetStatusEnum;
+use App\Utils\Lib\Transfer;
 use Illuminate\Support\Facades\DB;
 
 class ResponsabilitySheetEdit extends Component
@@ -43,14 +44,17 @@ class ResponsabilitySheetEdit extends Component
     public $id;
     public $number;
     public $status;
-    public $created_at;
-    public $created_by;
-    public $updated_at;
-    public $updated_by;
+    public $status_translate;
+
     public $responsible_id;
     public $responsible_name;
 
+    public $created_at;
+    public $created_by;
     public $created_name;
+
+    public $updated_at;
+    public $updated_by;
     public $updated_name;
 
     public $line_code;
@@ -70,8 +74,10 @@ class ResponsabilitySheetEdit extends Component
     public $lines;
 
     /** === Tranfer Form Attributes === */
-    public $trans_responsible_id;
+    public $transfer_second_method = false;
+    public $transfer_responsible_id;
     public $transfer_lines = [];
+    public $show_transfer_btn = false;
 
     public function render()
     {
@@ -86,24 +92,28 @@ class ResponsabilitySheetEdit extends Component
 
         $this->id = $sheet->id;
         $this->number = $sheet->number;
-        $this->status = $sheet->status;
         $this->total_balance = $sheet->balance;
         $this->total_cash_in = $sheet->cash_in;
         $this->total_cash_out = $sheet->cash_out;
-        $this->created_at = $sheet->created_at;
+        $this->created_at = date('d/m/Y H:i', strtotime($sheet->created_at));
         $this->created_by = $sheet->created_by;
-        $this->updated_at = $sheet->updated_at;
+        $this->updated_at = date('d/m/Y H:i', strtotime($sheet->updated_at));
         $this->updated_by = $sheet->updated_by;
         $this->responsible_id = $sheet->id_responsible;
+
+        $this->status = $sheet->status;
+        $this->status_translate = __(ucfirst($sheet->status ?? ''));
 
         $responsible = User::find($this->responsible_id);
         $this->responsible_name = $responsible->name;
 
-        $creator = User::find($this->responsible_id);
+        $creator = User::find($this->created_by);
         $this->created_name = $creator->name;
 
-        $updator = User::find($this->responsible_id);
-        $this->updated_name = $updator->name;
+        $updator = User::find($this->updated_by);
+        if ($updator) {
+            $this->updated_name = $updator->name;
+        }
 
         $this->lines = $this->getlines($sheet);
         $this->searchUsers();
@@ -117,6 +127,7 @@ class ResponsabilitySheetEdit extends Component
         $this->line_date = date('Y-m-d');
         $this->isAvailable = $this->getIsAvailable();
         $this->show_create_btn = $this->appSettings->get('show_create_btn');
+        $this->transfer_second_method = $this->appSettings->get('second_transfer_method', false);
     }
 
     protected function getlines(&$sheet): array
@@ -327,6 +338,8 @@ class ResponsabilitySheetEdit extends Component
             'status' => ResponsabilitySheetStatusEnum::Closed->value,
             'approved_by' => Auth::user()->id
         ]);
+
+        $this->addAlert(AlertTypeEnum::Success, __('Sheet updated successfully'));
         redirect()->route('responsability-sheet.edit', $sheet->id)->with('alerts', $this->getAlerts());
     }
 
@@ -608,6 +621,63 @@ class ResponsabilitySheetEdit extends Component
         if (!$is_checked && isset($this->transfer_lines[$line_id])) {
             unset($this->transfer_lines[$line_id]);
         }
+
+        if (!empty($this->transfer_lines)) {
+            $this->show_transfer_btn = true;
+        }
+    }
+
+    function makeTransfer()
+    {
+        if (empty($this->transfer_lines)) {
+            $this->show_transfer_modal = false;
+            $this->addAlert(AlertTypeEnum::Warning, __('No lines selected'));
+            $this->processAlerts();
+            return;
+        }
+
+        if (empty($this->transfer_responsible_id)) {
+            $this->show_transfer_modal = false;
+            $this->addAlert(AlertTypeEnum::Warning, __('No responsible selected'));
+            $this->processAlerts();
+            return;
+        }
+
+        $transfer = new Transfer();
+
+        $transfer->setCurrentSheetId($this->id);
+        $transfer->setItemsToTransfer($this->transfer_lines);
+        $transfer->setNewResponsibleId($this->transfer_responsible_id);
+
+        if ($this->transfer_second_method) {
+            $transfer->useSecondMethod();
+        }
+
+        $response = $transfer->makeTransfer();
+
+        // Validación de la respuesta
+        if (!$response['status']) {
+            $this->show_transfer_modal = false;
+
+            if (isset($response['message'])) {
+                $this->addAlert(AlertTypeEnum::Error, __($response['message']));
+            } else {
+                $this->addAlert(AlertTypeEnum::Error, __('Transfer could not be created'));
+            }
+
+            $this->processAlerts();
+            return;
+        }
+
+        $this->show_transfer_modal = false;
+
+        if (isset($response['message'])) {
+            $this->addAlert(AlertTypeEnum::Success, __($response['message']));
+        } else {
+            $this->addAlert(AlertTypeEnum::Success, __('Transfer successfully created'));
+        }
+
+        return redirect()->route('responsability-sheet.edit', $this->id)->with('alerts', $this->getAlerts());
     }
 
     private function validateResponsable()
