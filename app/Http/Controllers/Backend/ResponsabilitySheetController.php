@@ -93,7 +93,7 @@ class ResponsabilitySheetController extends Controller
         ];
 
         $pdf = Pdf::loadView('backend.pdfs.print-responsability-sheet', $data);
-        $pdf->setPaper('letter', 'landscape');
+        $pdf->setPaper('legal', 'landscape');
         return $pdf->stream('Hoja de Responsabilidades - ' . $sheet->number . '.pdf');
     }
 }

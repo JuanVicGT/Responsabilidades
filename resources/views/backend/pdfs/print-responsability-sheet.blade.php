@@ -159,15 +159,15 @@
                 @endif
 
                 <!-- Table -->
-                <table class="table" style="width: 265mm;">
+                <table class="table" style="width: 335mm;">
                     <thead>
                         <tr>
                             <th style="width: 5%;">Fecha</th>
-                            <th style="width: 10%;">Número de Identificación</th>
+                            <th style="width: 9%;">Número de Identificación</th>
                             <th style="width: 40%;">Descripción del Artículo</th>
-                            <th style="width: 5%;">Debe</th>
-                            <th style="width: 5%;">Haber</th>
-                            <th style="width: 10%;">Saldo</th>
+                            <th style="width: 7%;">Debe</th>
+                            <th style="width: 7%;">Haber</th>
+                            <th style="width: 7%;">Saldo</th>
                             <th style="width: 25%;">Observaciones</th>
                         </tr>
                     </thead>
