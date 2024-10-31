@@ -275,5 +275,8 @@
     "Second Transfer Method Description": "Este método no generará nuevas hojas, simplemente actualizara el estado de las hojas actual, si el nuevo responsable no tuviera una hoja si se creará una nueva para el.",
     "Transfer to :responsible": "Transferido a :responsible",
     "Transfer from :responsible": "Transferido de :responsible",
-    "Transfer done": "Transferencia realizada"
+    "Transfer done": "Transferencia realizada",
+    "Make Transfer": "Realizar Transferencia",
+    "Print": "Imprimir",
+    "Print QR": "Imprimir Código QR"
 }
