@@ -72,8 +72,12 @@
             {{-- Botones para cuando esta bloqueada la hoja --}}
             @if ($status === App\Utils\Enums\ResponsabilitySheetStatusEnum::Closed->value)
                 <div class="flex col-span-4 justify-between mt-2">
-                    <x-mary-button label="{{ __('Print') }}" icon="o-printer" class=" btn-accent" spinner
-                        link="{{ route('responsability-sheet.print', ['id' => $id]) }}" external />
+                    <div class="flex space-x-2">
+                        <x-mary-button label="{{ __('Print') }}" icon="o-printer" class=" btn-accent" spinner
+                            link="{{ route('responsability-sheet.print', ['id' => $id]) }}" external />
+                        <x-mary-button label="{{ __('Print QR') }}" class=" btn-accent dark:btn-info"
+                            wire:click='generateQr' spinner />
+                    </div>
                     <x-mary-button label="{{ __('Make Transfer') }}" icon="o-arrows-right-left" class=" btn-warning"
                         spinner @click="$wire.show_transfer_modal = true" />
                 </div>
@@ -297,10 +301,10 @@
 
             <div class="min-h-96">
                 {{-- Select new responsable --}}
-                <x-mary-choices label="{{ __('Transfer To') }}" debounce="500ms" wire:model="transfer_responsible_id"
-                    name="responsible_id" single icon="o-user" no-result-text="{{ __('No results found.') }}"
-                    required class="max-h-16 external-choice" :options="$option_users" searchable
-                    search-function="searchUsers">
+                <x-mary-choices label="{{ __('Transfer To') }}" debounce="500ms"
+                    wire:model="transfer_responsible_id" name="responsible_id" single icon="o-user"
+                    no-result-text="{{ __('No results found.') }}" required class="max-h-16 external-choice"
+                    :options="$option_users" searchable search-function="searchUsers">
                     {{-- Item slot --}}
                     @scope('item', $user)
                         <x-mary-list-item :item="$user" sub-value="work_position">

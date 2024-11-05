@@ -119,4 +119,13 @@
                 link="{{ route('app_setting.index') }}" />
         @endif
     </x-mary-menu>
+
+    {{-- COPYRIGHT --}}
+    <div class="flex flex-col items-center px-4 py-2">
+        <img src="{{ asset('assets/images/umg.png') }}" class="h-20 w-auto sm:h-10" alt="logo_umg">
+        <p class="text-center text-sm text-gray-500 mt-2">
+            {{ __('Developed by') }}
+        </p>
+    </div>
+
 </x-slot:sidebar>

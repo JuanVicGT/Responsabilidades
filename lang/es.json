@@ -278,5 +278,13 @@
     "Transfer done": "Transferencia realizada",
     "Make Transfer": "Realizar Transferencia",
     "Print": "Imprimir",
-    "Print QR": "Imprimir Código QR"
+    "Print QR": "Imprimir Código QR",
+    "Create Date": "Fecha de Creación",
+    "Create Time": "Hora de Creación",
+    "Close Date": "Fecha de Cierre",
+    "Close Time": "Hora de Cierre",
+    "Print Date": "Fecha de Impresión",
+    "Print Time": "Hora de Impresión",
+    "Transfer Date": "Fecha de Transferencia",
+    "Developed by": "Desarrollado por Juan Victor"
 }

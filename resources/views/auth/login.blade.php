@@ -72,11 +72,18 @@
                     </x-primary-button>
 
                     <!-- Register Button -->
-                    <p class="text-sm text-center mt-6">{{ date('Y') }} &copy; {{ __('Work Rights') }}</p>
+                    <div class="flex items-center justify-center mt-6">
+                        <div class="grid grid-cols-1 gap-4 mt-4 justify-items-center">
+                            <img src="{{ asset('assets/images/umg.png') }}" alt="logo_umg" class="h-20 w-auto sm:h-10">
+                            <span class="text-sm text-gray-600 dark:text-gray-400">
+                                {{ __('Developed by') }}
+                            </span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-center mt-2">{{ date('Y') }} &copy; {{ __('Work Rights') }}</p>
                 </div>
 
             </form>
         </div>
     </div>
 </x-guest-layout>
-

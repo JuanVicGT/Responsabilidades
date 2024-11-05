@@ -6,15 +6,23 @@ use App\Http\Controllers\Backend;
 use App\Http\Controllers\Public;
 use App\Http\Controllers\Backend\EventController;
 use App\Http\Controllers\Backend\TodoController;
+use App\Http\Controllers\Public\ConsultSheetController;
 use Illuminate\Support\Facades\Redirect;
 
 // Request to reset password
-Route::middleware('guest')->controller(Public\PasswordResetRequestPublicController::class)->prefix('/forgot-password')
-    ->name('prequest.')
-    ->group(function () {
-        Route::get('/', 'create')->name('create');
-        Route::post('/', 'store')->name('store');
-    });
+Route::middleware('guest')->group(function () {
+    Route::controller(ProfileController::class)->prefix('/forgot-password')->name('prequest.')
+        ->group(function () {
+            Route::get('/', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+        });
+
+    Route::controller(ConsultSheetController::class)->prefix('/Consult')->name('consult.')
+        ->group(function () {
+            Route::get('/Sheet/{id}', 'index_sheet')->name('sheet');
+            Route::get('/Item/{id}', 'index_item')->name('item');
+        });
+});
 
 // First Login Routes (only for authenticated users)
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -184,7 +192,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/Create', 'create')->name('create');
             Route::get('/Edit/{id}', 'edit')->name('edit');
             Route::get('/Show/{id}', 'show')->name('show');
-            
+
             // Actions
             Route::get('/Print/{id}', 'print')->name('print'); // Print PDF
             Route::post('/Store', 'store')->name('store');

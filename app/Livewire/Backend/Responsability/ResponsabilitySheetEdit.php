@@ -627,7 +627,7 @@ class ResponsabilitySheetEdit extends Component
         }
     }
 
-    function makeTransfer()
+    public function makeTransfer()
     {
         if (empty($this->transfer_lines)) {
             $this->show_transfer_modal = false;
@@ -678,6 +678,10 @@ class ResponsabilitySheetEdit extends Component
         }
 
         return redirect()->route('responsability-sheet.edit', $this->id)->with('alerts', $this->getAlerts());
+    }
+
+    public function generateQr()
+    {
     }
 
     private function validateResponsable()
